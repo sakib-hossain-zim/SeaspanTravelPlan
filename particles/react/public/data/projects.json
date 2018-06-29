@@ -1,0 +1,14 @@
+{
+  "pagination": {},
+  "data": [
+    {
+      "id": 1,
+      "name": "Travel Plan",
+      "client_name": "Seaspan Vancouver Shipyards",
+      "Issued by": "Coordinator_Name",
+      "days": "",
+      "status": "approved",
+      "description": "Your approved travel plan"
+    }
+  ]
+}

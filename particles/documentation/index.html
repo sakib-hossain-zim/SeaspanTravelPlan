@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<head lang="en">
+	<meta http-equiv="content-type" content="text/html;charset=utf-8">
+	<title>Particles - Admin Template for React</title>
+	<!-- Framework CSS -->
+	<link rel="stylesheet" href="assets/blueprint-css/screen.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="assets/blueprint-css/print.css" type="text/css" media="print">
+	<!--[if lt IE 8]><link rel="stylesheet" href="assets/blueprint-css/ie.css" type="text/css" media="screen, projection"><![endif]-->
+	<link rel="stylesheet" href="assets/blueprint-css/plugins/fancy-type/screen.css" type="text/css" media="screen, projection">
+	<style type="text/css" media="screen">
+		p, table, hr, .box { margin-bottom:25px; }
+		.box p { margin-bottom:10px; }
+	</style>
+</head>
+
+
+<body>
+	<div class="container">
+	
+		<h3 class="center alt">&ldquo;Particles - Admin Template for React&rdquo; Documentation by &ldquo;Code Vision&rdquo; v1.0</h3>
+		
+		<hr>
+		
+		<h1 class="center">&ldquo;Particles - Admin Template for React&rdquo;</h1>
+		
+		<div class="borderTop">
+			<div class="span-6 colborder info prepend-1">
+				<p class="prepend-top">
+					<strong>
+					Created: 10/11/2017<br>
+					By: Code Vision<br>
+					Email: <a href="mailto:info@wearecodevision.com">info@wearecodevision.com</a>
+					</strong>
+				</p>
+			</div><!-- end div .span-6 -->		
+	
+			<div class="span-12 last">
+				<p class="prepend-top append-0">Thank you for purchasing our template. If you have any questions that are beyond the scope of this help file, please feel free to email us via our user page contact form <a href="http://themeforest.net/user/codevisionthemes">here</a>. Thanks so much!</p>
+			</div>
+		</div><!-- end div .borderTop -->
+		
+		<hr>
+		
+		<h2 id="toc" class="alt">Table of Contents</h2>
+
+		<ol class="alpha">
+			<li><a href="#file-structure">General Information</a></li>
+			<li><a href="#color-combinations">Color Combinations</a></li>
+			<li><a href="#optional-classes">Optional Classes</a></li>
+			<li><a href="#file-structure">File Structure</a></li>	
+			<li><a href="#installation">Application Installation</a></li>	
+			<li><a href="#nginx-configuration">Nginx Configuration</a></li>	
+		</ol>
+
+		<hr>
+		
+		<h3 id="general-information"><strong>General Information</strong> - <a href="#toc">top</a></h3>
+
+		<p>
+			Before starting to work with template, there are some basic concepts/technologies you need to be familiar with. Please check the Susy framework and SASS for more information. These two technologies and the core of the template.
+		</p>
+
+		<p>
+
+			There are some other essentials technologies used across the template files. Material Icons are used for displaying the icons. However these technogies are not mandatory to use. But learning these technologies will make easier site creation.
+		</p>
+
+		<h3 id="color-combinations"><strong>Color Combinations</strong> - <a href="#toc">top</a></h3>
+
+		<p>
+			CSS folder contains multiple color combinations so you can use already prepared colors. Everything what you need to do is to rename particles.css to match filename.
+		</p>
+
+		<p>
+			By using the gulpfile.js in "react" folder you can create or modify already existing sass files. The CSS files inside "html/assets/css" directory are just copied from the "react/public/css" folder.
+		</p>
+
+		<h3 id="optional-classes"><strong>Optional Classes</strong> - <a href="#toc">top</a></h3>
+
+		<p>
+			You can set toolbar actions to slide from the left side instead of poping out by using CSS class "toolbar-slide" on ".toolbar" div.
+		</p>
+
+		<h3 id="file-structure"><strong>File Structure</strong> - <a href="#toc">top</a></h3>
+
+		<p>
+			All CSS files are located inside assets/css folder. Template oriented files are generated from SASS source codes. You can find the SASS files insidede public/scss. It is recommended to edit SASS files instead of CSS files because if you compile the SASS, you will loose all your changes.
+		</p>
+
+		<p>
+			Images are located in public/img. The tmp folder container sample images. In the package which you downloaded are situated the compressed images with the placeholders only.
+		</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="39%">
+<col width="61%">
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Folder</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>public/css</td>
+<td>CSS files</td>
+</tr>
+<tr class="row-odd"><td>public/data</td>
+<td>JSON data for eg. contacts</td>
+
+<tr class="row-odd"><td>public/img</td>
+<td>Images</td>
+</tr>
+<tr class="row-odd"><td>public/scss</td>
+<td>SASS files</td>
+</tr>
+</tbody>
+</table>
+
+		<h3 id="install"><strong>Application Installation</strong> - <a href="#toc">top</a></h3>		
+
+		<p><strong>Installing on the local machine</strong></p>
+
+		<p>Please note that we will be working in terminal. Mac or Linux users have already terminal available in OS but Windows users must look for third party solution</p>
+
+		<ol>
+			<li><code>cd particles</code></li>
+			<li><code>npm install</code> # Install all dependencies</li>			
+			<li><code>npm run</code></li>
+            <li><code>npm run-script build</code> # Create production build</li>
+            
+		</ol>
+
+		<p>Now you can access <a href="http://localhost:3000">http://localhost:3000</a></p>
+		
+		<p><strong>Installing on the hosting</strong></p>
+
+		<p>
+			When installing application on the hosting you can replicate almost all steps from the previous guide how to install it on the local machine but the last command (server:run) is not recommended to run. You must configure your own webserver. For example our demo is running on nginx. Below we attached our nginx configuration.
+		</p>
+
+<h3 id="nginx-configuration"><strong>Nginx Configuration</strong> - <a href="#toc">top</a></h3>
+<pre><code>server {
+    listen 80;
+    listen [::]:80;
+
+    root /PATH_HERE/particles/build;
+    index index.php;
+    client_max_body_size 20M;
+
+    gzip                on;
+    gzip_min_length     1000;
+    gzip_buffers        4 8k;
+    gzip_http_version   1.0;
+    gzip_disable        "msie6";
+    gzip_types          text/plain text/css application/json application/javascript application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+    gzip_vary           on;
+
+    server_name YOUR_DOMAIN_HERE;
+
+    location / {
+        index index.html;
+        try_files $uri $uri/ /index.html;
+    }
+}
+</code></pre>
+
+		<hr class="space">
+	</div><!-- end div .container -->
+</body>
+</html>
