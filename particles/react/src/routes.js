@@ -11,9 +11,18 @@ import Forms from './components/Pages/Forms';
 import Contact from './components/Pages/Contact';
 import Faq from './components/Pages/Faq';
 import Forgot from './components/Pages/Forgot';
-import Register from './components/Pages/Register'
-import Decision from './components/Pages/DecisionPage'
-import login from './components/Pages/Login'
+import Register from './components/Pages/Register';
+import Decision from './components/Pages/DecisionPage';
+import login from './components/Pages/Login';
+import login from './components/Pages/Controller/Authorization';
+import login from './components/Pages/Controller/Event';
+import login from './components/Pages/Controller/Invoicing';
+import login from './components/Pages/Controller/TravelPlan';
+import login from './components/Pages/Controller/TravelPlanViewer';
+import login from './components/Pages/Traveller/ApprovedTravelPlan';
+import login from './components/Pages/Traveller/FormSubmission';
+import login from './components/Pages/Traveller/TravelTracker';
+import login from './components/Pages/LandingPage';
 
 
 export const routes = [
