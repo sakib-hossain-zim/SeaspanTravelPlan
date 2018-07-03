@@ -19,8 +19,8 @@ export default class InfoboxProject extends Component {
 
                           <Button classes="button-default" to="/decisionPage" exact={true} activeClassName="active">
 
-                              <span> Vote</span>
-                          
+                              <span> View </span>
+
                          </Button>
 
                         </div>
@@ -28,20 +28,14 @@ export default class InfoboxProject extends Component {
 
                     <div className="infobox-meta">
                         <ul>
-                            <li>
-                                <span>Voters</span>
-                                <strong>{this.props.project.tasks}</strong>
-                            </li>
+                          
 
                             <li>
-                                <span>Days Left</span>
+                                <span>Day Published</span>
                                 <strong>{this.props.project.days}</strong>
                             </li>
 
-                            <li>
-                                <span>Due</span>
-                                <strong>{this.props.project.due}</strong>
-                            </li>
+
                         </ul>
                     </div>
 
