@@ -13,16 +13,16 @@ import Faq from './components/Pages/Faq';
 import Forgot from './components/Pages/Forgot';
 import Register from './components/Pages/Register';
 import Decision from './components/Pages/DecisionPage';
-import  from './components/Pages/Login';
-import login from './components/Pages/Controller/Authorization';
-import login from './components/Pages/Controller/Event';
-import login from './components/Pages/Controller/Invoicing';
-import login from './components/Pages/Controller/TravelPlan';
-import login from './components/Pages/Controller/TravelPlanViewer';
-import login from './components/Pages/Traveller/ApprovedTravelPlan';
-import login from './components/Pages/Traveller/FormSubmission';
-import login from './components/Pages/Traveller/TravelTracker';
-import login from './components/Pages/LandingPage';
+import login from './components/Pages/Login';
+import Authorization from './components/Pages/Controller/Authorization';
+import Event from './components/Pages/Controller/Event';
+import Invoices from './components/Pages/Controller/Invoicing';
+import TravelPlan from './components/Pages/Controller/TravelPlan';
+import TravelPlanExplorer from './components/Pages/Controller/TravelPlanViewer';
+import ApprovedTravelPlan from './components/Pages/Traveller/ApprovedTravelPlan';
+import FormSubmission from './components/Pages/Traveller/FormSubmission';
+import TravelTracker from './components/Pages/Traveller/TravelTracker';
+
 
 
 export const routes = [
@@ -159,4 +159,60 @@ export const routes = [
       component: Decision
 
     },
+
+    {
+      path: '/authorization',
+      title: 'Authorization',
+      breadcrumb: 'Authorization',
+      breadcrumb_link: false,
+      exact: true,
+      component: Authorization
+
+    },
+    {
+      path: '/event',
+      title: 'Event',
+      breadcrumb: 'Event',
+      breadcrumb_link: false,
+      exact: true,
+      component: Event
+
+    },
+
+    {
+      path: '/invoicing',
+      title: 'Invoices',
+      breadcrumb: 'Invoices',
+      breadcrumb_link: false,
+      exact: true,
+      component: Invoices
+
+    },
+
+    {
+      path: '/travelplan',
+      title: 'TravelPlan',
+      breadcrumb: 'TravelPlan',
+      breadcrumb_link: false,
+      exact: true,
+      component: TravelPlan
+
+    },
+
+
+    {
+      path: '/travelplanviewer',
+      title: 'TravelPlanExplorer',
+      breadcrumb: 'TravelPlanExplorer',
+      breadcrumb_link: false,
+      exact: true,
+      component: TravelPlanExplorer
+
+    },
+
+
+
+
+
+
 ];
