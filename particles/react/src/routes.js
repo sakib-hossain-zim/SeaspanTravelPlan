@@ -13,7 +13,7 @@ import Faq from './components/Pages/Faq';
 import Forgot from './components/Pages/Forgot';
 import Register from './components/Pages/Register';
 import Decision from './components/Pages/DecisionPage';
-import login from './components/Pages/Login';
+import  from './components/Pages/Login';
 import login from './components/Pages/Controller/Authorization';
 import login from './components/Pages/Controller/Event';
 import login from './components/Pages/Controller/Invoicing';
