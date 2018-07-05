@@ -18,17 +18,32 @@ import Authorization from './components/Pages/Controller/Authorization';
 import Event from './components/Pages/Controller/Event';
 import Invoices from './components/Pages/Controller/Invoicing';
 import TravelPlan from './components/Pages/Controller/TravelPlan';
+import ControllerDashboard from './components/Pages/Controller/ControllerDashboard';
 import TravelPlanExplorer from './components/Pages/Controller/TravelPlanViewer';
 import ApprovedTravelPlan from './components/Pages/Traveller/ApprovedTravelPlan';
 import FormSubmission from './components/Pages/Traveller/FormSubmission';
 import TravelTracker from './components/Pages/Traveller/TravelTracker';
+import TravellerDashboard from './components/Pages/Traveller/TravellerDashboard';
+import LandingPage from './components/Pages/LandingPage';
+
 
 
 
 export const routes = [
 
+
+  {
+    path: '/',
+    title: 'LandingPage',
+    breadcrumb: 'LandingPage',
+    breadcrumb_link: false,
+    exact: true,
+    component: LandingPage
+
+  },
+
     {
-      path: '/',
+      path: '/login',
       title: 'Login',
       breadcrumb:'Login',
       breadcrumb_link: true,
@@ -211,7 +226,57 @@ export const routes = [
     },
 
 
+    {
+      path: '/controllerDashboard',
+      title: 'ControllerDashboard',
+      breadcrumb: 'ControllerDashboard',
+      breadcrumb_link: false,
+      exact: true,
+      component: ControllerDashboard
 
+    },
+
+
+
+    {
+      path: '/approvedtravelplan',
+      title: 'ApprovedTravelPlan',
+      breadcrumb: 'ApprovedTravelPlan',
+      breadcrumb_link: false,
+      exact: true,
+      component: ApprovedTravelPlan
+
+    },
+
+    {
+      path: '/formsubmission',
+      title: 'FormSubmission',
+      breadcrumb: 'FormSubmission',
+      breadcrumb_link: false,
+      exact: true,
+      component: FormSubmission
+
+    },
+
+    {
+      path: '/travellerdashboard',
+      title: 'TravellerDashboard',
+      breadcrumb: 'TravellerDashboard',
+      breadcrumb_link: false,
+      exact: true,
+      component: TravellerDashboard
+
+    },
+
+    {
+      path: '/traveltracker',
+      title: 'TravelTracker',
+      breadcrumb: 'TravelTracker',
+      breadcrumb_link: false,
+      exact: true,
+      component: TravelTracker
+
+    },
 
 
 

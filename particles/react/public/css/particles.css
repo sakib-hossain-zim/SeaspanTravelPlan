@@ -1656,6 +1656,15 @@ table {
     text-overflow: ellipsis;
     white-space: nowrap; }
 
+    .box.vertical-center{
+      margin-bottom: 0px;
+      margin-top:100px;
+      padding-left: 425px;
+      padding-right: 0px;
+    }
+
+
+
 /**
  * 17. Infobox
  */
@@ -2309,3 +2318,59 @@ table {
 @media (min-width: 992px) {
   .footer-right {
     float: right; } }
+
+
+    .button-new {
+     border: none;
+     padding: 50px 70px;
+     text-align: center;
+     font-family: "Arial";
+     background-color: white;
+     color:black;
+     border: 2px solid #e7e7e7;
+     margin: 10px
+    }
+
+    .button-new:hover {
+      background-color: #e7e7e7;
+      outline: none;
+      color: white;
+    }
+
+    .button-new:active {
+      background-color: #e7e7e7;
+      outline: 0;
+    }
+
+    .button-new:focus {
+      background-color: #e7e7e7;
+      outline: 0;
+    }
+
+
+    .button-new-dark {
+  border: none;
+  padding: 50px 70px;
+  text-align: center;
+  font-family: "Arial";
+  background-color: white;
+  color:black;
+  border: 2px solid #e7e7e7;
+  margin: 10px
+ }
+
+ .button-new-dark:hover {
+   background-color: #e7e7e7;
+   outline: none;
+   color: white;
+ }
+
+ .button-new-dark:active {
+   background-color: #e7e7e7;
+   outline: 0;
+ }
+
+ .button-new-dark:focus {
+   background-color: #e7e7e7;
+   outline: 0;
+ }

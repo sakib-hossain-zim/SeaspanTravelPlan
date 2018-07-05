@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Backend from '../../Layouts/Backend';
-import { InfoboxProject } from '../../UI/Infobox';
+import Backend from './Layouts/Backend';
+import { InfoboxProject } from './UI/Infobox';
 import { connect } from 'react-redux';
 import { actionCreators } from '../../../actions';
-import Loading from '../../Helpers/Loading';
+import Loading from './Helpers/Loading';
 
 class TravelPlanExplorer extends Component {
      componentWillMount() {
