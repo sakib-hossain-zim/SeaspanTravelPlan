@@ -55,7 +55,7 @@ class LandingPage extends Component {
                       </button>
                       <span>   </span>
                       <button  type= "submit" className = "button-new" bsSize="large"  >
-                    <a href= '/controllerloginpage'> Controller </a>
+                    <a href= '/controllerloginpage'> Coordinator </a>
                       </button>
 
                     </Box>
