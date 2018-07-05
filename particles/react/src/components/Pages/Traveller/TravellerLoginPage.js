@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import {withRouter} from 'react-router-dom';
 
-import Empty from '../Layouts/Empty';
+import Empty from './Layouts/Empty';
 
 // eslint-disable-next-line
-import { Button }  from '../UI/Button';
+import { Button }  from './UI/Button';
 
-export default class Login extends Component {
+export default class TravellerLoginPage extends Component {
 
 
 
@@ -35,8 +35,8 @@ export default class Login extends Component {
 
 
 
-                      <button type ='submit' className="button-primary button-right">
-                        <a href="/Dashboard">Login</a>
+                      <button className="button button-primary button-right">
+                        <a href="/travellerdashboard">Login</a>
                         </button>
 
 

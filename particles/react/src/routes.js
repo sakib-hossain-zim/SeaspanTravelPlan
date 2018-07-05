@@ -25,6 +25,9 @@ import FormSubmission from './components/Pages/Traveller/FormSubmission';
 import TravelTracker from './components/Pages/Traveller/TravelTracker';
 import TravellerDashboard from './components/Pages/Traveller/TravellerDashboard';
 import LandingPage from './components/Pages/LandingPage';
+import TravellerLoginPage from './components/Pages/Traveller/TravellerLoginPage';
+import ControllerLoginPage from './components/Pages/Controller/ControllerLoginPage';
+
 
 
 
@@ -275,6 +278,26 @@ export const routes = [
       breadcrumb_link: false,
       exact: true,
       component: TravelTracker
+
+    },
+
+    {
+      path: '/travellerloginpage',
+      title: 'TravellerLoginPage',
+      breadcrumb: 'TravellerLoginPage',
+      breadcrumb_link: false,
+      exact: true,
+      component: TravellerLoginPage
+
+    },
+
+    {
+      path: '/controllerloginpage',
+      title: 'ControllerLoginPage',
+      breadcrumb: 'ControllerLoginPage',
+      breadcrumb_link: false,
+      exact: true,
+      component: ControllerLoginPage
 
     },
 
