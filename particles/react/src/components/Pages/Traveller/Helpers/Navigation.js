@@ -14,14 +14,14 @@ export default class Navigation extends Component {
                     </li>
 
                     <li>
-                        <NavLink to="/TravelTracker" activeClassName="active">
-                            <i className="md-icon">folder_open</i> <span>Travel Explorer</span>
+                        <NavLink to="/FormSubmission" activeClassName="active">
+                            <i className="md-icon">library_books</i> <span>Forms</span>
                         </NavLink>
                     </li>
 
                     <li>
-                        <NavLink to="/FormSubmission" activeClassName="active">
-                            <i className="md-icon">folder_open</i> <span>Forms</span>
+                        <NavLink to="/TravelTracker" activeClassName="active">
+                            <i className="md-icon">find_in_page</i> <span>Travel Plan Explorer</span>
                         </NavLink>
                     </li>
 

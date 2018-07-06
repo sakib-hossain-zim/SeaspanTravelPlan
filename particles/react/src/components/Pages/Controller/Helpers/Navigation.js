@@ -13,30 +13,35 @@ export default class Navigation extends Component {
                         </NavLink>
                     </li>
 
+
                     <li>
-                        <NavLink to="/authorization" activeClassName="active">
-                            <i className="md-icon">folder_open</i> <span>Authorization</span>
+                        <NavLink to="/event" activeClassName="active">
+                            <i className="md-icon">add</i> <span>Create Event</span>
                         </NavLink>
                     </li>
 
                     <li>
-                        <NavLink to="/event" activeClassName="active">
-                            <i className="md-icon">folder_open</i> <span>Create Event</span>
-                        </NavLink>
-                    </li>
-                    <li>
                         <NavLink to="/travelplan" activeClassName="active">
-                            <i className="md-icon">folder_open</i> <span>Travel Plan</span>
+                            <i className="md-icon">add</i> <span>Create Travel Plan</span>
                         </NavLink>
                     </li>
+
+
+                    <li>
+                        <NavLink to="/authorization" activeClassName="active">
+                            <i className="md-icon">done</i> <span>Approvals</span>
+                        </NavLink>
+                    </li>
+
+
                     <li>
                         <NavLink to="/travelplanviewer" activeClassName="active">
-                            <i className="md-icon">folder_open</i> <span>Travel Plan Explorer</span>
+                            <i className="md-icon">find_in_page</i> <span>Travel Plan Explorer</span>
                         </NavLink>
                     </li>
                     <li>
                         <NavLink to="/invoicing" activeClassName="active">
-                            <i className="md-icon">folder_open</i> <span>Invoice</span>
+                            <i className="md-icon">insert_drive_file</i> <span>Invoice</span>
                         </NavLink>
                     </li>
 
