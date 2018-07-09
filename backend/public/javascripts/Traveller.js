@@ -1,7 +1,7 @@
 var http = require('http');
 var express = require('express');
 var router = express.Router();
-var mysql = require('mysql');
+var mysql = require('mssql');
 var bodyParser = require('body-parser');
 
 /* GET users listing. */
