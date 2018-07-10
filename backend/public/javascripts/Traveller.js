@@ -1,7 +1,7 @@
 var http = require('http');
 var express = require('express');
 var router = express.Router();
-var mysql = require('mssql');
+var mysql = require('mysql');
 var bodyParser = require('body-parser');
 
 /* GET users listing. */
@@ -12,10 +12,10 @@ router.get('/', function(req, res, next) {
 
 //start my sql connection
 var connection = mysql.createConnection({
-  host : 'travelplansqlserver.database.windows.net',
-  user : 'sakib',
+  host : 'localhost',
+  user : 'root',
   password: 'Topoftheworld10!',
-  database: 'TravelPlanSQLDatabase'
+  database: 'travelplanserverdatabase'
 });
 
 connection.connect(function(err) {
