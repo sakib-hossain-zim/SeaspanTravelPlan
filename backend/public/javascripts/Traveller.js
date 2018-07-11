@@ -36,7 +36,7 @@ router.use(bodyParser.urlencoded({
 //rest api to get all the results from Traveller table
 
 router.get('/travellers', function(req,res){
-  connection.query('select * from Traveller', function(error,results,fields){
+  connection.query('select * from traveller', function(error,results,fields){
     if (error) throw error;
     res.end(JSON.stringify(results));
   });
@@ -47,7 +47,7 @@ router.get('/travellers', function(req,res){
 
 router.post('/travellers',function(req,res){
   var postData = req.body;
-  connection.query('INSERT INTO Traveller SET ?', postData, function(error,results,fields){
+  connection.query('INSERT INTO traveller SET ?', postData, function(error,results,fields){
     if(error) throw error;
     res.end(JSON.stringify(results));
   });

@@ -38,4 +38,12 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
+app.listen(4000, () => {
+  console.log('Seaspan server listening on port 4000')
+});
+
+
+module.exports = app;
+
 module.exports = app;
