@@ -624,8 +624,8 @@ a {
   box-sizing: border-box;
   padding: 20px 10px;
   position: relative;
-  min-width: 200px;
-  width: 320px;
+  min-width: 250px;
+  width: 250px;
   z-index: 100; }
   @media (max-width: 1281px) {
     .sidebar {
@@ -1665,6 +1665,7 @@ table {
 
 
 
+
 /**
  * 17. Infobox
  */
@@ -1831,14 +1832,29 @@ table {
         float: right;
         margin-right: 0; } }
 
+
+
+
+
 .card {
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
   border: 1px solid rgba(0, 0, 0, 0.06);
-  margin: 0 0 30px 0;
+  margin: 0 0 0 0;
   padding: 20px;
   position: relative; }
+
+.card-event {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  margin: 0 0 0px 0;
+  padding: 10px 10px 10px 10px;
+  position: relative;
+
+}
 
 .card-close {
   cursor: pointer;
@@ -1856,8 +1872,16 @@ table {
 
 .card-content {
   border-top: 1px solid rgba(0, 0, 0, 0.06);
-  margin: 0 -20px;
-  padding: 20px 20px 0 20px; }
+  margin: 0 0px;
+  padding: 5px; }
+
+  .card-event-content {
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    margin: 0 0px;
+    padding: 50px 0px 0 450px;
+  }
+
+
 
 .card-title {
   display: block;
@@ -1865,6 +1889,14 @@ table {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; }
+
+  .card-title-event{
+    display: block;
+    font-size: 25px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
 .card-subtitle {
   display: block;

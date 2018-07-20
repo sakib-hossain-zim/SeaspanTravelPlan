@@ -8,25 +8,25 @@ export default class Navigation extends Component {
             <div className="navigation">
                 <ul>
                     <li>
-                        <NavLink to="/TravellerDashboard" exact={true} activeClassName="active">
+                        <NavLink to="/TravellerDashboard" class="text-muted" exact={true} activeClassName="active">
                              <i className="md-icon">dashboard</i> <span>Home</span>
                         </NavLink>
                     </li>
 
                     <li>
-                        <NavLink to="/FormSubmission" activeClassName="active">
+                        <NavLink to="/FormSubmission" class="text-muted" activeClassName="active">
                             <i className="md-icon">library_books</i> <span>Forms</span>
                         </NavLink>
                     </li>
 
                     <li>
-                        <NavLink to="/TravelTracker" activeClassName="active">
+                        <NavLink to="/TravelTracker" class="text-muted" activeClassName="active">
                             <i className="md-icon">find_in_page</i> <span>Travel Plan Explorer</span>
                         </NavLink>
                     </li>
 
                     <li>
-                        <NavLink to="/ApprovedTravelPlan" activeClassName="active">
+                        <NavLink to="/ApprovedTravelPlan" class="text-muted" activeClassName="active">
                             <i className="md-icon">done</i> <span>Approved</span>
                         </NavLink>
                     </li>

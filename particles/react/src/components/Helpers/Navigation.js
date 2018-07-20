@@ -8,24 +8,24 @@ export default class Navigation extends Component {
             <div className="navigation">
                 <ul>
                     <li>
-                        <NavLink to="/Dashboard" exact={true} activeClassName="active">
+                        <NavLink to="/Dashboard" class="text-muted"  exact={true} activeClassName="active">
                              <i className="md-icon">dashboard</i> <span>Home</span>
                         </NavLink>
                     </li>
 
                     <li>
-                        <NavLink to="/votes" activeClassName="active">
+                        <NavLink to="/votes" class="text-muted" activeClassName="active">
                             <i className="md-icon">folder_open</i> <span>Upcoming</span>
                         </NavLink>
                     </li>
 
                     <li>
-                        <NavLink to="/past" activeClassName="active">
+                        <NavLink to="/past" class="text-muted" activeClassName="active">
                             <i className="md-icon">done</i> <span>Past</span>
                         </NavLink>
                     </li>
 
-                  
+
 
 
 

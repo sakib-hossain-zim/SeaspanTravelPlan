@@ -8,39 +8,39 @@ export default class Navigation extends Component {
             <div className="navigation">
                 <ul>
                     <li>
-                        <NavLink to="/controllerDashboard" exact={true} activeClassName="active">
-                             <i className="md-icon">dashboard</i> <span>Home</span>
+                        <NavLink to="/controllerDashboard" class="text-muted" exact={true} activeClassName="active">
+                             <i className="md-icon" >dashboard</i> <span>Home</span>
                         </NavLink>
                     </li>
 
 
                     <li>
-                        <NavLink to="/event" activeClassName="active">
+                        <NavLink to="/event" class="text-muted" activeClassName="active">
                             <i className="md-icon">add</i> <span>Create Event</span>
                         </NavLink>
                     </li>
 
                     <li>
-                        <NavLink to="/travelplan" activeClassName="active">
+                        <NavLink to="/travelplan" class="text-muted" activeClassName="active">
                             <i className="md-icon">add</i> <span>Create Travel Plan</span>
                         </NavLink>
                     </li>
 
 
                     <li>
-                        <NavLink to="/authorization" activeClassName="active">
+                        <NavLink to="/authorization" class="text-muted" activeClassName="active">
                             <i className="md-icon">done</i> <span>Approvals</span>
                         </NavLink>
                     </li>
 
 
                     <li>
-                        <NavLink to="/travelplanviewer" activeClassName="active">
+                        <NavLink to="/travelplanviewer" class="text-muted" activeClassName="active">
                             <i className="md-icon">find_in_page</i> <span>Travel Plan Explorer</span>
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/invoicing" activeClassName="active">
+                        <NavLink to="/invoicing"  class="text-muted"activeClassName="active">
                             <i className="md-icon">insert_drive_file</i> <span>Invoice</span>
                         </NavLink>
                     </li>
