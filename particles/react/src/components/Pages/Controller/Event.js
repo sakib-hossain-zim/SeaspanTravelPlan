@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import EventForm from "./Helpers/EventForm";
-import Table1 from "./Helpers/Table";
+import EventTable from "./Helpers/EventTable";
 import "../../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Modal from "react-responsive-modal";
 import './Helpers/Event.css'
@@ -22,6 +22,7 @@ class Event extends Component {
       data: [],
 
       Event_id: "",
+      TravelPlan_id: "",
       event_name: "",
       event_type: "",
       description: "",
@@ -71,7 +72,7 @@ class Event extends Component {
 
 
       <div className= 'card-event'>
-      <div className= 'card-title-event'>Create Table</div>
+      <div className= 'card-title-event'>Create Event</div>
       <div className= 'card-event-content'>
       <div className="container">
       <EventForm
@@ -95,7 +96,7 @@ class Event extends Component {
         <div className='card-content'>
 
         <div className="container" style={{marginTop:20}}>
-          <Table1 data={this.state.data} />
+          <EventTable data={this.state.data} />
         </div>
 
          </div>

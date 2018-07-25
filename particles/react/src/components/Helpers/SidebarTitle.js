@@ -12,7 +12,7 @@ export default class SidebarTitle extends Component {
         return (
             <h1 className="sidebar-title-wrapper">
                 <div className="sidebar-title-inner" onClick={this.toggleBodyClass.bind(this)} style={{flex: 1}}>
-                    <img src={require('../../media/logo.png')} alt="Seaspan_logo" style={{height: 60, marginLeft: -10}}/>
+                    <img src={require('../../media/logo.png')} alt="Seaspan_logo" style={{height: 40}}/>
                 </div>
             </h1>
         );

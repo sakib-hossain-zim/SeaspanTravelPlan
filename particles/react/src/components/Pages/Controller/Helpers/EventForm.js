@@ -2,10 +2,11 @@ import React from "react";
 import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
 
-export default class Form extends React.Component {
+export default class EventForm extends React.Component {
   state = {
     val: Math.floor(Math.random() * 10000000 + 1),
     Event_id: "",
+    TravelPlan_id: "",
     event_name: "",
     event_type: "",
     description: "",
@@ -145,6 +146,7 @@ export default class Form extends React.Component {
       // clear form
       this.setState({
         Event_id: "",
+        TravelPlan_id: "",
         event_name: "",
         event_type: "",
         description: "",
@@ -175,6 +177,7 @@ export default class Form extends React.Component {
 
       var data = {
         Event_id: this.state.Event_id,
+        TravelPlan_id: this.state.TravelPlan_id,
         event_name: this.state.event_name,
         event_type: this.state.event_type,
         description: this.state.description,
@@ -232,6 +235,17 @@ export default class Form extends React.Component {
           floatingLabelFixed
         />
         <br />
+
+        <TextField
+          name="TravelPlan_id"
+          hintText="Please insert TravelPlan id"
+          floatingLabelText="Travel Plan id"
+          value={this.state.TravelPlan_id}
+          onChange={e => this.change(e)}
+          floatingLabelFixed
+        />
+        <br />
+
         <TextField
           name="event_name"
           hintText="Please insert event name"

@@ -51,11 +51,11 @@ class LandingPage extends Component {
                    <Box classes="side-margins vertical-center">
                    <div><img src={require('../../media/logo.png')} alt="Seaspan_logo" style={{height: 50, marginLeft: 100,marginBottom: 30}}/></div>
                    <button type = "submit" className = "button-new"  bsSize="large" >
-                    <a href= '/travellerloginpage'> Traveller </a>
+                    <a href= '/travellerloginpage' class="text-muted"> Traveller </a>
                       </button>
                       <span>   </span>
                       <button  type= "submit" className = "button-new" bsSize="large"  >
-                    <a href= '/controllerloginpage'> Coordinator </a>
+                    <a href= '/controllerloginpage' class="text-muted"> Coordinator </a>
                       </button>
 
                     </Box>

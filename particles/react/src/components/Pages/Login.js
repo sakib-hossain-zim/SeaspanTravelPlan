@@ -30,13 +30,13 @@ export default class Login extends Component {
 
                     <div className="form-group form-group-button">
                         <div className="form-group-button-description">
-                            <a href="/forgot" >I forgot password</a>
+                            <a href="/forgot" class="text-muted">I forgot password</a>
                         </div>
 
 
 
                       <button type ='submit' className="button-primary button-right">
-                        <a href="/Dashboard">Login</a>
+                        <a href="/Dashboard" class="text-white">Login</a>
                         </button>
 
 
@@ -44,7 +44,7 @@ export default class Login extends Component {
 
                     <div className="form-group">
                         <div className="form-group-button-description">
-                            <a href="/register">Not a member? Register here</a>
+                            <a href="/register" class="text-muted">Not a member? Register here</a>
                         </div>
                     </div>
 

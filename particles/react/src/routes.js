@@ -27,6 +27,7 @@ import TravellerDashboard from './components/Pages/Traveller/TravellerDashboard'
 import LandingPage from './components/Pages/LandingPage';
 import TravellerLoginPage from './components/Pages/Traveller/TravellerLoginPage';
 import ControllerLoginPage from './components/Pages/Controller/ControllerLoginPage';
+import AddTraveller from './components/Pages/Controller/AddTraveller';
 
 
 
@@ -298,6 +299,16 @@ export const routes = [
       breadcrumb_link: false,
       exact: true,
       component: ControllerLoginPage
+
+    },
+
+    {
+      path: '/addTraveller',
+      title: 'AddTraveller',
+      breadcrumb: 'AddTraveller',
+      breadcrumb_link: false,
+      exact: true,
+      component: AddTraveller
 
     },
 

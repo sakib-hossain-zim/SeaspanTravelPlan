@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import "../../../../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css";
 
-class Table1 extends Component {
+class EventTable extends Component {
   render() {
     return (
       <div>
@@ -16,6 +16,9 @@ class Table1 extends Component {
         >
           <TableHeaderColumn isKey dataField="Event_id" width="200">
             Event ID
+          </TableHeaderColumn>
+          <TableHeaderColumn dataField="TravelPlan_id" width="200">
+            Travel Plan ID
           </TableHeaderColumn>
           <TableHeaderColumn dataField="event_name" width="200">
             Event Name
@@ -59,4 +62,4 @@ class Table1 extends Component {
   }
 }
 
-export default Table1;
+export default EventTable;

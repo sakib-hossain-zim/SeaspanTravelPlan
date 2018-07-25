@@ -14,6 +14,13 @@ export default class Navigation extends Component {
                     </li>
 
 
+
+                    <li>
+                        <NavLink to="/travelplan" class="text-muted" activeClassName="active">
+                            <i className="md-icon">add</i> <span>Create Travel Plan</span>
+                        </NavLink>
+                    </li>
+
                     <li>
                         <NavLink to="/event" class="text-muted" activeClassName="active">
                             <i className="md-icon">add</i> <span>Create Event</span>
@@ -21,8 +28,8 @@ export default class Navigation extends Component {
                     </li>
 
                     <li>
-                        <NavLink to="/travelplan" class="text-muted" activeClassName="active">
-                            <i className="md-icon">add</i> <span>Create Travel Plan</span>
+                        <NavLink to="/addTraveller" class="text-muted" activeClassName="active">
+                            <i className="md-icon">add</i> <span>Add Traveller</span>
                         </NavLink>
                     </li>
 
