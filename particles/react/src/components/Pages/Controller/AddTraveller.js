@@ -123,6 +123,7 @@ class AddTraveller extends Component {
           floatingLabelFixed
         />
         <br />
+        <br />
 
         <RaisedButton label="Add" onClick={e => this.onSubmit(e)} primary/>
       </form>

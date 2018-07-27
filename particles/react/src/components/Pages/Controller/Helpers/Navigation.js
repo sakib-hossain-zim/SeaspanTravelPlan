@@ -33,6 +33,12 @@ export default class Navigation extends Component {
                         </NavLink>
                     </li>
 
+                    <li>
+                        <NavLink to="/createBudget" class="text-muted" activeClassName="active">
+                            <i className="md-icon">add</i> <span>Create Budget</span>
+                        </NavLink>
+                    </li>
+
 
                     <li>
                         <NavLink to="/authorization" class="text-muted" activeClassName="active">

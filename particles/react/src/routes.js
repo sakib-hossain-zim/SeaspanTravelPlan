@@ -28,6 +28,7 @@ import LandingPage from './components/Pages/LandingPage';
 import TravellerLoginPage from './components/Pages/Traveller/TravellerLoginPage';
 import ControllerLoginPage from './components/Pages/Controller/ControllerLoginPage';
 import AddTraveller from './components/Pages/Controller/AddTraveller';
+import ControllerBudget from './components/Pages/Controller/ControllerBudget';
 
 
 
@@ -309,6 +310,16 @@ export const routes = [
       breadcrumb_link: false,
       exact: true,
       component: AddTraveller
+
+    },
+
+    {
+      path: '/createBudget',
+      title: 'ControllerBudget',
+      breadcrumb: 'ControllerBudget',
+      breadcrumb_link: false,
+      exact: true,
+      component: ControllerBudget
 
     },
 
