@@ -12,16 +12,21 @@ export default class Navigation extends Component {
                              <i className="md-icon">dashboard</i> <span>Home</span>
                         </NavLink>
                     </li>
-
                     <li>
-                        <NavLink to="/FormSubmission" class="text-muted" activeClassName="active">
-                            <i className="md-icon">library_books</i> <span>Forms</span>
+                        <NavLink to="/TravelTracker" class="text-muted" activeClassName="active">
+                            <i className="md-icon">find_in_page</i> <span>Travel Plan Explorer</span>
                         </NavLink>
                     </li>
 
                     <li>
-                        <NavLink to="/TravelTracker" class="text-muted" activeClassName="active">
-                            <i className="md-icon">find_in_page</i> <span>Travel Plan Explorer</span>
+                        <NavLink to="/OnlineTravelRequestForm" class="text-muted" activeClassName="active">
+                            <i className="md-icon">library_books</i> <span>Travel Request</span>
+                        </NavLink>
+                    </li>
+
+                    <li>
+                        <NavLink to="/TravelExpenseClaim" class="text-muted" activeClassName="active">
+                            <i className="md-icon">library_books</i> <span>Expense Claim</span>
                         </NavLink>
                     </li>
 

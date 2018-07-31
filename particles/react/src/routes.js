@@ -29,6 +29,10 @@ import TravellerLoginPage from './components/Pages/Traveller/TravellerLoginPage'
 import ControllerLoginPage from './components/Pages/Controller/ControllerLoginPage';
 import AddTraveller from './components/Pages/Controller/AddTraveller';
 import ControllerBudget from './components/Pages/Controller/ControllerBudget';
+import CreateTraveller from './components/Pages/Controller/CreateTraveller';
+import OnlineTravelRequestForm from './components/Pages/Traveller/OnlineTravelRequestForm';
+import TravelExpenseClaim from './components/Pages/Traveller/TravelExpenseClaim';
+
 
 
 
@@ -320,6 +324,36 @@ export const routes = [
       breadcrumb_link: false,
       exact: true,
       component: ControllerBudget
+
+    },
+
+    {
+      path: '/createTraveller',
+      title: 'Create Traveller',
+      breadcrumb: 'CreateTraveller',
+      breadcrumb_link: false,
+      exact: true,
+      component: CreateTraveller
+
+    },
+
+    {
+      path: '/onlinetravelrequestform',
+      title: 'Online Travel Request',
+      breadcrumb: 'OnlineTravelRequest',
+      breadcrumb_link: false,
+      exact: true,
+      component: OnlineTravelRequestForm
+
+    },
+
+    {
+      path: '/travelexpenseclaim',
+      title: 'Travel Expense Claim',
+      breadcrumb: 'TravelExpenseClaim',
+      breadcrumb_link: false,
+      exact: true,
+      component: TravelExpenseClaim
 
     },
 

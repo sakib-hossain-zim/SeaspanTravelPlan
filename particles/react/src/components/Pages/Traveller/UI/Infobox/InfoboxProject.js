@@ -28,7 +28,7 @@ export default class InfoboxProject extends Component {
 
                     <div className="infobox-meta">
                         <ul>
-                          
+
 
                             <li>
                                 <span>Day Published</span>

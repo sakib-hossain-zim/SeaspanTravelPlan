@@ -21,28 +21,12 @@ export default class Toolbar extends Component {
                         <i className="md-icon">check</i>
                     </div>
 
-                    <ul className="top">
-                        <li>
-                            <a onClick={this.toggleActionsBodyClass.bind(this)}>
-                                <i className="md-icon">add</i>
-                            </a>
-                        </li>
 
-                        {/* <li>
-                            <a  onClick={this.toggleSearchBodyClass.bind(this)}>
-                                <i className="md-icon">search</i>
-                            </a>
-                        </li> */}
-                    </ul>
 
                     <Navigation />
 
                     <ul className="bottom">
-                        <li>
-                            <NavLink to="/login">
-                                <i className="md-icon">perm_identity</i>
-                            </NavLink>
-                        </li>
+                        
 
                         <li>
                             <NavLink to="/logout">

@@ -1,14 +1,24 @@
 {
   "pagination": {},
   "data": [
+
     {
       "id": 1,
-      "name": "Travel Plan",
+      "name": "Online Travel Request",
       "client_name": "Seaspan Vancouver Shipyards",
       "Issued by": "Coordinator_Name",
       "days": "",
-      "status": "approved",
-      "description": "Your approved travel plan"
+      "status": "",
+      "description": "Submit your online travel request form"
+    },
+    {
+      "id": 2,
+      "name": "Expense Claim",
+      "client_name": "Seaspan Vancouver Shipyards",
+      "Issued by": "Coordinator_Name",
+      "days": "",
+      "status": "",
+      "description": "Claim your travel expenses by completing the travel expense claim form"
     }
   ]
 }

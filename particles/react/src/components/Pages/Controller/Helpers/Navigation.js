@@ -39,6 +39,12 @@ export default class Navigation extends Component {
                         </NavLink>
                     </li>
 
+                    <li>
+                        <NavLink to="/createTraveller" class="text-muted" activeClassName="active">
+                            <i className="md-icon">create</i> <span>Register Travellers</span>
+                        </NavLink>
+                    </li>
+
 
                     <li>
                         <NavLink to="/authorization" class="text-muted" activeClassName="active">

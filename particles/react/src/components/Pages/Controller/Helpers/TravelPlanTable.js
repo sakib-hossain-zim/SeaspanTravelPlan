@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import "../../../../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css";
 
-class EventTable extends Component {
+class TravelPlanTable extends Component {
   render() {
     return (
       <div>
@@ -59,4 +59,4 @@ class EventTable extends Component {
   }
 }
 
-export default EventTable;
+export default TravelPlanTable;

@@ -8,22 +8,17 @@ import { actionCreators } from '../../../actions';
 import Loading from './Helpers/Loading';
 
 class ApprovedTravelPlan extends Component {
-     componentWillMount() {
-         this.props.dispatch(actionCreators.fetchProjects());
-     }
+
 
     render() {
-        let results = this.props.projects.map((project) => {
-            return <InfoboxProject key={project.id} project={project} />
-        });
+
 
         return (
             this.props.isFetching ? <Backend><div className="content-inner"><Loading /></div></Backend> :
             <Backend>
                 <div className="content-inner">
-                    <div className="projects">
-                        {results}
-                    </div>
+                  
+
                 </div>
             </Backend>
         );
