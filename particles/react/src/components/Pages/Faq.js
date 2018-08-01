@@ -13,24 +13,7 @@ export default class Invoice extends Component {
                             </div>
 
 
-                  <table class="table table-bordered table-striped" id="pastvote_table">
-                 <thead class="thead-dark">
-                 <tr>
-                 <th>Identifier</th>
-                  <th>Vote Decision</th>
-                  <th>Transaction Id</th>
-                  <th>Time Stamp</th>
-                  <th>New</th>
-                  <th>Old</th>
-                  <th>Auth</th>
-                  <th>Time Stamp</th>
-                  <th>New</th>
-                  <th>Old</th>
-
-
-                 </tr>
-                     </thead>
-             </table>
+            
 
 
                   </div>

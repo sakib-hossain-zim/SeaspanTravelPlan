@@ -253,7 +253,8 @@ export default class BudgetForm extends React.Component {
           value={this.state.Budget_id}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
+
 
         <TextField
           name="TravelPlan_id"
@@ -263,7 +264,7 @@ export default class BudgetForm extends React.Component {
           onChange={e => this.change(e)}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
 
         <TextField
           name="VSY_IndexNo"
@@ -273,7 +274,7 @@ export default class BudgetForm extends React.Component {
           onChange={e => this.change(e)}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
 
         <TextField
           name="VSY_Meeting_Group_Desription"
@@ -283,7 +284,7 @@ export default class BudgetForm extends React.Component {
           onChange={e => this.change(e)}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
         <TextField
           name="milestone"
           hintText="Please insert milestone"
@@ -292,7 +293,7 @@ export default class BudgetForm extends React.Component {
           onChange={e => this.change(e)}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
         <TextField
           name="description"
           hintText="Description"
@@ -301,7 +302,7 @@ export default class BudgetForm extends React.Component {
           onChange={e => this.change(e)}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
         <TextField
           name="traveller_company"
           hintText="Traveller Company"
@@ -310,7 +311,7 @@ export default class BudgetForm extends React.Component {
           onChange={e => this.change(e)}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
         <TextField
           name="from_location"
           hintText="Source Location"
@@ -319,7 +320,7 @@ export default class BudgetForm extends React.Component {
           onChange={e => this.change(e)}
           floatingLabelFixed
         />
-        <br />
+      <div class="divider"/>
         <TextField
           name="to_location"
           hintText="To Location"
@@ -328,7 +329,7 @@ export default class BudgetForm extends React.Component {
           onChange={e => this.change(e)}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
         <TextField
           name="travel_status_days"
           hintText="Travel Status Days"
@@ -337,7 +338,7 @@ export default class BudgetForm extends React.Component {
           onChange={e => this.change(e)}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
 
         <TextField
           name="traveller_name"
@@ -347,7 +348,7 @@ export default class BudgetForm extends React.Component {
           onChange={e => this.change(e)}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
 
         <TextField
           name="traveller_labor_category"
@@ -358,7 +359,7 @@ export default class BudgetForm extends React.Component {
           floatingLabelFixed
         />
 
-        <br />
+        <div class="divider"/>
 
         <TextField
           name="estimated_labor_travel_time"
@@ -369,7 +370,7 @@ export default class BudgetForm extends React.Component {
           floatingLabelFixed
         />
 
-        <br />
+        <div class="divider"/>
 
         <TextField
           name="comments"
@@ -380,7 +381,7 @@ export default class BudgetForm extends React.Component {
           floatingLabelFixed
         />
 
-        <br />
+        <div class="divider"/>
 
         <TextField
           name="accomodation_cost"
@@ -390,7 +391,7 @@ export default class BudgetForm extends React.Component {
           onChange={e => this.change(e)}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
         <TextField
           name="car_rental_cost"
           hintText="Car rental cost"
@@ -399,7 +400,7 @@ export default class BudgetForm extends React.Component {
           onChange={e => this.change(e)}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
         <TextField
           name="per_diem_cost"
           hintText="Per Diem Cost"
@@ -408,7 +409,7 @@ export default class BudgetForm extends React.Component {
           onChange={e => this.change(e)}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
         <TextField
           name="flight_or_car_cost"
           hintText="Flight or Car cost"
@@ -417,7 +418,7 @@ export default class BudgetForm extends React.Component {
           onChange={e => this.change(e)}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
 
         <TextField
           name="taxi_mileage_gas"
@@ -427,7 +428,7 @@ export default class BudgetForm extends React.Component {
           onChange={e => this.change(e)}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
 
         <TextField
           name="total"
@@ -440,7 +441,7 @@ export default class BudgetForm extends React.Component {
         <br />
         <br />
 
-        <div className="box">
+        <div className="box-submit">
         <RaisedButton label="Submit" onClick={e => this.onSubmit(e)} primary/>
         </div>
 

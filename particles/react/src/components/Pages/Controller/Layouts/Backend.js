@@ -11,7 +11,7 @@ export default class Backend extends Component {
     render() {
         return(
           <div className="page-inner">
-              <Toolbar />
+            
               <Sidebar />
 
               <div className="main">

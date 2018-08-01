@@ -27,6 +27,7 @@
  * 24. Empty
  * 25. Page header
  * 26. Footer
+ * 27. Divider
  */
 /**
  * 01. Libraries
@@ -1620,7 +1621,9 @@ table {
  * 16. Box
  */
 .box {
-  margin: 60px; }
+  margin: 60px;
+  margin-left: 300px;
+ }
   .box:after {
     content: " ";
     display: block;
@@ -1662,6 +1665,14 @@ table {
       padding-left: 425px;
       padding-right: 0px;
     }
+
+
+.box-submit{
+  margin-left:275px;
+  margin-top: 30px;
+}
+
+
 
 
 
@@ -2406,3 +2417,13 @@ table {
    background-color: #e7e7e7;
    outline: 0;
  }
+
+ /**
+  * 27.Divider
+  */
+
+  .divider{
+    width: 100px;
+    height:auto;
+    display:inline-block;
+  }

@@ -70,6 +70,13 @@ router.post('/travelplan/new', function(req, res, next) {
     });
 });
 
+router.put('/travelplan/edit', function(req, res, next) {
+    connection.query('UPDATE travelplan SET `start_date`=?,`end_date`=?,`source`=?,`destination`=?,`travel_status_bool`=?,`approval_status`=?,`travel_period`=?,`contract`=?,`phase`=?,`nss_program`=?,`planned_budget`=?,`e1_business_unit`=? where `TravelPlan_id`=?',[req.body.start_date,req.body.end_date,req.body.source,req.body.destination,req.body.travel_status_bool,req.body.approval_status,req.body.travel_period,req.body.contract,req.body.phase,req.body.nss_program,req.body.planned_budget,req.body.e1_business_unit,req.body.TravelPlan_id], function (error, results, fields) {
+        if(error) throw error;
+        res.send(JSON.stringify(results));
+    });
+});
+
 
 
 
@@ -95,6 +102,8 @@ router.get('/addTraveller/view',(req,res) => {
     }
   });
 });
+
+
 
 router.get('/budget/view',(req,res) => {
   connection.query(sqlquery_budget_viewer,(err,results) => {

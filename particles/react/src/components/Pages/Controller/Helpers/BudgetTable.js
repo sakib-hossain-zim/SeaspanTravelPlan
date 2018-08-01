@@ -107,6 +107,7 @@ class BudgetTable extends Component {
       taxi_mileage_gas : this.state.taxi_mileage_gas,
       total : this.state.total
     };
+    var self = this;
     fetch("/users/budget/edit", {
       method: "PUT",
       headers: {
@@ -127,9 +128,17 @@ class BudgetTable extends Component {
             msg: "User has been edited."
 
           });
-          window.location.reload();
+
+
 
         }
+      })
+
+      .then(function(){
+        self.setState({modalIsOpen: false})
+      })
+      .then(function(){
+        window.location.reload()
       })
       .catch(function(err) {
         console.log(err);
@@ -171,64 +180,64 @@ onRowSelect = (row) => {
           selectRow={selectRowProp}
           csvFileName="data.csv"
         >
-          <TableHeaderColumn isKey dataField="Budget_id" width="200">
+          <TableHeaderColumn isKey dataField="Budget_id" filter={{type: 'TextFilter', delay:1000}} width="200">
             Budget ID
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="TravelPlan_id" width="200">
+          <TableHeaderColumn dataField="TravelPlan_id" filter={{type: 'TextFilter', delay:1000}} width="200">
             Travel Plan ID
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="VSY_IndexNo" width="200">
+          <TableHeaderColumn dataField="VSY_IndexNo" filter={{type: 'TextFilter', delay:1000}} width="200">
             VSY Index No
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="VSY_Meeting_Group_Desription" width="200">
+          <TableHeaderColumn dataField="VSY_Meeting_Group_Desription" filter={{type: 'TextFilter', delay:1000}} width="200">
             VSY_Meeting_Group_Desription
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="milestone" width="400">
+          <TableHeaderColumn dataField="milestone" filter={{type: 'TextFilter', delay:1000}} width="400">
             Milestone
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="description" width="200">
+          <TableHeaderColumn dataField="description" filter={{type: 'TextFilter', delay:1000}} width="200">
             Meeting Description
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="traveller_company" width="200">
+          <TableHeaderColumn dataField="traveller_company" filter={{type: 'TextFilter', delay:1000}} width="200">
             Traveller Company
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="from_location" width="200">
+          <TableHeaderColumn dataField="from_location" filter={{type: 'TextFilter', delay:1000}} width="200">
             From Location
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="to_location" width="200">
+          <TableHeaderColumn dataField="to_location" filter={{type: 'TextFilter', delay:1000}} width="200">
             To Location
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="travel_status_days" width="200">
+          <TableHeaderColumn dataField="travel_status_days" filter={{type: 'TextFilter', delay:1000}} width="200">
             Travel Status Days
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="traveller_name" width="200">
+          <TableHeaderColumn dataField="traveller_name" filter={{type: 'TextFilter', delay:1000}} width="200">
             Traveller Name
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="traveller_labor_category" width="200">
+          <TableHeaderColumn dataField="traveller_labor_category" filter={{type: 'TextFilter', delay:1000}} width="200">
             Traveller Labor Category
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="estimated_labor_travel_time" width="200">
+          <TableHeaderColumn dataField="estimated_labor_travel_time" filter={{type: 'TextFilter', delay:1000}} width="200">
             Estimated labor travel time cost
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="comments" width="500">
+          <TableHeaderColumn dataField="comments" filter={{type: 'TextFilter', delay:1000}} width="500">
             Comments
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="accomodation_cost" width="500">
+          <TableHeaderColumn dataField="accomodation_cost" filter={{type: 'TextFilter', delay:1000}} width="500">
             Accomodation cost
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="car_rental_cost" width="500">
+          <TableHeaderColumn dataField="car_rental_cost" filter={{type: 'TextFilter', delay:1000}} width="500">
             Car Rental Cost
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="per_diem_cost" width="500">
+          <TableHeaderColumn dataField="per_diem_cost" filter={{type: 'TextFilter', delay:1000}} width="500">
             Per Diem Cost
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="flight_or_car_cost" width="500">
+          <TableHeaderColumn dataField="flight_or_car_cost" filter={{type: 'TextFilter', delay:1000}} width="500">
             Flight or Car Cost
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="taxi_mileage_gas" width="500">
+          <TableHeaderColumn dataField="taxi_mileage_gas" filter={{type: 'TextFilter', delay:1000}} width="500">
             Taxi/Mileage/Gas
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="total" width="500">
+          <TableHeaderColumn dataField="total" filter={{type: 'TextFilter', delay:1000}} width="500">
             Total
           </TableHeaderColumn>
 

@@ -79,16 +79,16 @@ class CreateTraveller extends Component {
         <br />
 
 
-        <div className= 'card-event'>
-        <div className= 'card-title-event'>Traveller Viewer </div>
-        <div className='card-content'>
 
         <div className="container" style={{marginTop:20}}>
+        <h3> Registered Travellers </h3>
+        <br />
+        
           <CreateTravellerTable data={this.state.data} />
         </div>
 
-         </div>
-        </div>
+
+
 
 
 

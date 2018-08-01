@@ -67,6 +67,7 @@ class CreateTravellerTable extends Component {
       labor_rate: this.state.labor_rate
 
     };
+    var self = this;
     fetch("/users/traveller/edit", {
       method: "PUT",
       headers: {
@@ -90,6 +91,12 @@ class CreateTravellerTable extends Component {
           window.location.reload();
 
         }
+      })
+      .then(function(){
+        self.setState({modalIsOpen: false})
+      })
+      .then(function(){
+        window.location.reload()
       })
       .catch(function(err) {
         console.log(err);
@@ -120,6 +127,10 @@ onRowSelect = (row) => {
       onSelect: this.onRowSelect
     }
 
+
+
+
+
     return (
       <div>
         <BootstrapTable
@@ -131,22 +142,22 @@ onRowSelect = (row) => {
           selectRow={selectRowProp}
           csvFileName="traveller.csv"
         >
-          <TableHeaderColumn isKey dataField="VSY_IndexNo" width="200">
+          <TableHeaderColumn isKey dataField="VSY_IndexNo" filter={{type: 'TextFilter', delay:1000}} width="150">
             VSY_IndexNo
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="name" width="200">
+          <TableHeaderColumn dataField="name" filter={{type: 'TextFilter', delay:1000}} width="150">
             Name
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="location" width="200">
+          <TableHeaderColumn dataField="location" filter={{type: 'TextFilter', delay:1000}} width="150">
             Location
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="company" width="200">
+          <TableHeaderColumn dataField="company" filter={{type: 'TextFilter', delay:1000}} width="150">
             Company
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="labor_category" width="400">
+          <TableHeaderColumn dataField="labor_category" filter={{type: 'TextFilter', delay:1000}}  width="150">
             Labor Category
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="labor_rate" width="200">
+          <TableHeaderColumn dataField="labor_rate" filter={{type: 'TextFilter', delay:1000}} width="150">
             Labor Rate
           </TableHeaderColumn>
 
