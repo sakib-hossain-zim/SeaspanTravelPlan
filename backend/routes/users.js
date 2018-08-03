@@ -47,6 +47,15 @@ router.post('/event/new', function(req, res, next) {
     });
 });
 
+router.put('/event/edit', function(req, res, next) {
+    connection.query('UPDATE event SET `TravelPlan_id`=?,`event_name`=?,`event_type`=?,`description`=?,`event_location`=?,`month_reported_in_table1`=?,`duration`=?,`event_status`=?,`travel_group`=?,`p6_uniqueid`=?,`weekNo`=?,`meeting_date`=?,`expected_meeting_date`=? where`Event_id`=?',[req.body.TravelPlan_id,req.body.event_name,req.body.event_type,req.body.description,req.body.event_location,req.body.month_reported_in_table1,req.body.duration,req.body.event_status,req.body.travel_group,req.body.p6_uniqueid,req.body.weekNo,req.body.meeting_date,req.body.expected_meeting_date,req.body.Event_id], function (error, results, fields) {
+        if(error) throw error;
+        res.send(JSON.stringify(results));
+    });
+});
+
+
+
 
 router.get('/travelplan/view',(req,res) => {
   connection.query(sqlquery_travelPlan,(err,results) => {

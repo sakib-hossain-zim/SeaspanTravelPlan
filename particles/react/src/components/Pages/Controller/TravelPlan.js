@@ -70,10 +70,8 @@ class TravelPlan extends Component {
       <MuiThemeProvider>
 
 
-      <div className= 'card-event'>
-      <div className= 'card-title-event'>Create Travel Plan</div>
-      <div className= 'card-event-content'>
-      <div className="container">
+      <h2 align="center">Create New Travel Plan </h2>
+      <div className="box" >
       <TravelPlanForm
       onSubmit={submission =>
         this.setState({
@@ -81,8 +79,7 @@ class TravelPlan extends Component {
         })}
         />
         </div>
-        </div>
-        </div>
+
 
 
         </MuiThemeProvider>
@@ -90,16 +87,12 @@ class TravelPlan extends Component {
         <br />
 
 
-         <div className= 'card-event'>
-        <div className= 'card-title-event'>TravelPlan Viewer </div>
-        <div className='card-content'>
 
         <div className="container" style={{marginTop:20}}>
           <TravelPlanTable data={this.state.data} />
         </div>
 
-         </div>
-        </div>
+
 
 
 

@@ -70,11 +70,8 @@ class Event extends Component {
       <div className="content-side-wrapper">
       <MuiThemeProvider>
 
-
-      <div className= 'card-event'>
-      <div className= 'card-title-event'>Create Event</div>
-      <div className= 'card-event-content'>
-      <div className="container">
+      <h2 align="center">Create New Event </h2>
+      <div className="box" >
       <EventForm
       onSubmit={submission =>
         this.setState({
@@ -82,8 +79,8 @@ class Event extends Component {
         })}
         />
         </div>
-        </div>
-        </div>
+
+
 
 
         </MuiThemeProvider>
@@ -91,24 +88,17 @@ class Event extends Component {
         <br />
 
 
-         <div className= 'card-event'>
-        <div className= 'card-title-event'>Event Viewer </div>
-        <div className='card-content'>
+
 
         <div className="container" style={{marginTop:20}}>
           <EventTable data={this.state.data} />
         </div>
 
-         </div>
+        </div>
         </div>
 
 
-
-          </div>
-          </div>
-
-
-              </Backend>
+        </Backend>
             );
           }
 

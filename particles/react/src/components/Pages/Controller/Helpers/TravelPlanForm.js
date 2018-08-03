@@ -227,7 +227,7 @@ export default class TravelPlanForm extends React.Component {
           errorText={this.state.TravelPlan_iderror}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
 
         <TextField
           name="start_date"
@@ -238,7 +238,7 @@ export default class TravelPlanForm extends React.Component {
           errorText={this.state.start_dateerror}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
         <TextField
           name="end_date"
           hintText="Please insert end date"
@@ -248,7 +248,7 @@ export default class TravelPlanForm extends React.Component {
           errorText={this.state.end_dateerror}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
         <TextField
           name="source"
           hintText="Source"
@@ -258,7 +258,7 @@ export default class TravelPlanForm extends React.Component {
           errorText={this.state.sourceerror}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
         <TextField
           name="destination"
           hintText="Destination"
@@ -268,7 +268,7 @@ export default class TravelPlanForm extends React.Component {
           errorText={this.state.destinationerror}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
         <TextField
           name="travel_status_bool"
           hintText="Travel Status"
@@ -278,7 +278,7 @@ export default class TravelPlanForm extends React.Component {
           errorText={this.state.travel_status_boolerror}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
 
         <TextField
           name="approval_status"
@@ -289,7 +289,7 @@ export default class TravelPlanForm extends React.Component {
           errorText={this.state.approval_statuserror}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
         <TextField
           name="travel_period"
           hintText="Travel Period"
@@ -299,7 +299,7 @@ export default class TravelPlanForm extends React.Component {
           errorText={this.state.travel_perioderror}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
         <TextField
           name="contract"
           hintText="Contract"
@@ -309,7 +309,7 @@ export default class TravelPlanForm extends React.Component {
           errorText={this.state.contracterror}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
 
         <TextField
           name="phase"
@@ -320,7 +320,7 @@ export default class TravelPlanForm extends React.Component {
           errorText={this.state.phaseerror}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
 
         <TextField
           name="nss_program"
@@ -331,7 +331,7 @@ export default class TravelPlanForm extends React.Component {
           errorText={this.state.nss_programerror}
           floatingLabelFixed
         />
-        <br />
+        <div class="divider"/>
 
         <TextField
           name="planned_budget"
@@ -343,7 +343,7 @@ export default class TravelPlanForm extends React.Component {
           floatingLabelFixed
         />
 
-        <br />
+          <div class="divider"/>
 
         <TextField
           name="e1_business_unit"
@@ -358,7 +358,7 @@ export default class TravelPlanForm extends React.Component {
         <br />
         <br />
 
-        <div className="box">
+        <div className="box-submit">
         <RaisedButton label="Submit" onClick={e => this.onSubmit(e)} primary/>
         </div>
 
