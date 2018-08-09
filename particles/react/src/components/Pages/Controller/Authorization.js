@@ -6,6 +6,7 @@ import { InfoboxProject } from './UI/Infobox';
 import { connect } from 'react-redux';
 import { actionCreators } from '../../../actions';
 import Loading from './Helpers/Loading';
+import Box from './UI/Box';
 
 class Authorization extends Component {
      componentWillMount() {
@@ -18,7 +19,15 @@ class Authorization extends Component {
         return (
             this.props.isFetching ? <Backend><div className="content-inner"><Loading /></div></Backend> :
             <Backend>
-                
+            <Box classes="side-margins new">
+            <button type = "submit" className = "button-new"  bsSize="large" >
+             <a href= '/onlinetravelrequestapproval' class="text-muted"> Online Travel Requests </a>
+               </button>
+               <span>   </span>
+               <button  type= "submit" className = "button-new" bsSize="large"  >
+             <a href= '/controllerloginpage' class="text-muted"> Travel Expense Claims </a>
+               </button>
+               </Box>
             </Backend>
         );
     }

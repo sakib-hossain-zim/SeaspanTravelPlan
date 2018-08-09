@@ -26,12 +26,6 @@ class BudgetTable extends Component {
       traveller_labor_category : "",
       estimated_labor_travel_time : "",
       comments : "",
-      accomodation_cost : "",
-      car_rental_cost : "",
-      per_diem_cost: "",
-      flight_or_car_cost : "",
-      taxi_mileage_gas : "",
-      total : "",
       modalIsOpen: false
     };
     this.openModal = this.openModal.bind(this);
@@ -58,12 +52,6 @@ class BudgetTable extends Component {
       traveller_labor_category : abcd[11],
       estimated_labor_travel_time : abcd[12],
       comments : abcd[13],
-      accomodation_cost : abcd[14],
-      car_rental_cost : abcd[15],
-      per_diem_cost: abcd[16],
-      flight_or_car_cost : abcd[17],
-      taxi_mileage_gas : abcd[18],
-      total : abcd[19]
     });
 
   }
@@ -100,12 +88,6 @@ class BudgetTable extends Component {
       traveller_labor_category : this.state.traveller_labor_category,
       estimated_labor_travel_time : this.state.estimated_labor_travel_time,
       comments : this.state.comments,
-      accomodation_cost : this.state.accomodation_cost,
-      car_rental_cost : this.state.car_rental_cost,
-      per_diem_cost: this.state.per_diem_cost,
-      flight_or_car_cost : this.state.flight_or_car_cost,
-      taxi_mileage_gas : this.state.taxi_mileage_gas,
-      total : this.state.total
     };
     var self = this;
     fetch("/users/budget/edit", {
@@ -162,12 +144,16 @@ onRowSelect = (row) => {
 
 
 
+
+
   render() {
     const selectRowProp = {
       mode:"checkbox",
       clickToSelect: true,
       onSelect: this.onRowSelect
     }
+
+
 
     return (
       <div>
@@ -179,6 +165,10 @@ onRowSelect = (row) => {
           exportCSV
           selectRow={selectRowProp}
           csvFileName="data.csv"
+          height='350'
+          scrollTop={'Bottom'}
+
+
         >
           <TableHeaderColumn isKey dataField="Budget_id" filter={{type: 'TextFilter', delay:1000}} width="200">
             Budget ID
@@ -219,27 +209,10 @@ onRowSelect = (row) => {
           <TableHeaderColumn dataField="estimated_labor_travel_time" filter={{type: 'TextFilter', delay:1000}} width="200">
             Estimated labor travel time cost
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="comments" filter={{type: 'TextFilter', delay:1000}} width="500">
+          <TableHeaderColumn dataField="comments" filter={{type: 'TextFilter', delay:1000}} width="1000">
             Comments
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="accomodation_cost" filter={{type: 'TextFilter', delay:1000}} width="500">
-            Accomodation cost
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField="car_rental_cost" filter={{type: 'TextFilter', delay:1000}} width="500">
-            Car Rental Cost
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField="per_diem_cost" filter={{type: 'TextFilter', delay:1000}} width="500">
-            Per Diem Cost
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField="flight_or_car_cost" filter={{type: 'TextFilter', delay:1000}} width="500">
-            Flight or Car Cost
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField="taxi_mileage_gas" filter={{type: 'TextFilter', delay:1000}} width="500">
-            Taxi/Mileage/Gas
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField="total" filter={{type: 'TextFilter', delay:1000}} width="500">
-            Total
-          </TableHeaderColumn>
+
 
 
 
@@ -331,67 +304,6 @@ onRowSelect = (row) => {
                      name="comments"
                    />
                  </label>
-                 <label>
-                   Accomodation Cost:
-                   <input
-                     type="text"
-                     onChange={this.logChange}
-                     value={this.state.accomodation_cost}
-                     className="form-control"
-                     name="accomodation_cost"
-                   />
-                 </label>
-                 <label>
-                   Car Rental Cost:
-                   <input
-                     type="text"
-                     onChange={this.logChange}
-                     value={this.state.car_rental_cost}
-                     className="form-control"
-                     name="car_rental_cost"
-                   />
-                 </label>
-                 <label>
-                   Per Diem Cost:
-                   <input
-                     type="text"
-                     onChange={this.logChange}
-                     value={this.state.per_diem_cost}
-                     className="form-control"
-                     name="per_diem_cost"
-                   />
-                 </label>
-                 <label>
-                   Flight or Travel By Car:
-                   <input
-                     type="text"
-                     onChange={this.logChange}
-                     value={this.state.flight_or_car_cost}
-                     className="form-control"
-                     name="flight_or_car_cost"
-                   />
-                 </label>
-                 <label>
-                   Taxi/Mileage/Gas:
-                   <input
-                     type="text"
-                     onChange={this.logChange}
-                     value={this.state.taxi_mileage_gas}
-                     className="form-control"
-                     name="taxi_mileage_gas"
-                   />
-                 </label>
-                 <label>
-                   Total:
-                   <input
-                     type="text"
-                     onChange={this.logChange}
-                     value={this.state.total}
-                     className="form-control"
-                     name="total"
-                   />
-                 </label>
-
 
                  <div className="submit-section">
                    <button>Submit</button>

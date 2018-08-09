@@ -1666,6 +1666,14 @@ table {
       padding-right: 0px;
     }
 
+    .box.new {
+      margin-bottom: 0px;
+      margin-top:200px;
+      padding-left: 300px;
+      padding-right: 0px;
+
+    }
+
 
 .box-submit{
   margin-left:275px;
@@ -2427,3 +2435,34 @@ table {
     height:auto;
     display:inline-block;
   }
+
+
+  /**
+   * 28. Button
+   */
+
+   .button_submit {
+     border: none;
+     color: white;
+     padding: 4px;
+     text-align: center;
+     text-decoration: none;
+     display: inline-block;
+     font-size: 15px;
+     margin: 4px 2px;
+     transition-duration: 0.4s;
+     cursor: pointer;
+
+
+   }
+
+   .button_item {
+     background-color: #f44336;
+     color: white;
+     border: 2px solid #f44336;
+   }
+
+   .button_item:hover {
+     background-color: white;
+     color: black;
+   }

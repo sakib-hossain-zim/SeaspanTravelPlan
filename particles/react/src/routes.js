@@ -32,6 +32,7 @@ import ControllerBudget from './components/Pages/Controller/ControllerBudget';
 import CreateTraveller from './components/Pages/Controller/CreateTraveller';
 import OnlineTravelRequestForm from './components/Pages/Traveller/OnlineTravelRequestForm';
 import TravelExpenseClaim from './components/Pages/Traveller/TravelExpenseClaim';
+import OnlineTravelRequestApproval from './components/Pages/Controller/OnlineTravelRequestApproval';
 
 
 
@@ -354,6 +355,17 @@ export const routes = [
       breadcrumb_link: false,
       exact: true,
       component: TravelExpenseClaim
+
+    },
+
+
+    {
+      path: '/onlinetravelrequestapproval',
+      title: 'Online Travel Request Approval',
+      breadcrumb: 'OnlineTravelRequestApproval',
+      breadcrumb_link: false,
+      exact: true,
+      component: OnlineTravelRequestApproval
 
     },
 

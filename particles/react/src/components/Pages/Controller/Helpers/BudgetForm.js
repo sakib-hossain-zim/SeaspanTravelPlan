@@ -18,12 +18,7 @@ export default class BudgetForm extends React.Component {
     traveller_labor_category : "",
     estimated_labor_travel_time : "",
     comments : "",
-    accomodation_cost : "",
-    car_rental_cost : "",
-    per_diem_cost: "",
-    flight_or_car_cost : "",
-    taxi_mileage_gas : "",
-    total : ""
+
 
     // Budget_iderror: "",
     // TravelPlan_iderror: "",
@@ -176,12 +171,7 @@ export default class BudgetForm extends React.Component {
         traveller_labor_category : "",
         estimated_labor_travel_time : "",
         comments : "",
-        accomodation_cost : "",
-        car_rental_cost : "",
-        per_diem_cost: "",
-        flight_or_car_cost : "",
-        taxi_mileage_gas : "",
-        total : ""
+
 
         // event_iderror: "",
         // event_nameerror: "",
@@ -213,12 +203,7 @@ export default class BudgetForm extends React.Component {
         traveller_labor_category : this.state.traveller_labor_category,
         estimated_labor_travel_time : this.state.estimated_labor_travel_time,
         comments : this.state.comments,
-        accomodation_cost : this.state.accomodation_cost,
-        car_rental_cost : this.state.car_rental_cost,
-        per_diem_cost:this.state.per_diem_cost,
-        flight_or_car_cost : this.state.flight_or_car_cost,
-        taxi_mileage_gas : this.state.taxi_mileage_gas,
-        total : this.state.total
+
       };
       console.log(data);
 
@@ -381,63 +366,9 @@ export default class BudgetForm extends React.Component {
           floatingLabelFixed
         />
 
-        <div class="divider"/>
 
-        <TextField
-          name="accomodation_cost"
-          hintText="Accomodation cost"
-          floatingLabelText="Accomodation cost"
-          value={this.state.accomodation_cost}
-          onChange={e => this.change(e)}
-          floatingLabelFixed
-        />
-        <div class="divider"/>
-        <TextField
-          name="car_rental_cost"
-          hintText="Car rental cost"
-          floatingLabelText="Car rental cost"
-          value={this.state.car_rental_cost}
-          onChange={e => this.change(e)}
-          floatingLabelFixed
-        />
-        <div class="divider"/>
-        <TextField
-          name="per_diem_cost"
-          hintText="Per Diem Cost"
-          floatingLabelText="Per Diem Cost"
-          value={this.state.per_diem_cost}
-          onChange={e => this.change(e)}
-          floatingLabelFixed
-        />
-        <div class="divider"/>
-        <TextField
-          name="flight_or_car_cost"
-          hintText="Flight or Car cost"
-          floatingLabelText="Flight or Car cost"
-          value={this.state.flight_or_car_cost}
-          onChange={e => this.change(e)}
-          floatingLabelFixed
-        />
-        <div class="divider"/>
 
-        <TextField
-          name="taxi_mileage_gas"
-          hintText="Taxi/Mileage/Gas cost"
-          floatingLabelText="Taxi/Mileage/Gas cost"
-          value={this.state.taxi_mileage_gas}
-          onChange={e => this.change(e)}
-          floatingLabelFixed
-        />
-        <div class="divider"/>
 
-        <TextField
-          name="total"
-          hintText="Total cost"
-          floatingLabelText="Total cost"
-          value={this.state.total}
-          onChange={e => this.change(e)}
-          floatingLabelFixed
-        />
         <br />
         <br />
 

@@ -8,7 +8,11 @@ var sqlquery_addTraveller = 'SELECT traveller_event.VSY_IndexNo, traveller_event
 var sqlquery_selectTraveller = 'SELECT VSY_IndexNo from traveller';
 var sqlquery_budget_viewer = 'SELECT * FROM budget';
 var sqlquery_traveller_viewer = 'SELECT * FROM traveller';
+var items_query = 'SELECT * FROM items';
+var items_onlinetravelrequest_query = 'SELECT onlinetravelrequest.Request_Form_No, items.VSY_IndexNo, items.Event_id, items.TravelPlan_id, items.Budget_id, items.Item_id, items.item_name, items.amount, items.requested_amount, items.status, items.comment, items.reasoning from items Inner Join onlinetravelrequest on items.VSY_IndexNo = onlinetravelrequest.VSY_IndexNo and items.TravelPlan_id = onlinetravelrequest.TravelPlan_id';
+
 var bodyParser = require('body-parser');
+
 
 var connection = mysql.createConnection({
   host: 'localhost',
@@ -201,6 +205,89 @@ router.post('/onlinetravelrequest/new', function(req, res, next) {
         res.send(JSON.stringify(results));
     });
 });
+
+
+
+router.post('/items/new', function(req, res, next) {
+    var postData = req.body;
+    connection.query('INSERT INTO items SET ?',postData, function (error, results, fields) {
+        if(error) throw error;
+        res.send(JSON.stringify(results));
+    });
+});
+
+router.get('/items/view',(req,res) => {
+  connection.query(items_query,(err,results) => {
+    if(err){
+      return res.send(err);
+      console.log(err)
+    } else {
+      return res.json({
+        items_data: results
+    })
+    }
+  });
+});
+
+router.get('/items/view/:VSY_IndexNo',(req,res) => {
+  console.log(req)
+  connection.query('SELECT * from items where VSY_IndexNo=?', [req.params.VSY_IndexNo], (err,results) => {
+    if(err){
+      return res.send(err);
+      console.log(err)
+    } else {
+      return res.json({
+        data: results
+    })
+    }
+  });
+});
+
+
+router.put('/items/edit', function(req, res, next) {
+    connection.query('UPDATE items SET `requested_amount`=? where `Item_id`=?',[req.body.requested_amount,req.body.Item_id], function (error, results, fields) {
+        if(error) throw error;
+        res.send(JSON.stringify(results));
+    });
+});
+
+
+router.put('/items/editStatus', function(req, res, next) {
+    connection.query('UPDATE items SET `status`=? where `Item_id`=?',[req.body.status,req.body.Item_id], function (error, results, fields) {
+        if(error) throw error;
+        res.send(JSON.stringify(results));
+    });
+});
+
+
+
+
+
+router.get('/itemsotr/view',(req,res) => {
+  connection.query(items_onlinetravelrequest_query,(err,results) => {
+    if(err){
+      return res.send(err);
+      console.log(err)
+    } else {
+      return res.json({
+        data: results
+    })
+    }
+  });
+});
+
+
+router.post('/travel_auth/new', function(req, res, next) {
+    var postData = req.body;
+    connection.query('INSERT INTO authorizationplan SET ?',postData, function (error, results, fields) {
+        if(error) throw error;
+        res.send(JSON.stringify(results));
+    });
+});
+
+
+
+
 
 
 
