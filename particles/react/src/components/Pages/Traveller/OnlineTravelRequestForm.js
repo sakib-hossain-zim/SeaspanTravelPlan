@@ -19,7 +19,7 @@ class OnlineTravelRequestForm extends Component {
       insert_data: [],
       data: [],
       Request_Form_No: "OTR-" + Math.floor(Math.random() * 10000000 + 1),
-      VSY_IndexNo: "",
+      VSY_IndexNo: localStorage.getItem('VSY_IndexNo'),
       TravelPlan_id: "",
       Event_id: "",
       request_date: "",
@@ -66,6 +66,30 @@ class OnlineTravelRequestForm extends Component {
 
 
     });
+
+  }
+
+
+  componentDidMount(){
+
+
+    let self = this;
+    fetch("/users/items/view/" + this.state.VSY_IndexNo, {
+      method: "GET"
+    })
+      .then(function(response) {
+        if (response.status >= 400) {
+          throw new Error("Bad Response from server");
+        }
+        return response.json();
+      })
+      .then(function(data) {
+        self.setState({ data: data.data });
+      })
+      .catch(err => {
+        console.log("caught it !, err");
+      })
+      .then(console.log(localStorage.getItem('VSY_IndexNo')));
 
   }
 
@@ -159,6 +183,27 @@ class OnlineTravelRequestForm extends Component {
         }
       })
 
+      .then (function() {
+
+        fetch("/users/items/view/" + self.state.VSY_IndexNo, {
+          method: "GET"
+        })
+          .then(function(response) {
+            if (response.status >= 400) {
+              throw new Error("Bad Response from server");
+            }
+            return response.json();
+          })
+          .then(function(data) {
+            self.setState({ data: data.data });
+          })
+          .catch(err => {
+            console.log("caught it !, err");
+          })
+          .then(console.log(localStorage.getItem('VSY_IndexNo')));
+
+      })
+
       .then(function(){
         self.setState({modalIsOpen: false})
       })
@@ -209,6 +254,26 @@ class OnlineTravelRequestForm extends Component {
           });
         }
       })
+      .then (function() {
+
+        fetch("/users/items/view/" + self.state.VSY_IndexNo, {
+          method: "GET"
+        })
+          .then(function(response) {
+            if (response.status >= 400) {
+              throw new Error("Bad Response from server");
+            }
+            return response.json();
+          })
+          .then(function(data) {
+            self.setState({ data: data.data });
+          })
+          .catch(err => {
+            console.log("caught it !, err");
+          })
+          .then(console.log(localStorage.getItem('VSY_IndexNo')));
+
+      })
       .then(function(){
         self.setState({addModalIsOpen: false})
       })
@@ -258,29 +323,6 @@ class OnlineTravelRequestForm extends Component {
 
   };
 
-
-
-  onSearchSubmit = e => {
-    e.preventDefault();
-
-    let self = this;
-    fetch("/users/items/view/" + this.state.VSY_IndexNo, {
-      method: "GET"
-    })
-      .then(function(response) {
-        if (response.status >= 400) {
-          throw new Error("Bad Response from server");
-        }
-        return response.json();
-      })
-      .then(function(data) {
-        self.setState({ data: data.data });
-      })
-      .catch(err => {
-        console.log("caught it !, err");
-      });
-
-  }
 
   render() {
     const selectRowProp = {
@@ -360,29 +402,7 @@ class OnlineTravelRequestForm extends Component {
         <h3> Step 2: Insert Budgeted Value </h3>
         <br />
 
-        <h4>Search</h4>
-        <MuiThemeProvider>
-        <div className="container">
-        <form>
-          <TextField
-            name="VSY_IndexNo"
-            hintText="Insert VSY_IndexNo"
-            floatingLabelText="Insert VSY_IndexNo"
-            value={this.state.VSY_IndexNo}
-            onChange={e => this.change(e)}
-            floatingLabelFixed
-          />
-          <br />
-          <br />
 
-
-          <RaisedButton label="FIND" onClick={e => this.onSearchSubmit(e)} primary/>
-
-        </form>
-        </div>
-        </MuiThemeProvider>
-        <br />
-        <br />
 
 
         <div className="container" style={{marginTop:20}}>

@@ -4,7 +4,8 @@ import RaisedButton from "material-ui/RaisedButton";
 
 export default class CreateTravellerForm extends React.Component {
   state = {
-       VSY_IndexNo: "",
+       VSY_IndexNo: "T-" + Math.floor(Math.random() * 10000000 + 1),
+       password: "",
        name: "",
        company: "",
        location: "",
@@ -32,6 +33,7 @@ export default class CreateTravellerForm extends React.Component {
     let isError = false;
     const errors = {
       VSY_IndexNoerror: "",
+      passworderror: "",
       name_error: "",
       company_error: "",
       location_error: "",
@@ -43,6 +45,11 @@ export default class CreateTravellerForm extends React.Component {
     if (this.state.VSY_IndexNo.length < 1) {
       isError = true;
       errors.VSY_IndexNoerror = "VSY_IndexNo cannot be empty";
+    }
+
+    if (this.state.password.length < 1) {
+      isError = true;
+      errors.passworderror = "Password cannot be empty";
     }
 
     if (this.state.name.length < 1) {
@@ -91,6 +98,7 @@ export default class CreateTravellerForm extends React.Component {
       // clear form
       this.setState({
         VSY_IndexNo: "",
+        password: "",
         name: "",
         company: "",
         location: "",
@@ -98,6 +106,7 @@ export default class CreateTravellerForm extends React.Component {
         labor_rate: "",
 
         VSY_IndexNoerror: "",
+        passworderror: "",
         name_error: "",
         company_error: "",
         location_error: "",
@@ -111,6 +120,7 @@ export default class CreateTravellerForm extends React.Component {
 
       var data = {
         VSY_IndexNo: this.state.VSY_IndexNo,
+        password: this.state.password,
         name: this.state.name,
         company: this.state.company,
         location: this.state.location,
@@ -150,9 +160,19 @@ export default class CreateTravellerForm extends React.Component {
           name="VSY_IndexNo"
           hintText="Please insert VSY_IndexNo"
           floatingLabelText="VSY Index No"
-          onChange={e => this.change(e)}
           value={this.state.VSY_IndexNo}
           errorText={this.state.VSY_IndexNoerror}
+          floatingLabelFixed
+        />
+        <br />
+
+        <TextField
+          name="password"
+          hintText="Please insert password"
+          floatingLabelText="password"
+          value={this.state.password}
+          onChange={e => this.change(e)}
+          errorText={this.state.passworderror}
           floatingLabelFixed
         />
         <br />

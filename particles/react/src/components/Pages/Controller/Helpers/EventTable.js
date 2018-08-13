@@ -213,6 +213,7 @@ onRowSelect = (row) => {
                  center
                >
                  <form onSubmit={this.handleEdit}>
+                  <h3>Event Editor</h3>
                    <label>
                      Event_id:
                      <input

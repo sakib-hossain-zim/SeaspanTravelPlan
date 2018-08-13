@@ -20,7 +20,6 @@ class TravelPlanTable extends Component {
       contract: "",
       phase: "",
       nss_program: "",
-      planned_budget: "",
       e1_business_unit: "",
       modalIsOpen: false
     };
@@ -191,9 +190,7 @@ class TravelPlanTable extends Component {
           <TableHeaderColumn dataField="nss_program" filter={{type: 'TextFilter', delay:1000}} width="200">
             NSS Program
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="planned_budget" filter={{type: 'TextFilter', delay:1000}} width="200">
-            Planned Budget
-          </TableHeaderColumn>
+
           <TableHeaderColumn dataField="e1_business_unit" filter={{type: 'TextFilter', delay:1000}} width="200">
             E1 Business Unit
           </TableHeaderColumn>
@@ -205,7 +202,7 @@ class TravelPlanTable extends Component {
                  center
                >
                  <form onSubmit={this.handleEdit}>
-                 <h3>Traveller Editor</h3>
+                 <h3>Travel Plan Editor</h3>
                    <label>
                      TravelPlan_id:
                      <input
@@ -315,16 +312,6 @@ class TravelPlanTable extends Component {
                        value={this.state.nss_program}
                        className="form-control"
                        name="nss_program"
-                     />
-                   </label>
-                   <label>
-                     Planned Budget:
-                     <input
-                       type="text"
-                       onChange={this.logChange}
-                       value={this.state.planned_budget}
-                       className="form-control"
-                       name="planned_budget"
                      />
                    </label>
                    <label>

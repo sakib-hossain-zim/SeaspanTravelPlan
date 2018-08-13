@@ -5,7 +5,7 @@ import RaisedButton from "material-ui/RaisedButton";
 export default class TravelPlanForm extends React.Component {
   state = {
 
-    TravelPlan_id: "",
+    TravelPlan_id: "TP-" + Math.floor(Math.random() * 10000000 + 1),
     start_date: "",
     end_date: "",
     source: "",
@@ -16,7 +16,6 @@ export default class TravelPlanForm extends React.Component {
     contract: "",
     phase: "",
     nss_program: "",
-    planned_budget: "",
     e1_business_unit: "",
 
 
@@ -31,7 +30,6 @@ export default class TravelPlanForm extends React.Component {
     contracterror: "",
     phaseerror: "",
     nss_programerror: "",
-    planned_budgeterror: "",
     e1_businessuniterror: ""
 
   };
@@ -57,7 +55,6 @@ export default class TravelPlanForm extends React.Component {
       contracterror: "",
       phaseerror: "",
       nss_programerror: "",
-      planned_budgeterror: "",
       e1_businessuniterror: ""
 
     };
@@ -120,10 +117,7 @@ export default class TravelPlanForm extends React.Component {
       errors.nss_programerror = "Field cannot be empty";
     }
 
-    if (this.state.planned_budget.length < 1) {
-      isError = true;
-      errors.planned_budgeterror = "Field cannot be empty";
-    }
+
 
     if (this.state.e1_business_unit.length < 1) {
       isError = true;
@@ -170,7 +164,6 @@ export default class TravelPlanForm extends React.Component {
         contracterror: "",
         phaseerror: "",
         nss_programerror: "",
-        planned_budgeterror: "",
         e1_businessuniterror: ""
 
 
@@ -188,7 +181,6 @@ export default class TravelPlanForm extends React.Component {
         contract: this.state.contract,
         phase: this.state.phase,
         nss_program: this.state.nss_program,
-        planned_budget: this.state.planned_budget,
         e1_business_unit: this.state.e1_business_unit,
 
       };
@@ -223,7 +215,6 @@ export default class TravelPlanForm extends React.Component {
           hintText="Please insert TravelPlan id"
           floatingLabelText="Travel Plan id"
           value={this.state.TravelPlan_id}
-          onChange={e => this.change(e)}
           errorText={this.state.TravelPlan_iderror}
           floatingLabelFixed
         />
@@ -332,18 +323,6 @@ export default class TravelPlanForm extends React.Component {
           floatingLabelFixed
         />
         <div class="divider"/>
-
-        <TextField
-          name="planned_budget"
-          hintText="Planned Budget"
-          floatingLabelText="planned budget in dollar"
-          value={this.state.planned_budget}
-          onChange={e => this.change(e)}
-          errorText={this.state.planned_budgeterror}
-          floatingLabelFixed
-        />
-
-          <div class="divider"/>
 
         <TextField
           name="e1_business_unit"

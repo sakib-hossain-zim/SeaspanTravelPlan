@@ -61,6 +61,7 @@ class AddTraveller extends Component {
   onSubmit = e => {
   e.preventDefault();
       // clear form
+
       this.setState({
         Event_id: "" ,
         VSY_IndexNo: ""
@@ -71,6 +72,7 @@ class AddTraveller extends Component {
         VSY_IndexNo: this.state.VSY_IndexNo
       };
       console.log(insert_data);
+      var self = this;
 
       fetch("users/addTraveller/new", {
         method: "POST",
@@ -89,6 +91,8 @@ class AddTraveller extends Component {
         .catch(function(err) {
           console.log(err);
         });
+
+
 
   };
 

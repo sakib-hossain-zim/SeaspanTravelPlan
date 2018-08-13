@@ -18,43 +18,15 @@ class TravelTracker extends Component {
     this.state = {
       data: [],
 
-      VSY_IndexNo: ""
+      VSY_IndexNo: localStorage.getItem('VSY_IndexNo')
 
     };
 
   }
 
-  // componentDidMount() {
-  //   let self = this;
-  //   fetch("/users/travelPlan/view", {
-  //     method: "GET"
-  //   })
-  //     .then(function(response) {
-  //       if (response.status >= 400) {
-  //         throw new Error("Bad Response from server");
-  //       }
-  //       return response.json();
-  //     })
-  //     .then(function(data) {
-  //       self.setState({ data: data.data });
-  //     })
-  //     .catch(err => {
-  //       console.log("caught it !, err");
-  //     });
-  // }
 
-  change = e => {
-    // this.props.onChange({ [e.target.name]: e.target.value });
-    this.setState({
-      [e.target.name]: e.target.value
 
-    });
-
-    console.log(this.state.VSY_IndexNo)
-  };
-
-  onSubmit = e => {
-  e.preventDefault();
+  componentDidMount(){
 
       let self = this;
       fetch("/users/traveller/travelplan/" + this.state.VSY_IndexNo, {
@@ -84,32 +56,6 @@ class TravelTracker extends Component {
 
       <div className= "content-inner">
       <div className="content-side-wrapper">
-      <h4>Search</h4>
-      <MuiThemeProvider>
-      <div className="container">
-      <form>
-        <TextField
-          name="VSY_IndexNo"
-          hintText="Insert VSY_IndexNo"
-          floatingLabelText="Insert VSY_IndexNo"
-          value={this.state.VSY_IndexNo}
-          onChange={e => this.change(e)}
-          floatingLabelFixed
-        />
-        <br />
-
-
-        <br />
-
-        <RaisedButton label="FIND" onClick={e => this.onSubmit(e)} primary/>
-      </form>
-      </div>
-      </MuiThemeProvider>
-      <br />
-      <br />
-
-
-
 
         <div>
         <h4> Travel Plan Viewer </h4>

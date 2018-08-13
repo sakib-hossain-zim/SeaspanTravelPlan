@@ -4,8 +4,7 @@
 
   export default class EventForm extends React.Component {
     state = {
-      val: Math.floor(Math.random() * 10000000 + 1),
-      Event_id: "",
+      Event_id: "E-" + Math.floor(Math.random() * 10000000 + 1),
       TravelPlan_id: "",
       event_name: "",
       event_type: "",
@@ -216,21 +215,12 @@
     render() {
       return (
         <form>
-          <TextField
-            name="VAL"
-            hintText="Please insert event"
-            floatingLabelText="VAL"
-            value={this.state.val}
-            floatingLabelFixed
-          />
-            <div class="divider"/>
 
           <TextField
             name="Event_id"
             hintText="Please insert event"
             floatingLabelText="Event_id"
             value={this.state.Event_id}
-            onChange={e => this.change(e)}
             errorText={this.state.event_iderror}
             floatingLabelFixed
           />

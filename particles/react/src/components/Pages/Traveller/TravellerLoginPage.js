@@ -8,6 +8,76 @@ import { Button }  from './UI/Button';
 
 export default class TravellerLoginPage extends Component {
 
+  constructor(props){
+    super(props);
+    this.state = {
+      data: [],
+      VSY_IndexNo: "",
+      password: ""
+
+    }
+  }
+
+
+  change = e => {
+    // this.props.onChange({ [e.target.name]: e.target.value });
+
+
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+
+    localStorage.setItem('VSY_IndexNo',this.state.VSY_IndexNo);
+  };
+
+  handlelogin = (e) => {
+    e.preventDefault();
+    var data = {
+      VSY_IndexNo: this.state.VSY_IndexNo,
+      password: this.state.password
+
+    }
+
+    let self = this;
+    fetch("/users/login/auth", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+      .then(function(response) {
+        if (response.status >= 400) {
+          throw new Error("Bad response from server");
+        }
+        return response.json();
+      })
+      .then(function(response){
+        if(response.code === 204){
+          throw new Error("Password doesnt match");
+          self.props.history.push('/travellerloginpage',self.state)
+        }
+      })
+      .then(function(data) {
+        console.log(data);
+        if (data === "success") {
+          this.setState({
+            msg: "Item has been inserted."
+          })
+        }
+      })
+      .catch(err => {
+        console.log("caught it !, err");
+        window.alert("VSY_IndexNo and password do not match. Please try again.")
+        self.props.history.push('/travellerloginpage',self.state);
+      })
+      .then( self.props.history.push('/travellerdashboard', self.state));
+
+  };
+
+
+
+
 
 
 
@@ -20,12 +90,14 @@ export default class TravellerLoginPage extends Component {
                 <form>
                     <div className="form-group">
                         <label>Username</label>
-                        <input type="text" name="username" className="form-control"/>
+                        <input type="text" name="VSY_IndexNo" className="form-control" value={this.state.VSY_IndexNo}
+                        onChange={e => this.change(e)}/>
                     </div>
 
                     <div className="form-group">
                         <label>Password</label>
-                        <input type="text" name="password"  className="form-control"/>
+                        <input type="text" name="password"  className="form-control" value={this.state.password}
+                        onChange={e => this.change(e)}/>
                     </div>
 
                     <div className="form-group form-group-button">
@@ -35,18 +107,14 @@ export default class TravellerLoginPage extends Component {
 
 
 
-                      <button className="button button-primary button-right">
-                        <a href="/travellerdashboard" class="text-white">Login</a>
-                        </button>
+                      <button className="button button-primary button-right" onClick={e => this.handlelogin(e)}>
+                        Login
+                      </button>
 
 
                     </div>
 
-                    <div className="form-group">
-                        <div className="form-group-button-description">
-                            <a href="/register" class="text-muted">Not a member? Register here</a>
-                        </div>
-                    </div>
+              
 
                 </form>
 

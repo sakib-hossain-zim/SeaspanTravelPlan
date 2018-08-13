@@ -33,10 +33,12 @@ class OnlineTravelRequestApproval extends Component {
       reasoning: "",
       status: "",
 
+
       Travel_Auth_No: "",
       status1: "",
       status2_bool: "No",
       status3: "No",
+      notes: "",
 
       modalIsOpen: false,
 
@@ -87,6 +89,8 @@ class OnlineTravelRequestApproval extends Component {
      VSY_IndexNo: this.state.VSY_IndexNo,
      Event_id: this.state.Event_id,
      TravelPlan_id: this.state.TravelPlan_id,
+     Item_id: this.state.Item_id,
+     item_name: this.state.item_name,
      status1: this.state.status,
      status2: this.state.status2,
      status3: this.state.status3,
@@ -300,6 +304,17 @@ class OnlineTravelRequestApproval extends Component {
                                     name="status"
                                   />
                         </label>
+
+                        <label>
+                             Notes:
+                                 <input
+                                   type="text"
+                                   onChange={this.logChange}
+                                   value={this.state.notes}
+                                   className="form-control"
+                                   name="notes"
+                                 />
+                       </label>
 
                        <div className="submit-section">
                          <button>Submit</button>

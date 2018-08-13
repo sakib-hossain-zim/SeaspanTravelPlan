@@ -10,7 +10,7 @@ var sqlquery_budget_viewer = 'SELECT * FROM budget';
 var sqlquery_traveller_viewer = 'SELECT * FROM traveller';
 var items_query = 'SELECT * FROM items';
 var items_onlinetravelrequest_query = 'SELECT onlinetravelrequest.Request_Form_No, items.VSY_IndexNo, items.Event_id, items.TravelPlan_id, items.Budget_id, items.Item_id, items.item_name, items.amount, items.requested_amount, items.status, items.comment, items.reasoning from items Inner Join onlinetravelrequest on items.VSY_IndexNo = onlinetravelrequest.VSY_IndexNo and items.TravelPlan_id = onlinetravelrequest.TravelPlan_id';
-
+var travel_auth_query = 'SELECT * from authorizationplan'
 var bodyParser = require('body-parser');
 
 
@@ -185,7 +185,7 @@ router.post('/traveller/new', function(req, res, next) {
 
 router.get('/traveller/travelplan/:VSY_IndexNo',(req,res) => {
   console.log(req)
-  connection.query('SELECT travelplan.TravelPlan_id, traveller_event.Event_id, traveller_event.VSY_IndexNo, travelplan.start_date,travelplan.end_date,travelplan.source,travelplan.destination,travelplan.travel_status_bool,travelplan.approval_status,travelplan.travel_period,travelplan.contract,travelplan.phase,travelplan.nss_program,travelplan.planned_budget,travelplan.e1_business_unit from ((traveller_event INNER JOIN event ON event.Event_id = traveller_event.Event_id) INNER JOIN travelplan ON event.TravelPlan_id = travelplan.TravelPlan_id) where VSY_IndexNo=?', [req.params.VSY_IndexNo], (err,results) => {
+  connection.query('SELECT travelplan.TravelPlan_id, traveller_event.Event_id, traveller_event.VSY_IndexNo, travelplan.start_date,travelplan.end_date,travelplan.source,travelplan.destination,travelplan.travel_status_bool,travelplan.approval_status,travelplan.travel_period,travelplan.contract,travelplan.phase,travelplan.nss_program,travelplan.e1_business_unit from ((traveller_event INNER JOIN event ON event.Event_id = traveller_event.Event_id) INNER JOIN travelplan ON event.TravelPlan_id = travelplan.TravelPlan_id) where VSY_IndexNo=?', [req.params.VSY_IndexNo], (err,results) => {
     if(err){
       return res.send(err);
       console.log(err)
@@ -284,6 +284,63 @@ router.post('/travel_auth/new', function(req, res, next) {
         res.send(JSON.stringify(results));
     });
 });
+
+
+router.post('/login/auth/',function(req,res){
+  var VSY_IndexNo = req.body.VSY_IndexNo;
+  var password = req.body.password;
+  connection.query('SELECT * from traveller WHERE `VSY_IndexNo` =?', [VSY_IndexNo,password], function(error,results,fields){
+    if(error) {
+      res.send({
+        "code": 400,
+        "failed": "error occurred"
+      })
+    }else {
+      if(results.length > 0){
+        if(results[0].password == password){
+          res.send({
+            "code": 200,
+            "success": "login successful"
+          });
+        } else {
+          res.send({
+            "code": 204,
+            "success": "Email and password does not match"
+          });
+        }
+      }
+        else {
+          res.send({
+            "code": 204,
+            "success": "VSY_IndexNo does not exist"
+          });
+        }
+      }
+    })
+  });
+
+
+
+
+
+
+router.get('/authorizationplan/view/:VSY_IndexNo',(req,res) => {
+  console.log(req)
+  connection.query('SELECT * from authorizationplan where VSY_IndexNo=?', [req.params.VSY_IndexNo], (err,results) => {
+    if(err){
+      return res.send(err);
+      console.log(err)
+    } else {
+      return res.json({
+        data: results
+    })
+    }
+  });
+});
+
+
+
+
 
 
 

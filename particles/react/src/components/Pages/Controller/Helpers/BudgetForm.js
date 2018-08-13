@@ -4,7 +4,7 @@ import RaisedButton from "material-ui/RaisedButton";
 
 export default class BudgetForm extends React.Component {
   state = {
-    Budget_id: "",
+    Budget_id: "B-" + Math.floor(Math.random() * 10000000 + 1),
     TravelPlan_id: "",
     VSY_IndexNo: "",
     VSY_Meeting_Group_Desription : "",
@@ -234,7 +234,6 @@ export default class BudgetForm extends React.Component {
           name="Budget_id"
           hintText="Please insert Budget_id"
           floatingLabelText="Budget Id"
-          onChange={e => this.change(e)}
           value={this.state.Budget_id}
           floatingLabelFixed
         />
