@@ -70,6 +70,69 @@ class EventTable extends Component {
     });
   }
 
+  onDeleteClick(e){
+      e.preventDefault();
+
+      var data = {
+        Event_id: this.state.Event_id
+      }
+
+      var self = this;
+
+      fetch("/users/event/delete", {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+
+      }).then(function(response){
+        if(response.status >= 400){
+          throw new Error("Bad response from server");
+        }
+        return response.json();
+      })
+      .then(function(data){
+        if(data === "success"){
+          this.setState({msg: "User has been deleted"})
+        }
+      })
+      .then(function(){
+        self.setState({modalIsOpen: false})
+      })
+      .catch(function(err){
+        console.log(err)
+      })
+      .then(function(){
+        fetch("/users/event/delete/individual", {
+          method: "POST",
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(data)
+
+        }).then(function(response){
+          if(response.status >= 400){
+            throw new Error("Bad response from server");
+          }
+          return response.json();
+        })
+        .then(function(data){
+          if(data === "success"){
+            this.setState({msg: "User has been deleted"})
+          }
+        })
+        .then(function(){
+          self.setState({modalIsOpen: false})
+        })
+        .then(function(){
+          window.location.reload()
+        })
+        .catch(function(err){
+          console.log(err)
+        })
+
+      });
+
+
+  }
+
   handleEdit(event) {
     //Edit functionality
     console.log("Successful");
@@ -361,6 +424,10 @@ onRowSelect = (row) => {
                      <button>Submit</button>
                    </div>
                  </form>
+
+                 <div className="submit-section">
+                   <button onClick={e => this.onDeleteClick(e)}>Delete Entry</button>
+                 </div>
                </Modal>
 
 

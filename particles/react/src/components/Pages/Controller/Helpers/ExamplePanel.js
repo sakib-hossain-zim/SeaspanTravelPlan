@@ -4,10 +4,19 @@ import React, { Component } from 'react';
 import { Panel, PanelUser, PanelAction, PanelActionWrapper, PanelList, PanelListItem, PanelListTitle, PanelListWrapper } from '../UI/Panel';
 
 export default class ExamplePanel extends Component {
+
+  handleclick = () => {
+    this.props.history.push('/',this.state);
+  }
+
     render() {
+
+      var name_holder = "Hi,  " + localStorage.getItem('name');
+
+
         return (
             <Panel>
-                <PanelUser name="User Name" subtitle="Coordinator" />
+                <PanelUser name = {name_holder} subtitle="Coordinator" />
 
                 <PanelListWrapper>
 
@@ -18,6 +27,10 @@ export default class ExamplePanel extends Component {
                     </PanelList>
 
                     <PanelListTitle></PanelListTitle>
+
+                    <a href='/'><button class="button_logout button_log_out"> <i className="md-icon">power_settings_new</i> Log Out </button></a>
+
+
 
 
 

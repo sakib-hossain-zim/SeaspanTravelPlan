@@ -150,7 +150,6 @@ export default class TravelPlanForm extends React.Component {
         contract: "",
         phase: "",
         nss_program: "",
-        planned_budget: "",
         e1_business_unit: "",
 
         TravelPlan_iderror: "",

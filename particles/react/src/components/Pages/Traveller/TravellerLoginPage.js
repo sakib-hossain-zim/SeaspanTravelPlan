@@ -59,6 +59,7 @@ export default class TravellerLoginPage extends Component {
         }
       })
       .then(function(data) {
+        self.props.history.push('/travellerdashboard', self.state);
         console.log(data);
         if (data === "success") {
           this.setState({
@@ -71,9 +72,8 @@ export default class TravellerLoginPage extends Component {
         window.alert("VSY_IndexNo and password do not match. Please try again.")
         self.props.history.push('/travellerloginpage',self.state);
       })
-      .then( self.props.history.push('/travellerdashboard', self.state));
-
   };
+
 
 
 
@@ -89,7 +89,7 @@ export default class TravellerLoginPage extends Component {
 
                 <form>
                     <div className="form-group">
-                        <label>Username</label>
+                        <label>VSY_IndexNo</label>
                         <input type="text" name="VSY_IndexNo" className="form-control" value={this.state.VSY_IndexNo}
                         onChange={e => this.change(e)}/>
                     </div>
@@ -114,7 +114,7 @@ export default class TravellerLoginPage extends Component {
 
                     </div>
 
-              
+
 
                 </form>
 

@@ -90,9 +90,10 @@ class AddTraveller extends Component {
         })
         .catch(function(err) {
           console.log(err);
-        });
-
-
+        })
+        .then(function(){
+          window.location.reload()
+        })
 
   };
 

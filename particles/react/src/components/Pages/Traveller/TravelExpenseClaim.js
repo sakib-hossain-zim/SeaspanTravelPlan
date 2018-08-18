@@ -15,10 +15,15 @@ class TravelExpenseClaim extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [],
 
-      Event_id: "",
-      VSY_IndexNo: ""
+      data: [],
+      InvoiceNo:"",
+      VSY_IndexNo: "",
+      Travel_Auth_No: "",
+      dates: "",
+      expenses_incurred: "",
+      status1_claimed_bool: "",
+      status2: ""
 
     };
   }
@@ -130,7 +135,7 @@ class TravelExpenseClaim extends Component {
       <div>
 
       <div className="container" style={{marginTop:20}}>
-      <h3>Master Table</h3>
+      <h3>Expense Claim Table</h3>
       <br/>
         <BootstrapTable
           data={this.state.data}
@@ -140,14 +145,29 @@ class TravelExpenseClaim extends Component {
           exportCSV
           csvFileName="data.csv"
         >
-        <TableHeaderColumn isKey dataField="VSY_IndexNo" width="100">
-            VSY_IndexNo
+        <TableHeaderColumn isKey dataField="InvoiceNo" width="100">
+            InvoiceNo
+        </TableHeaderColumn>
+        <TableHeaderColumn dataField="Travel_Auth_No" width="100">
+            Travel Auth No
+        </TableHeaderColumn>
+        <TableHeaderColumn dataField="VSY_IndexNo" width="100">
+           VSY_IndexNo
+        </TableHeaderColumn>
+        <TableHeaderColumn dataField="TravelPlan_id" width="100">
+            Travel Plan Id
         </TableHeaderColumn>
         <TableHeaderColumn dataField="Event_id" width="100">
             Event Id
         </TableHeaderColumn>
-        <TableHeaderColumn dataField="TravelPlan_id" width="100">
-            Travel Plan Id
+        <TableHeaderColumn dataField="expense_incurred" width="100">
+            Expense Incurred
+        </TableHeaderColumn>
+        <TableHeaderColumn dataField="coordinator_approval" width="100">
+            Coordinator Approval
+        </TableHeaderColumn>
+        <TableHeaderColumn dataField="final_approval" width="100">
+            Final Approval
         </TableHeaderColumn>
       </BootstrapTable>
         </div>

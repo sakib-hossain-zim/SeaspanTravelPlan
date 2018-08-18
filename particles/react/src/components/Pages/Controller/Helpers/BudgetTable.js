@@ -14,6 +14,7 @@ class BudgetTable extends Component {
 
       Budget_id: "",
       TravelPlan_id: "",
+      Event_id: "",
       VSY_IndexNo: "",
       VSY_Meeting_Group_Desription : "",
       milestone : "",
@@ -40,18 +41,19 @@ class BudgetTable extends Component {
       modalIsOpen: true,
       Budget_id: abcd[0],
       TravelPlan_id: abcd[1],
-      VSY_IndexNo: abcd[2],
-      VSY_Meeting_Group_Desription : abcd[3],
-      milestone : abcd[4],
-      description : abcd[5],
-      traveller_company : abcd[6],
-      from_location : abcd[7],
-      to_location : abcd[8],
-      travel_status_days : abcd[9],
-      traveller_name : abcd[10],
-      traveller_labor_category : abcd[11],
-      estimated_labor_travel_time : abcd[12],
-      comments : abcd[13],
+      Event_id: abcd[2],
+      VSY_IndexNo: abcd[3],
+      VSY_Meeting_Group_Desription : abcd[4],
+      milestone : abcd[5],
+      description : abcd[6],
+      traveller_company : abcd[7],
+      from_location : abcd[8],
+      to_location : abcd[9],
+      travel_status_days : abcd[10],
+      traveller_name : abcd[11],
+      traveller_labor_category : abcd[12],
+      estimated_labor_travel_time : abcd[13],
+      comments : abcd[14],
     });
 
   }
@@ -68,6 +70,70 @@ class BudgetTable extends Component {
     });
   }
 
+
+  onDeleteClick(e){
+      e.preventDefault();
+
+      var data = {
+        Budget_id: this.state.Budget_id
+      }
+
+      var self = this;
+
+      fetch("/users/budget/delete", {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+
+      }).then(function(response){
+        if(response.status >= 400){
+          throw new Error("Bad response from server");
+        }
+        return response.json();
+      })
+      .then(function(data){
+        if(data === "success"){
+          this.setState({msg: "User has been deleted"})
+        }
+      })
+      .then(function(){
+        self.setState({modalIsOpen: false})
+      })
+      .catch(function(err){
+        console.log(err)
+      })
+      .then(function(){
+        fetch("/users/budget/delete/individual", {
+          method: "POST",
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(data)
+
+        }).then(function(response){
+          if(response.status >= 400){
+            throw new Error("Bad response from server");
+          }
+          return response.json();
+        })
+        .then(function(data){
+          if(data === "success"){
+            this.setState({msg: "User has been deleted"})
+          }
+        })
+        .then(function(){
+          self.setState({modalIsOpen: false})
+        })
+        .then(function(){
+          window.location.reload()
+        })
+        .catch(function(err){
+          console.log(err)
+        })
+
+      });
+
+
+  }
+
   handleEdit(event) {
     //Edit functionality
     console.log("Successful");
@@ -76,6 +142,7 @@ class BudgetTable extends Component {
     var data = {
       Budget_id: this.state.Budget_id,
       TravelPlan_id: this.state.TravelPlan_id,
+      Event_id: this.state.Event_id,
       VSY_IndexNo: this.state.VSY_IndexNo,
       VSY_Meeting_Group_Desription : this.state.VSY_Meeting_Group_Desription,
       milestone : this.state.milestone,
@@ -110,8 +177,6 @@ class BudgetTable extends Component {
             msg: "User has been edited."
 
           });
-
-
 
         }
       })
@@ -175,6 +240,9 @@ onRowSelect = (row) => {
           </TableHeaderColumn>
           <TableHeaderColumn dataField="TravelPlan_id" filter={{type: 'TextFilter', delay:1000}} width="200">
             Travel Plan ID
+          </TableHeaderColumn>
+          <TableHeaderColumn dataField="Event_id" filter={{type: 'TextFilter', delay:1000}} width="200">
+            Event ID
           </TableHeaderColumn>
           <TableHeaderColumn dataField="VSY_IndexNo" filter={{type: 'TextFilter', delay:1000}} width="200">
             VSY Index No
@@ -241,6 +309,16 @@ onRowSelect = (row) => {
                      className="form-control"
                      name="TravelPlan_id"
                    />
+                   </label>
+                   <label>
+                     Event_id:
+                     <input
+                       type="text"
+                       onChange={this.logChange}
+                       value={this.state.Event_id}
+                       className="form-control"
+                       name="Event_id"
+                     />
                  </label>
                  <label>
                    VSY_IndexNo:
@@ -309,6 +387,10 @@ onRowSelect = (row) => {
                    <button>Submit</button>
                  </div>
                </form>
+
+               <div className="submit-section">
+                 <button onClick={e => this.onDeleteClick(e)}>Delete Entry</button>
+               </div>
              </Modal>
              </BootstrapTable>
       </div>

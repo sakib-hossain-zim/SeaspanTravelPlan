@@ -14,6 +14,7 @@ class CreateTravellerTable extends Component {
 
       VSY_IndexNo: "",
       name: "",
+      password: "",
       company: "",
       location: "",
       labor_category: "",
@@ -31,11 +32,12 @@ class CreateTravellerTable extends Component {
     this.setState({
       modalIsOpen: true,
       VSY_IndexNo: abcd[0],
-      name: abcd[1],
-      company: abcd[2],
-      location: abcd[3],
-      labor_category: abcd[4],
-      labor_rate : abcd[5],
+      password: abcd[1],
+      name: abcd[2],
+      company: abcd[3],
+      location: abcd[4],
+      labor_category: abcd[5],
+      labor_rate : abcd[6],
 
     });
 
@@ -61,6 +63,7 @@ class CreateTravellerTable extends Component {
     var data = {
       VSY_IndexNo: this.state.VSY_IndexNo,
       name: this.state.name,
+      password: this.state.password,
       company: this.state.company,
       location: this.state.location,
       labor_category: this.state.labor_category,
@@ -145,6 +148,9 @@ onRowSelect = (row) => {
           <TableHeaderColumn isKey dataField="VSY_IndexNo" filter={{type: 'TextFilter', delay:1000}} width="150">
             VSY_IndexNo
           </TableHeaderColumn>
+          <TableHeaderColumn  dataField="password" filter={{type: 'TextFilter', delay:1000}} width="150">
+            Password
+          </TableHeaderColumn>
           <TableHeaderColumn dataField="name" filter={{type: 'TextFilter', delay:1000}} width="150">
             Name
           </TableHeaderColumn>
@@ -179,6 +185,16 @@ onRowSelect = (row) => {
                      value={this.state.VSY_IndexNo}
                      className="form-control"
                      name="VSY_IndexNo"
+                   />
+                 </label>
+                 <label>
+                   Password:
+                   <input
+                     type="text"
+                     onChange={this.logChange}
+                     value={this.state.password}
+                     className="form-control"
+                     name="password"
                    />
                  </label>
                  <label>

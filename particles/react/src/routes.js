@@ -33,6 +33,7 @@ import CreateTraveller from './components/Pages/Controller/CreateTraveller';
 import OnlineTravelRequestForm from './components/Pages/Traveller/OnlineTravelRequestForm';
 import TravelExpenseClaim from './components/Pages/Traveller/TravelExpenseClaim';
 import OnlineTravelRequestApproval from './components/Pages/Controller/OnlineTravelRequestApproval';
+import CheckStatus from './components/Pages/Traveller/CheckStatus';
 
 
 
@@ -366,6 +367,16 @@ export const routes = [
       breadcrumb_link: false,
       exact: true,
       component: OnlineTravelRequestApproval
+
+    },
+
+    {
+      path: '/checkStatus',
+      title: 'CheckStatus',
+      breadcrumb: 'CheckStatus',
+      breadcrumb_link: false,
+      exact: true,
+      component: CheckStatus
 
     },
 

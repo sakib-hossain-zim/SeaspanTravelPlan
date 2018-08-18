@@ -44,8 +44,7 @@ class TravelPlanTable extends Component {
       contract: abcd[8],
       phase: abcd[9],
       nss_program: abcd[10],
-      planned_budget: abcd[11],
-      e1_business_unit: abcd[12]
+      e1_business_unit: abcd[11]
 
 
     });
@@ -62,6 +61,69 @@ class TravelPlanTable extends Component {
     this.setState({
       [e.target.name]: e.target.value //setting value edited by the admin in state.
     });
+  }
+
+  onDeleteClick(e){
+      e.preventDefault();
+
+      var data = {
+        TravelPlan_id: this.state.TravelPlan_id
+      }
+
+      var self = this;
+
+      fetch("/users/travelplan/delete", {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+
+      }).then(function(response){
+        if(response.status >= 400){
+          throw new Error("Bad response from server");
+        }
+        return response.json();
+      })
+      .then(function(data){
+        if(data === "success"){
+          this.setState({msg: "User has been deleted"})
+        }
+      })
+      .then(function(){
+        self.setState({modalIsOpen: false})
+      })
+      .catch(function(err){
+        console.log(err)
+      })
+      .then(function(){
+        fetch("/users/travelplan/delete/individual", {
+          method: "POST",
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(data)
+
+        }).then(function(response){
+          if(response.status >= 400){
+            throw new Error("Bad response from server");
+          }
+          return response.json();
+        })
+        .then(function(data){
+          if(data === "success"){
+            this.setState({msg: "User has been deleted"})
+          }
+        })
+        .then(function(){
+          self.setState({modalIsOpen: false})
+        })
+        .then(function(){
+          window.location.reload()
+        })
+        .catch(function(err){
+          console.log(err)
+        })
+
+      });
+
+
   }
 
   handleEdit(event) {
@@ -328,9 +390,13 @@ class TravelPlanTable extends Component {
 
 
                    <div className="submit-section">
-                     <button>Submit</button>
+                     <button>Save</button>
                    </div>
                  </form>
+                 <div className="submit-section">
+                   <button onClick={e => this.onDeleteClick(e)}>Delete Entry</button>
+                 </div>
+
                </Modal>
 
 

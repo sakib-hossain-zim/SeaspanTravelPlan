@@ -9,8 +9,10 @@ var sqlquery_selectTraveller = 'SELECT VSY_IndexNo from traveller';
 var sqlquery_budget_viewer = 'SELECT * FROM budget';
 var sqlquery_traveller_viewer = 'SELECT * FROM traveller';
 var items_query = 'SELECT * FROM items';
-var items_onlinetravelrequest_query = 'SELECT onlinetravelrequest.Request_Form_No, items.VSY_IndexNo, items.Event_id, items.TravelPlan_id, items.Budget_id, items.Item_id, items.item_name, items.amount, items.requested_amount, items.status, items.comment, items.reasoning from items Inner Join onlinetravelrequest on items.VSY_IndexNo = onlinetravelrequest.VSY_IndexNo and items.TravelPlan_id = onlinetravelrequest.TravelPlan_id';
-var travel_auth_query = 'SELECT * from authorizationplan'
+var items_onlinetravelrequest_query = 'SELECT onlinetravelrequest.Request_Form_No, items.VSY_IndexNo, items.Event_id, items.TravelPlan_id, items.Budget_id, items.Item_id, items.item_name, items.amount, items.requested_amount, items.status, items.comment, items.reasoning, items.note_from_coordinator from items Inner Join onlinetravelrequest on items.VSY_IndexNo = onlinetravelrequest.VSY_IndexNo and items.TravelPlan_id = onlinetravelrequest.TravelPlan_id';
+var travel_auth_query = 'SELECT * from authorizationplan';
+var otr_query = 'SELECT * from onlinetravelrequest';
+var auth_otr_query = 'select authorizationplan.Travel_Auth_no, authorizationplan.Request_Form_No, authorizationplan.status1, authorizationplan.status2_bool, authorizationplan.status3, authorizationplan.notes, onlinetravelrequest.TravelPlan_id, onlinetravelrequest.Event_id,onlinetravelrequest.VSY_IndexNo from authorizationplan inner join onlinetravelrequest on authorizationplan.Request_Form_No = onlinetravelrequest.Request_Form_No'
 var bodyParser = require('body-parser');
 
 
@@ -84,7 +86,7 @@ router.post('/travelplan/new', function(req, res, next) {
 });
 
 router.put('/travelplan/edit', function(req, res, next) {
-    connection.query('UPDATE travelplan SET `start_date`=?,`end_date`=?,`source`=?,`destination`=?,`travel_status_bool`=?,`approval_status`=?,`travel_period`=?,`contract`=?,`phase`=?,`nss_program`=?,`planned_budget`=?,`e1_business_unit`=? where `TravelPlan_id`=?',[req.body.start_date,req.body.end_date,req.body.source,req.body.destination,req.body.travel_status_bool,req.body.approval_status,req.body.travel_period,req.body.contract,req.body.phase,req.body.nss_program,req.body.planned_budget,req.body.e1_business_unit,req.body.TravelPlan_id], function (error, results, fields) {
+    connection.query('UPDATE travelplan SET `start_date`=?,`end_date`=?,`source`=?,`destination`=?,`travel_status_bool`=?,`approval_status`=?,`travel_period`=?,`contract`=?,`phase`=?,`nss_program`=?,`e1_business_unit`=? where `TravelPlan_id`=?',[req.body.start_date,req.body.end_date,req.body.source,req.body.destination,req.body.travel_status_bool,req.body.approval_status,req.body.travel_period,req.body.contract,req.body.phase,req.body.nss_program,req.body.e1_business_unit,req.body.TravelPlan_id], function (error, results, fields) {
         if(error) throw error;
         res.send(JSON.stringify(results));
     });
@@ -252,8 +254,16 @@ router.put('/items/edit', function(req, res, next) {
 });
 
 
-router.put('/items/editStatus', function(req, res, next) {
-    connection.query('UPDATE items SET `status`=? where `Item_id`=?',[req.body.status,req.body.Item_id], function (error, results, fields) {
+router.put('/items/editStatusandnotes', function(req, res, next) {
+    connection.query('UPDATE items SET `status`=?, `note_from_coordinator`=? where `Item_id`=?',[req.body.status,req.body.note_from_coordinator,req.body.Item_id], function (error, results, fields) {
+        if(error) throw error;
+        res.send(JSON.stringify(results));
+    });
+});
+
+
+router.put('/otr/otr_edit', function(req, res, next) {
+    connection.query('UPDATE onlinetravelrequest SET `status`=? where `Request_Form_No`=?',[req.body.status,req.body.Request_Form_No], function (error, results, fields) {
         if(error) throw error;
         res.send(JSON.stringify(results));
     });
@@ -262,9 +272,23 @@ router.put('/items/editStatus', function(req, res, next) {
 
 
 
-
 router.get('/itemsotr/view',(req,res) => {
   connection.query(items_onlinetravelrequest_query,(err,results) => {
+    if(err){
+      return res.send(err);
+      console.log(err)
+    } else {
+      return res.json({
+        data: results
+    })
+    }
+  });
+});
+
+
+
+router.get('/itemsotr/view/:VSY_IndexNo',(req,res) => {
+  connection.query('SELECT onlinetravelrequest.Request_Form_No, items.VSY_IndexNo, items.Event_id, items.TravelPlan_id, items.Budget_id, items.Item_id, items.item_name, items.amount, items.requested_amount, items.status, items.comment, items.reasoning, items.note_from_coordinator from items Inner Join onlinetravelrequest on items.VSY_IndexNo = onlinetravelrequest.VSY_IndexNo and items.TravelPlan_id = onlinetravelrequest.TravelPlan_id where onlinetravelrequest.VSY_IndexNo=?',[req.params.VSY_IndexNo],(err,results) => {
     if(err){
       return res.send(err);
       console.log(err)
@@ -321,6 +345,40 @@ router.post('/login/auth/',function(req,res){
 
 
 
+  router.post('/login/coordinator/auth/',function(req,res){
+    var VSY_IndexNo = req.body.VSY_IndexNo;
+    var password = req.body.password;
+    connection.query('SELECT * from coordinator WHERE `VSY_IndexNo` =?', [VSY_IndexNo,password], function(error,results,fields){
+      if(error) {
+        res.send({
+          "code": 400,
+          "failed": "error occurred"
+        })
+      }else {
+        if(results.length > 0){
+          if(results[0].password == password){
+            res.send({
+              "code": 200,
+              "success": "login successful"
+            });
+          } else {
+            res.send({
+              "code": 204,
+              "success": "Email and password does not match"
+            });
+          }
+        }
+          else {
+            res.send({
+              "code": 204,
+              "success": "VSY_IndexNo does not exist"
+            });
+          }
+        }
+      })
+    });
+
+
 
 
 
@@ -337,6 +395,124 @@ router.get('/authorizationplan/view/:VSY_IndexNo',(req,res) => {
     }
   });
 });
+
+
+
+
+
+
+
+
+
+
+
+router.get('/otr/view',(req,res) => {
+  connection.query(otr_query,(err,results) => {
+    if(err){
+      return res.send(err);
+      console.log(err)
+    } else {
+      return res.json({
+        otr_data: results
+    })
+    }
+  });
+});
+
+
+
+router.post('/travelplan/delete', function(req, res, next) {
+    connection.query('DELETE t,e,b,i from travelplan as t INNER JOIN event as e on t.TravelPlan_id = e.TravelPlan_id INNER JOIN budget as b on t.TravelPlan_id = b.TravelPlan_id INNER JOIN items as i on t.TravelPlan_id = i.TravelPlan_id where t.TravelPlan_id=?',[req.body.TravelPlan_id], function (error, results, fields) {
+        if(error) throw error;
+        res.send(JSON.stringify(results));
+    });
+});
+
+
+
+router.post('/travelplan/delete/individual', function(req, res, next) {
+    connection.query('DELETE from travelplan where `TravelPlan_id`=?',[req.body.TravelPlan_id], function (error, results, fields) {
+        if(error) throw error;
+        res.send(JSON.stringify(results));
+    });
+});
+
+
+
+router.post('/event/delete', function(req, res, next) {
+    connection.query('DELETE e,b,i from event as e INNER JOIN budget as b on e.Event_id = b.Event_id INNER JOIN items as i on e.Event_id = i.Event_id where e.Event_id=?',[req.body.Event_id], function (error, results, fields) {
+        if(error) throw error;
+        res.send(JSON.stringify(results));
+    });
+});
+
+
+
+router.post('/event/delete/individual', function(req, res, next) {
+    connection.query('DELETE from event where `Event_id`=?',[req.body.Event_id], function (error, results, fields) {
+        if(error) throw error;
+        res.send(JSON.stringify(results));
+    });
+});
+
+
+
+router.post('/budget/delete', function(req, res, next) {
+    connection.query('DELETE b,i from budget as b INNER JOIN items as i on b.Budget_id = i.Budget_id  where b.Budget_id=?',[req.body.Budget_id], function (error, results, fields) {
+        if(error) throw error;
+        res.send(JSON.stringify(results));
+    });
+});
+
+
+
+router.post('/budget/delete/individual', function(req, res, next) {
+    connection.query('DELETE from budget where `Budget_id`=?',[req.body.Budget_id], function (error, results, fields) {
+        if(error) throw error;
+        res.send(JSON.stringify(results));
+    });
+});
+
+
+router.post('/items/delete', function(req, res, next) {
+    connection.query('DELETE from items where `Item_id`=?',[req.body.Item_id], function (error, results, fields) {
+        if(error) throw error;
+        res.send(JSON.stringify(results));
+    });
+});
+
+
+
+router.put('/items_all/edit', function(req, res, next) {
+    connection.query('UPDATE items SET `Budget_id`=?, `TravelPlan_id`=?, `VSY_IndexNo`=?, `Event_id`=?, `item_name`=?, `amount`=? where `Item_id`=?',[req.body.Budget_id,req.body.TravelPlan_id,req.body.VSY_IndexNo,req.body.Event_id,req.body.item_name,req.body.amount,req.body.Item_id], function (error, results, fields) {
+        if(error) throw error;
+        res.send(JSON.stringify(results));
+    });
+});
+
+
+
+router.get('/authorizationplan_otr/view/:VSY_IndexNo',(req,res) => {
+  console.log(req)
+  connection.query('select authorizationplan.Travel_Auth_no, authorizationplan.Request_Form_No, authorizationplan.status1, authorizationplan.status2_bool, authorizationplan.status3, authorizationplan.notes, onlinetravelrequest.TravelPlan_id, onlinetravelrequest.Event_id,onlinetravelrequest.VSY_IndexNo from authorizationplan inner join onlinetravelrequest on authorizationplan.Request_Form_No = onlinetravelrequest.Request_Form_No where onlinetravelrequest.VSY_IndexNo=?', [req.params.VSY_IndexNo], (err,results) => {
+    if(err){
+      return res.send(err);
+      console.log(err)
+    } else {
+      return res.json({
+        data: results
+    })
+    }
+  });
+});
+
+
+
+
+
+
+
+
 
 
 

@@ -31,6 +31,12 @@ export default class Navigation extends Component {
                     </li>
 
                     <li>
+                        <NavLink to="/CheckStatus" class="text-muted" activeClassName="active">
+                            <i className="md-icon">library_books</i> <span>Check Status</span>
+                        </NavLink>
+                    </li>
+
+                    <li>
                         <NavLink to="/ApprovedTravelPlan" class="text-muted" activeClassName="active">
                             <i className="md-icon">done</i> <span>Approved</span>
                         </NavLink>

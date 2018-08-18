@@ -6,6 +6,7 @@ export default class BudgetForm extends React.Component {
   state = {
     Budget_id: "B-" + Math.floor(Math.random() * 10000000 + 1),
     TravelPlan_id: "",
+    Event_id: "",
     VSY_IndexNo: "",
     VSY_Meeting_Group_Desription : "",
     milestone : "",
@@ -159,6 +160,7 @@ export default class BudgetForm extends React.Component {
       this.setState({
         Budget_id: "",
         TravelPlan_id: "",
+        Event_id: "",
         VSY_IndexNo: "",
         VSY_Meeting_Group_Desription : "",
         milestone : "",
@@ -191,6 +193,7 @@ export default class BudgetForm extends React.Component {
       var data = {
         Budget_id: this.state.Budget_id,
         TravelPlan_id: this.state.TravelPlan_id,
+        Event_id: this.state.Event_id,
         VSY_IndexNo: this.state.VSY_IndexNo,
         VSY_Meeting_Group_Desription : this.state.VSY_Meeting_Group_Desription,
         milestone : this.state.milestone,
@@ -245,6 +248,16 @@ export default class BudgetForm extends React.Component {
           hintText="Please insert Travel Plan Id"
           floatingLabelText="TravelPlan_id"
           value={this.state.TravelPlan_id}
+          onChange={e => this.change(e)}
+          floatingLabelFixed
+        />
+        <div class="divider"/>
+
+        <TextField
+          name="Event_id"
+          hintText="Please insert Event Id"
+          floatingLabelText="Event_id"
+          value={this.state.Event_id}
           onChange={e => this.change(e)}
           floatingLabelFixed
         />
