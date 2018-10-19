@@ -5,7 +5,7 @@
   export default class EventForm extends React.Component {
     state = {
       Event_id: "E-" + Math.floor(Math.random() * 10000000 + 1),
-      TravelPlan_id: "",
+      TravelPlan_id: localStorage.getItem('TravelPlan_id_Contoller'),
       event_name: "",
       event_type: "",
       description: "",

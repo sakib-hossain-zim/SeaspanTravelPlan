@@ -37,9 +37,10 @@ class ItemAdditionTable extends Component {
     this.setState({
       modalIsOpen: true,
       Item_id: "I-" + Math.floor(Math.random() * 10000000 + 1),
-      Budget_id: this.state.Budget_id,
-      TravelPlan_id:this.state.TravelPlan_id,
-      VSY_IndexNo: this.state.VSY_IndexNo,
+      Budget_id: localStorage.getItem('Budget_id'),
+      TravelPlan_id:localStorage.getItem('BudgetSelection_TravelPlan_id'),
+      VSY_IndexNo: localStorage.getItem('BudgetSelection_VSY_IndexNo'),
+      Event_id: localStorage.getItem('BudgetSelection_Event_id'),
       item_name: "",
       amount: ""
     });
@@ -94,10 +95,10 @@ class ItemAdditionTable extends Component {
 
     var data = {
       Item_id: this.state.Item_id,
-      Budget_id: this.state.Budget_id,
-      TravelPlan_id: this.state.TravelPlan_id,
-      VSY_IndexNo: this.state.VSY_IndexNo,
-      Event_id : this.state.Event_id,
+      Budget_id: localStorage.getItem('Budget_id'),
+      TravelPlan_id:localStorage.getItem('BudgetSelection_TravelPlan_id'),
+      VSY_IndexNo: localStorage.getItem('BudgetSelection_VSY_IndexNo'),
+      Event_id: localStorage.getItem('BudgetSelection_Event_id'),
       item_name: this.state.item_name,
       amount: this.state.amount
     };
@@ -130,6 +131,9 @@ class ItemAdditionTable extends Component {
 
       .then(function(){
         self.setState({modalIsOpen: false})
+      })
+      .then(function(){
+        window.location.reload()
       })
       // .then(function(){
       //   window.location.reload()
@@ -313,27 +317,13 @@ const selectRowProp = {
         <TableHeaderColumn isKey dataField="Item_id" filter={{type: 'TextFilter', delay:1000}} width="200">
           Item ID
         </TableHeaderColumn>
-          <TableHeaderColumn dataField="Budget_id" filter={{type: 'TextFilter', delay:1000}} width="200">
-            Budget ID
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField="TravelPlan_id" filter={{type: 'TextFilter', delay:1000}} width="200">
-            Travel Plan ID
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField="VSY_IndexNo" filter={{type: 'TextFilter', delay:1000}} width="200">
-            VSY Index No
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField="Event_id" filter={{type: 'TextFilter', delay:1000}} width="200">
-            Event ID
-          </TableHeaderColumn>
           <TableHeaderColumn dataField="item_name" filter={{type: 'TextFilter', delay:1000}} width="200">
             Item Name
           </TableHeaderColumn>
           <TableHeaderColumn dataField="amount" filter={{type: 'TextFilter', delay:1000}} width="200">
            Amount
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="comment" filter={{type: 'TextFilter', delay:1000}} width="200">
-           Comment
-          </TableHeaderColumn>
+
 
 
 
@@ -366,39 +356,7 @@ const selectRowProp = {
 
                      />
                    </label>
-                   <label>
-                     TravelPlan_id:
-                     <input
-                       type="text"
-                       value={this.state.TravelPlan_id}
-                       className="form-control"
-                        onChange={this.logChange}
-                       name="TravelPlan_id"
 
-                     />
-                   </label>
-                   <label>
-                     VSY_IndexNo:
-                     <input
-                       type="text"
-                       value={this.state.VSY_IndexNo}
-                       className="form-control"
-                      onChange={this.logChange}
-                       name="VSY_IndexNo"
-
-                     />
-                   </label>
-                   <label>
-                     Event Id:
-                     <input
-                       type="text"
-                       value={this.state.Event_id}
-                       className="form-control"
-                      onChange={this.logChange}
-                       name="Event_id"
-
-                     />
-                   </label>
 
                    <label>
                      Item Name:

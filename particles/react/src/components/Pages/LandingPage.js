@@ -37,15 +37,16 @@ class LandingPage extends Component {
 
 
 
-
+                
                   <div className="content-inner padding-top padding-left no-padding-right">
+
 
 
                    <PageHeader/>
 
 
 
-
+                   <div className="content-inner-mobilefix">
 
 
                    <Box classes="side-margins vertical-center">
@@ -64,6 +65,7 @@ class LandingPage extends Component {
 
 
 
+                </div>
                 </div>
             </Backend_LandingPage>
         );

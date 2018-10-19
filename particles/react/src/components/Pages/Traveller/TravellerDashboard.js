@@ -17,17 +17,10 @@ export default class TravellerDashboard extends Component {
     render() {
         return (
             <Backend>
-                <div className="content-inner no-padding-top no-padding-left no-padding-right">
+                <div className="content-inner no-padding-top no-padding-left no-padding-right mobilefix">
                     <PageHeader/>
 
-                    <Box classes="border-bottom side-margins vertical-distance">
-                        <StatsWrapper>
-                            <Stat title="Travel Plan Update" subtitle="Travel Plans assigned to you"  value="2" labelClass="raising"/>
-                            <Stat title="Approval" subtitle="Travel Request Form Approvals"  value="1" labelClass="raising"/>
-                            <Stat title="Forms" subtitle="New Travel Expense Claim Form Available" value="2" />
-                            <Stat title="Pending" subtitle="Pending for approval" value="1"/>
-                        </StatsWrapper>
-                    </Box>
+                    <img src={require('../../../media/seaspan_jss.PNG')}  style={{width: 1300, height: 300}}/>
 
 
 

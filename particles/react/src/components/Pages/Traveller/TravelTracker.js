@@ -54,11 +54,14 @@ class TravelTracker extends Component {
 
 
 
-      <div className= "content-inner">
+      <div className= "content-inner-mobilefix">
       <div className="content-side-wrapper">
 
         <div>
-        <h4> Travel Plan Viewer </h4>
+        <h4> Hi {localStorage.getItem('traveller_name')}, Here are the Travel Plans and Events you're assigned to: </h4>
+        <br />
+        <p><b> * Click on the row to view event details </b></p>
+
         <div className="container" style={{marginTop:20}}>
           <TravelPlanTable data={this.state.data} />
         </div>

@@ -46,6 +46,7 @@ class CreateTraveller extends Component {
       })
       .then(function(data) {
         self.setState({ data: data.data });
+        console.log(data.data[0])
       })
       .catch(err => {
         console.log("caught it !, err");
@@ -59,7 +60,7 @@ class CreateTraveller extends Component {
 
 
 
-      <div className= "content-inner">
+      <div className= "content-inner-mobilefix">
       <div className="content-side-wrapper">
       <h3>Create New Traveller</h3>
       <MuiThemeProvider>

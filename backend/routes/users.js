@@ -1,6 +1,11 @@
 var express = require('express');
 var mysql = require('mysql');
 var router = express.Router();
+var bodyParser = require('body-parser');
+var fileUpload = require('express-fileupload');
+var cors = require('cors');
+
+
 
 var sqlquery = 'SELECT * FROM event';
 var sqlquery_travelPlan = 'SELECT * FROM travelplan';
@@ -11,9 +16,12 @@ var sqlquery_traveller_viewer = 'SELECT * FROM traveller';
 var items_query = 'SELECT * FROM items';
 var items_onlinetravelrequest_query = 'SELECT onlinetravelrequest.Request_Form_No, items.VSY_IndexNo, items.Event_id, items.TravelPlan_id, items.Budget_id, items.Item_id, items.item_name, items.amount, items.requested_amount, items.status, items.comment, items.reasoning, items.note_from_coordinator from items Inner Join onlinetravelrequest on items.VSY_IndexNo = onlinetravelrequest.VSY_IndexNo and items.TravelPlan_id = onlinetravelrequest.TravelPlan_id';
 var travel_auth_query = 'SELECT * from authorizationplan';
-var otr_query = 'SELECT * from onlinetravelrequest';
+var otr_query = 'SELECT onlinetravelrequest.Request_Form_No, onlinetravelrequest.VSY_IndexNo,onlinetravelrequest.TravelPlan_id, onlinetravelrequest.Event_id, onlinetravelrequest.request_date, onlinetravelrequest.status, event.event_name, traveller.name, traveller_event.travel_start_date from  (((onlinetravelrequest inner join traveller_event on traveller_event.VSY_IndexNo = onlinetravelrequest.VSY_IndexNo and traveller_event.Event_id = onlinetravelrequest.Event_id) inner join traveller on onlinetravelrequest.VSY_IndexNo = traveller.VSY_IndexNo) inner join event on onlinetravelrequest.Event_id = event.Event_id) ';
 var auth_otr_query = 'select authorizationplan.Travel_Auth_no, authorizationplan.Request_Form_No, authorizationplan.status1, authorizationplan.status2_bool, authorizationplan.status3, authorizationplan.notes, onlinetravelrequest.TravelPlan_id, onlinetravelrequest.Event_id,onlinetravelrequest.VSY_IndexNo from authorizationplan inner join onlinetravelrequest on authorizationplan.Request_Form_No = onlinetravelrequest.Request_Form_No'
 var bodyParser = require('body-parser');
+
+var multer = require('multer');
+
 
 
 var connection = mysql.createConnection({
@@ -165,7 +173,7 @@ router.get('/traveller/view',(req,res) => {
 
 
 router.put('/traveller/edit', function(req, res, next) {
-    connection.query('UPDATE traveller SET `name`=?,`company`=?,`location`=?,`labor_category`=?,`labor_rate`=? where `VSY_IndexNo`=?',[req.body.name,req.body.company,req.body.location,req.body.labor_category,req.body.labor_rate,req.body.VSY_IndexNo], function (error, results, fields) {
+    connection.query('UPDATE traveller SET `password`=?,`name`=?,`company`=?,`location`=?,`labor_category`=?,`labor_rate`=? where `VSY_IndexNo`=?',[req.body.password,req.body.name,req.body.company,req.body.location,req.body.labor_category,req.body.labor_rate,req.body.VSY_IndexNo], function (error, results, fields) {
         if(error) throw error;
         res.send(JSON.stringify(results));
     });
@@ -187,7 +195,7 @@ router.post('/traveller/new', function(req, res, next) {
 
 router.get('/traveller/travelplan/:VSY_IndexNo',(req,res) => {
   console.log(req)
-  connection.query('SELECT travelplan.TravelPlan_id, traveller_event.Event_id, traveller_event.VSY_IndexNo, travelplan.start_date,travelplan.end_date,travelplan.source,travelplan.destination,travelplan.travel_status_bool,travelplan.approval_status,travelplan.travel_period,travelplan.contract,travelplan.phase,travelplan.nss_program,travelplan.e1_business_unit from ((traveller_event INNER JOIN event ON event.Event_id = traveller_event.Event_id) INNER JOIN travelplan ON event.TravelPlan_id = travelplan.TravelPlan_id) where VSY_IndexNo=?', [req.params.VSY_IndexNo], (err,results) => {
+  connection.query('SELECT travelplan.TravelPlan_id, event.Event_id,event.event_name,event.event_type,event.description,event.event_location,event.month_reported_in_table1,event.duration,event.event_status,event.travel_group,event.p6_uniqueid,event.weekNo,event.meeting_date,event.expected_meeting_date,event.event_start_date,event.event_end_date, traveller_event.Event_id, traveller_event.VSY_IndexNo, travelplan.start_date,travelplan.end_date,travelplan.source,travelplan.destination,travelplan.travel_status_bool,travelplan.approval_status,travelplan.travel_period,travelplan.contract,travelplan.phase,travelplan.nss_program,travelplan.e1_business_unit from ((traveller_event INNER JOIN event ON event.Event_id = traveller_event.Event_id) INNER JOIN travelplan ON event.TravelPlan_id = travelplan.TravelPlan_id) where VSY_IndexNo=?', [req.params.VSY_IndexNo], (err,results) => {
     if(err){
       return res.send(err);
       console.log(err)
@@ -199,6 +207,21 @@ router.get('/traveller/travelplan/:VSY_IndexNo',(req,res) => {
   });
 });
 
+
+
+router.get('/traveller/event/:VSY_IndexNo',(req,res) => {
+  console.log(req)
+  connection.query('SELECT event.Event_id, event.TravelPlan_id,traveller_event.VSY_IndexNo, event.event_name, event.event_type, event.description, event.event_location, event.month_reported_in_table1,event.duration,event.event_status,event.travel_group,event.p6_uniqueid,event.weekNo,event.meeting_date,event.expected_meeting_date, traveller_event.otr_request_status, travelplan.nss_program, traveller_event.dummy_status from ((traveller_event INNER JOIN event ON event.Event_id = traveller_event.Event_id) INNER JOIN travelplan ON event.TravelPlan_id = travelplan.TravelPlan_id) where VSY_IndexNo=?', [req.params.VSY_IndexNo], (err,results) => {
+    if(err){
+      return res.send(err);
+      console.log(err)
+    } else {
+      return res.json({
+        data: results
+    })
+  }
+  });
+});
 
 router.post('/onlinetravelrequest/new', function(req, res, next) {
     var postData = req.body;
@@ -245,17 +268,57 @@ router.get('/items/view/:VSY_IndexNo',(req,res) => {
   });
 });
 
+router.get('/items/view/:Budget_id',(req,res) => {
+  console.log(req)
+  connection.query('SELECT * from items where Budget_id=?', [req.params.Budget_id], (err,results) => {
+    if(err){
+      return res.send(err);
+      console.log(err)
+    } else {
+      return res.json({
+        items_data: results
+    })
+    }
+  });
+});
+
+
+
+
+
+router.get('/items/view/:VSY_IndexNo/:TravelPlan_id/:Event_id',(req,res) => {
+  console.log(req)
+  connection.query('SELECT * from items where VSY_IndexNo=? and TravelPlan_id=? and Event_id=?', [req.params.VSY_IndexNo,req.params.TravelPlan_id,req.params.Event_id], (err,results) => {
+    if(err){
+      return res.send(err);
+      console.log(err)
+    } else {
+      return res.json({
+        data: results
+    })
+    }
+  });
+});
+
 
 router.put('/items/edit', function(req, res, next) {
-    connection.query('UPDATE items SET `requested_amount`=? where `Item_id`=?',[req.body.requested_amount,req.body.Item_id], function (error, results, fields) {
+    connection.query('UPDATE items SET `requested_amount`=?, `check_posted`=? where `Item_id`=?',[req.body.requested_amount,req.body.check_posted,req.body.Item_id], function (error, results, fields) {
         if(error) throw error;
         res.send(JSON.stringify(results));
     });
 });
 
 
-router.put('/items/editStatusandnotes', function(req, res, next) {
-    connection.query('UPDATE items SET `status`=?, `note_from_coordinator`=? where `Item_id`=?',[req.body.status,req.body.note_from_coordinator,req.body.Item_id], function (error, results, fields) {
+router.put('/items/edit/expense_claimed_amount', function(req, res, next) {
+    connection.query('UPDATE items SET `expense_claimed_amount`=? where `Item_id`=?',[req.body.expense_claimed_amount,req.body.Item_id], function (error, results, fields) {
+        if(error) throw error;
+        res.send(JSON.stringify(results));
+    });
+});
+
+
+router.put('/items/edit_approved_amountandnotes', function(req, res, next) {
+    connection.query('UPDATE items SET `approved_amount`=?, `note_from_coordinator`=? where `Item_id`=?',[req.body.approved_amount,req.body.note_from_coordinator,req.body.Item_id], function (error, results, fields) {
         if(error) throw error;
         res.send(JSON.stringify(results));
     });
@@ -299,6 +362,52 @@ router.get('/itemsotr/view/:VSY_IndexNo',(req,res) => {
     }
   });
 });
+
+
+router.get('/itemsotr/view/:VSY_IndexNo/:TravelPlan_id',(req,res) => {
+  connection.query('SELECT onlinetravelrequest.Request_Form_No, items.VSY_IndexNo, items.Event_id, items.TravelPlan_id, items.Budget_id, items.Item_id, items.item_name, items.amount, items.requested_amount, items.status, items.comment, items.reasoning, items.note_from_coordinator from items Inner Join onlinetravelrequest on items.VSY_IndexNo = onlinetravelrequest.VSY_IndexNo and items.TravelPlan_id = onlinetravelrequest.TravelPlan_id where onlinetravelrequest.VSY_IndexNo=? and items.TravelPlan_id=?',[req.params.VSY_IndexNo,req.params.TravelPlan_id],(err,results) => {
+    if(err){
+      return res.send(err);
+      console.log(err)
+    } else {
+      return res.json({
+        data: results
+    })
+    }
+  });
+});
+
+
+
+router.get('/items_otr/view/:VSY_IndexNo/:Event_id/:TravelPlan_id',(req,res) => {
+  connection.query('SELECT onlinetravelrequest.Request_Form_No, items.VSY_IndexNo, items.Event_id, items.TravelPlan_id, items.Budget_id, items.Item_id, items.item_name, items.amount, items.requested_amount, items.approved_amount , items.status, items.comment, items.reasoning, items.note_from_coordinator, event.event_name , traveller.name from (((items Inner Join onlinetravelrequest on items.VSY_IndexNo = onlinetravelrequest.VSY_IndexNo and items.TravelPlan_id = onlinetravelrequest.TravelPlan_id and items.Event_id = onlinetravelrequest.Event_id) inner join traveller on onlinetravelrequest.VSY_IndexNo = traveller.VSY_IndexNo) inner join event on onlinetravelrequest.Event_id = event.Event_id)  where onlinetravelrequest.VSY_IndexNo=? and items.Event_id=? and items.TravelPlan_id=?',[req.params.VSY_IndexNo,req.params.Event_id,req.params.TravelPlan_id],(err,results) => {
+    if(err){
+      return res.send(err);
+      console.log(err)
+    } else {
+      return res.json({
+        data: results
+    })
+    }
+  });
+});
+
+
+router.get('/budget_selection/view',(req,res) => {
+  connection.query('SELECT traveller_event.Event_id, traveller_event.VSY_IndexNo, traveller_event.travel_start_date, traveller_event.travel_end_date,  event.event_name, event.event_start_date, event.event_end_date, event.TravelPlan_id, travelplan.nss_program, traveller.name from (((traveller_event Inner Join event on traveller_event.Event_id = event.Event_id) inner join traveller on traveller_event.VSY_IndexNo = traveller.VSY_IndexNo) inner join travelplan on event.TravelPlan_id = travelplan.TravelPlan_id)',(err,results) => {
+    if(err){
+      return res.send(err);
+      console.log(err)
+    } else {
+      return res.json({
+        data: results
+    })
+    }
+  });
+});
+
+
+
 
 
 router.post('/travel_auth/new', function(req, res, next) {
@@ -382,42 +491,33 @@ router.post('/login/auth/',function(req,res){
 
 
 
-router.get('/authorizationplan/view/:VSY_IndexNo',(req,res) => {
-  console.log(req)
-  connection.query('SELECT * from authorizationplan where VSY_IndexNo=?', [req.params.VSY_IndexNo], (err,results) => {
-    if(err){
-      return res.send(err);
-      console.log(err)
-    } else {
-      return res.json({
-        data: results
-    })
-    }
+  router.get('/authorizationplan/view/:VSY_IndexNo',(req,res) => {
+    console.log(req)
+    connection.query('SELECT * from authorizationplan where VSY_IndexNo=?', [req.params.VSY_IndexNo], (err,results) => {
+      if(err){
+        return res.send(err);
+        console.log(err)
+      } else {
+        return res.json({
+          data: results
+      })
+      }
+    });
   });
-});
 
 
-
-
-
-
-
-
-
-
-
-router.get('/otr/view',(req,res) => {
-  connection.query(otr_query,(err,results) => {
-    if(err){
-      return res.send(err);
-      console.log(err)
-    } else {
-      return res.json({
-        otr_data: results
-    })
-    }
+  router.get('/otr/view',(req,res) => {
+    connection.query(otr_query,(err,results) => {
+      if(err){
+        return res.send(err);
+        console.log(err)
+      } else {
+        return res.json({
+          otr_data: results
+      })
+      }
+    });
   });
-});
 
 
 
@@ -494,7 +594,7 @@ router.put('/items_all/edit', function(req, res, next) {
 
 router.get('/authorizationplan_otr/view/:VSY_IndexNo',(req,res) => {
   console.log(req)
-  connection.query('select authorizationplan.Travel_Auth_no, authorizationplan.Request_Form_No, authorizationplan.status1, authorizationplan.status2_bool, authorizationplan.status3, authorizationplan.notes, onlinetravelrequest.TravelPlan_id, onlinetravelrequest.Event_id,onlinetravelrequest.VSY_IndexNo from authorizationplan inner join onlinetravelrequest on authorizationplan.Request_Form_No = onlinetravelrequest.Request_Form_No where onlinetravelrequest.VSY_IndexNo=?', [req.params.VSY_IndexNo], (err,results) => {
+  connection.query('select authorizationplan.Travel_Auth_no, authorizationplan.Request_Form_No, authorizationplan.status1, authorizationplan.status2_bool, authorizationplan.status3, authorizationplan.notes, onlinetravelrequest.TravelPlan_id, onlinetravelrequest.Event_id, event.event_name,event.event_start_date,travelplan.nss_program, onlinetravelrequest.VSY_IndexNo from (((authorizationplan inner join onlinetravelrequest on authorizationplan.Request_Form_No = onlinetravelrequest.Request_Form_No) INNER JOIN event ON event.Event_id = onlinetravelrequest.Event_id) INNER JOIN travelplan on onlinetravelrequest.TravelPlan_id = travelplan.TravelPlan_id) where onlinetravelrequest.VSY_IndexNo=?', [req.params.VSY_IndexNo], (err,results) => {
     if(err){
       return res.send(err);
       console.log(err)
@@ -505,6 +605,160 @@ router.get('/authorizationplan_otr/view/:VSY_IndexNo',(req,res) => {
     }
   });
 });
+
+
+const multerConfig = multer.diskStorage({
+    destination: function(req,file,next){
+      next(null,'./public/images/uploads');
+    },
+
+    filename: function(req,file,next){
+      next(null,file.fieldname + '-'+ Date.now() + '.'+ext);
+    }
+  });
+
+  var upload = multer({multerConfig:multerConfig});
+
+
+  router.post('/upload',multer(multerConfig).single('photo'),function(req,res){
+      res.send('Complete!')
+    })
+
+
+
+
+    router.get('/travelexpenseclaim/view/:VSY_IndexNo',(req,res) => {
+      console.log(req)
+      connection.query('select * from travelexpenseclaim where VSY_IndexNo=?', [req.params.VSY_IndexNo], (err,results) => {
+        if(err){
+          return res.send(err);
+          console.log(err)
+        } else {
+          return res.json({
+            data: results
+        })
+        }
+      });
+    });
+
+
+    router.post('/travelexpenseclaim/new', function(req, res, next) {
+        var postData = req.body;
+        connection.query('INSERT INTO travelexpenseclaim SET ?',postData, function (error, results, fields) {
+            if(error) throw error;
+            res.send(JSON.stringify(results));
+        });
+    });
+
+
+
+    router.put('otr/edit/changeotrstatus', function(req, res, next) {
+        connection.query('UPDATE onlinetravelrequest SET `submit_status`=? where `Request_Form_No`=?',[req.body.submit_status,req.body.Request_Form_No], function (error, results, fields) {
+            if(error) throw error;
+            res.send(JSON.stringify(results));
+        });
+    });
+
+
+    router.get('/otr/check/view/:VSY_IndexNo/:TravelPlan_id/:Event_id',(req,res) => {
+      connection.query('SELECT * from onlinetravelrequest where `VSY_IndexNo`=? and `TravelPlan_id`=? and `Event_id`=?',[req.params.VSY_IndexNo,req.params.TravelPlan_id,req.params.Event_id],(err,results) => {
+        if(err){
+          return res.send(err);
+          console.log(err)
+        } else {
+          return res.json({
+            otr_data: results
+        })
+        }
+      });
+    });
+
+
+    router.put('/otr/edit_status/', function(req, res, next) {
+        connection.query('UPDATE onlinetravelrequest SET `status`=? where `Request_Form_No`=?',[req.body.status,req.body.Request_Form_No], function (error, results, fields) {
+            if(error) throw error;
+            res.send(JSON.stringify(results));
+        });
+    });
+
+
+
+
+
+
+    router.get('/authorizationplan_otr/check/view/:VSY_IndexNo/:status3',(req,res) => {
+      console.log(req)
+      connection.query('select authorizationplan.Travel_Auth_no, authorizationplan.Request_Form_No, authorizationplan.status1, authorizationplan.status2_bool, authorizationplan.status3, authorizationplan.notes, onlinetravelrequest.TravelPlan_id, onlinetravelrequest.Event_id,event.event_start_date,event.event_end_date,onlinetravelrequest.VSY_IndexNo from ((authorizationplan inner join onlinetravelrequest on authorizationplan.Request_Form_No = onlinetravelrequest.Request_Form_No) INNER JOIN event on event.Event_id = onlinetravelrequest.Event_id) where onlinetravelrequest.VSY_IndexNo=? and authorizationplan.status3 =? ', [req.params.VSY_IndexNo,req.params.status3], (err,results) => {
+        if(err){
+          return res.send(err);
+          console.log(err)
+        } else {
+          return res.json({
+            data: results
+        })
+        }
+      });
+    });
+
+
+    router.put('/auth_travelexpensestatus/change/edit', function(req, res, next) {
+        connection.query('UPDATE authorizationplan SET `status3`=? where `Travel_Auth_No`=?',[req.body.status3,req.body.Travel_Auth_No], function (error, results, fields) {
+            if(error) throw error;
+            res.send(JSON.stringify(results));
+        });
+    });
+
+
+    router.put('/traveller_event/change/edit', function(req, res, next) {
+        connection.query('UPDATE traveller_event SET `otr_request_status`=? where `Event_id`=? and `VSY_IndexNo`=?',[req.body.otr_request_status,req.body.Event_id,req.body.VSY_IndexNo], function (error, results, fields) {
+            if(error) throw error;
+            res.send(JSON.stringify(results));
+        });
+    });
+
+
+    router.get('/traveller_event/view/:VSY_IndexNo/:Event_id',(req,res) => {
+      connection.query('SELECT * from traveller_event where `VSY_IndexNo`=? and `Event_id`=?',[req.params.VSY_IndexNo,req.params.Event_id],(err,results) => {
+        if(err){
+          return res.send(err);
+          console.log(err)
+        } else {
+          return res.json({
+            data: results
+        })
+        }
+      });
+    });
+
+
+    router.get('/traveller_event_event/view/:VSY_IndexNo/:Event_id',(req,res) => {
+      connection.query('SELECT traveller_event.Event_id, traveller_event.VSY_IndexNo, event.event_start_date, event.event_end_date from (traveller_event inner join event on event.Event_id = traveller_event.Event_id) where `VSY_IndexNo`=? and traveller_event.Event_id=?',[req.params.VSY_IndexNo,req.params.Event_id],(err,results) => {
+        if(err){
+          return res.send(err);
+          console.log(err)
+        } else {
+          return res.json({
+            event_data: results
+        })
+        }
+      });
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

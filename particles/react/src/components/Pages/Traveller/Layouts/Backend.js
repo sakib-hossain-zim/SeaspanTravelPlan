@@ -10,8 +10,9 @@ import Toolbar from '../Helpers/Toolbar';
 export default class Backend extends Component {
     render() {
         return(
+
           <div className="page-inner">
-            
+
               <Sidebar />
 
               <div className="main">
@@ -33,6 +34,7 @@ export default class Backend extends Component {
                 </div>
             </div>
           </div>
+          
         );
     }
 }

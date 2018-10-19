@@ -10,6 +10,7 @@ import Toolbar from '../Helpers/Toolbar';
 export default class Backend_LandingPage extends Component {
     render() {
         return(
+          <div className="content-inner-mobilefix">
           <div className="page-inner">
 
 
@@ -18,11 +19,12 @@ export default class Backend_LandingPage extends Component {
 
 
                 <div className="content">
-                 
+
                   {this.props.children}
                 </div>
 
 
+              </div>
               </div>
 
 

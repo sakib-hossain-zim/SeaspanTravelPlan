@@ -1,24 +1,25 @@
 import React from "react";
 import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
+import Modal from "react-responsive-modal";
 
 export default class BudgetForm extends React.Component {
   state = {
     Budget_id: "B-" + Math.floor(Math.random() * 10000000 + 1),
-    TravelPlan_id: "",
-    Event_id: "",
-    VSY_IndexNo: "",
-    VSY_Meeting_Group_Desription : "",
-    milestone : "",
-    description : "",
-    traveller_company : "",
-    from_location : "",
-    to_location : "",
+    TravelPlan_id: localStorage.getItem('BudgetSelection_TravelPlan_id'),
+    Event_id: localStorage.getItem('BudgetSelection_Event_id'),
+    VSY_IndexNo: localStorage.getItem('BudgetSelection_VSY_IndexNo'),
+    travel_program: localStorage.getItem('BudgetSelection_TravelProgram'),
+    budget_creation_date: "",
     travel_status_days : "",
-    traveller_name : "",
-    traveller_labor_category : "",
-    estimated_labor_travel_time : "",
-    comments : "",
+    traveller_name : localStorage.getItem('BudgetSelection_TravellerName'),
+    event_name: localStorage.getItem('BudgetSelection_EventName'),
+    event_start_date: localStorage.getItem('BudgetSelection_EventStartDate'),
+    event_end_date: localStorage.getItem('BudgetSelection_EventEndDate'),
+    travel_start_date: localStorage.getItem('BudgetSelection_TravelStartDate'),
+    travel_end_date: localStorage.getItem('BudgetSelection_TravelEndDate'),
+    modalIsOpen: false,
+
 
 
     // Budget_iderror: "",
@@ -152,60 +153,63 @@ export default class BudgetForm extends React.Component {
   //   return isError;
   // };
 
+
+  openModal= () => {
+
+    this.setState({
+      modalIsOpen: true,
+    });
+
+  }
+
   onSubmit = e => {
       e.preventDefault();
 
+      var self = this;
+
       this.props.onSubmit(this.state);
-      // clear form
-      this.setState({
-        Budget_id: "",
-        TravelPlan_id: "",
-        Event_id: "",
-        VSY_IndexNo: "",
-        VSY_Meeting_Group_Desription : "",
-        milestone : "",
-        description : "",
-        traveller_company : "",
-        from_location : "",
-        to_location : "",
-        travel_status_days : "",
-        traveller_name : "",
-        traveller_labor_category : "",
-        estimated_labor_travel_time : "",
-        comments : "",
 
 
-        // event_iderror: "",
-        // event_nameerror: "",
-        // event_typeerror: "",
-        // descriptionerror: "",
-        // event_locationerror: "",
-        // month_reported_in_table1error: "",
-        // durationerror: "",
-        // event_statuserror: "",
-        // travel_grouperror: "",
-        // p6_uniqueiderror: "",
-        // weekNoerror: "",
-        // meeting_dateerror: "",
-        // expected_meeting_dateerror: ""
-      });
+      localStorage.setItem('Budget_id', this.state.Budget_id);
+
+      var date1 = new Date(this.state.travel_start_date);
+      console.log(this.state.travel_start_date)
+      console.log(date1);
+      var date2 = new Date(this.state.travel_end_date);
+      var diffDays = this.dateDiffInDays(date1,date2);
+
+
+
+      var today= new Date();
+      var dd = today.getDate();
+      var mm = today.getMonth()+1;
+      var yyyy = today.getFullYear();
+
+      if(dd<10){
+        dd= '0'+dd
+      }
+      if(mm<10){
+        mm = '0'+ mm
+      }
+
+      today = yyyy + '-'+mm+'-'+dd;
+      var today_date = today.toString();
+
+      var date1 = new Date(this.state.travel_start_date);
+      console.log(this.state.travel_start_date)
+      console.log(date1);
+      var date2 = new Date(this.state.travel_end_date);
+      var diffDays = this.dateDiffInDays(date1,date2);
+
 
       var data = {
         Budget_id: this.state.Budget_id,
         TravelPlan_id: this.state.TravelPlan_id,
         Event_id: this.state.Event_id,
         VSY_IndexNo: this.state.VSY_IndexNo,
-        VSY_Meeting_Group_Desription : this.state.VSY_Meeting_Group_Desription,
-        milestone : this.state.milestone,
-        description : this.state.description,
-        traveller_company : this.state.traveller_company,
-        from_location : this.state.from_location,
-        to_location : this.state.to_location,
-        travel_status_days : this.state.travel_status_days,
+        travel_status_days : diffDays,
         traveller_name : this.state.traveller_name,
-        traveller_labor_category : this.state.traveller_labor_category,
-        estimated_labor_travel_time : this.state.estimated_labor_travel_time,
-        comments : this.state.comments,
+        budget_creation_date: today_date
 
       };
       console.log(data);
@@ -226,11 +230,48 @@ export default class BudgetForm extends React.Component {
         })
         .catch(function(err) {
           console.log(err);
+        })
+        .then(function(){
+           self.openModal();
         });
 
   };
 
+  dateDiffInDays(a , b){
+  const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+  // Discard the time and time-zone information.
+  const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+  const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+  return Math.floor((utc2 - utc1) / _MS_PER_DAY) + 1;
+}
+
   render() {
+    var date1 = new Date(this.state.travel_start_date);
+    console.log(this.state.travel_start_date)
+    console.log(date1);
+    var date2 = new Date(this.state.travel_end_date);
+    var diffDays = this.dateDiffInDays(date1,date2);
+
+
+
+    var today= new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1;
+    var yyyy = today.getFullYear();
+
+    if(dd<10){
+      dd= '0'+dd
+    }
+    if(mm<10){
+      mm = '0'+ mm
+    }
+
+    today = yyyy + '-'+mm+'-'+dd;
+    var today_date = today.toString();
+
+
+
     return (
       <form>
         <TextField
@@ -244,20 +285,9 @@ export default class BudgetForm extends React.Component {
 
 
         <TextField
-          name="TravelPlan_id"
-          hintText="Please insert Travel Plan Id"
-          floatingLabelText="TravelPlan_id"
-          value={this.state.TravelPlan_id}
-          onChange={e => this.change(e)}
-          floatingLabelFixed
-        />
-        <div class="divider"/>
-
-        <TextField
-          name="Event_id"
-          hintText="Please insert Event Id"
-          floatingLabelText="Event_id"
-          value={this.state.Event_id}
+          name="budget_creation_date"
+          floatingLabelText="Budget Creation Date"
+          value={today_date}
           onChange={e => this.change(e)}
           floatingLabelFixed
         />
@@ -265,8 +295,7 @@ export default class BudgetForm extends React.Component {
 
         <TextField
           name="VSY_IndexNo"
-          hintText="Please insert VSY_IndexNo"
-          floatingLabelText="VSY Index no"
+          floatingLabelText="Traveller ID No"
           value={this.state.VSY_IndexNo}
           onChange={e => this.change(e)}
           floatingLabelFixed
@@ -274,73 +303,8 @@ export default class BudgetForm extends React.Component {
         <div class="divider"/>
 
         <TextField
-          name="VSY_Meeting_Group_Desription"
-          hintText="VSY_Meeting_Group_Desription"
-          floatingLabelText="VSY_Meeting_Group_Desription"
-          value={this.state.VSY_Meeting_Group_Desription}
-          onChange={e => this.change(e)}
-          floatingLabelFixed
-        />
-        <div class="divider"/>
-        <TextField
-          name="milestone"
-          hintText="Please insert milestone"
-          floatingLabelText="milestone"
-          value={this.state.milestone}
-          onChange={e => this.change(e)}
-          floatingLabelFixed
-        />
-        <div class="divider"/>
-        <TextField
-          name="description"
-          hintText="Description"
-          floatingLabelText="Description"
-          value={this.state.description}
-          onChange={e => this.change(e)}
-          floatingLabelFixed
-        />
-        <div class="divider"/>
-        <TextField
-          name="traveller_company"
-          hintText="Traveller Company"
-          floatingLabelText="Traveller Company"
-          value={this.state.traveller_company}
-          onChange={e => this.change(e)}
-          floatingLabelFixed
-        />
-        <div class="divider"/>
-        <TextField
-          name="from_location"
-          hintText="Source Location"
-          floatingLabelText="Source Location"
-          value={this.state.from_location}
-          onChange={e => this.change(e)}
-          floatingLabelFixed
-        />
-      <div class="divider"/>
-        <TextField
-          name="to_location"
-          hintText="To Location"
-          floatingLabelText="To Location"
-          value={this.state.to_location}
-          onChange={e => this.change(e)}
-          floatingLabelFixed
-        />
-        <div class="divider"/>
-        <TextField
-          name="travel_status_days"
-          hintText="Travel Status Days"
-          floatingLabelText="Travel Status Days"
-          value={this.state.travel_status_days}
-          onChange={e => this.change(e)}
-          floatingLabelFixed
-        />
-        <div class="divider"/>
-
-        <TextField
           name="traveller_name"
-          hintText="Name"
-          floatingLabelText="Name"
+          floatingLabelText="Traveller Name"
           value={this.state.traveller_name}
           onChange={e => this.change(e)}
           floatingLabelFixed
@@ -348,47 +312,108 @@ export default class BudgetForm extends React.Component {
         <div class="divider"/>
 
         <TextField
-          name="traveller_labor_category"
-          hintText="Labor Category"
-          floatingLabelText="Labor Category"
-          value={this.state.traveller_labor_category}
+          name="TravelPlan_id"
+          floatingLabelText="Travel Plan ID"
+          value={this.state.TravelPlan_id}
           onChange={e => this.change(e)}
           floatingLabelFixed
         />
-
+        <div class="divider"/>
+        <TextField
+          name="travel_program"
+          floatingLabelText="Travel Program"
+          value={this.state.travel_program}
+          onChange={e => this.change(e)}
+          floatingLabelFixed
+        />
+        <div class="divider"/>
+        <TextField
+          name="Event_id"
+          floatingLabelText="Event ID"
+          value={this.state.Event_id}
+          onChange={e => this.change(e)}
+          floatingLabelFixed
+        />
+        <div class="divider"/>
+        <TextField
+          name="event_name"
+          floatingLabelText="Event Name"
+          value={this.state.event_name}
+          onChange={e => this.change(e)}
+          floatingLabelFixed
+        />
+        <div class="divider"/>
+        <TextField
+          name="event_start_date"
+          floatingLabelText="Event Start Date"
+          value={this.state.event_start_date}
+          onChange={e => this.change(e)}
+          floatingLabelFixed
+        />
+      <div class="divider"/>
+        <TextField
+          name="event_end_date"
+          floatingLabelText="Event End Date"
+          value={this.state.event_end_date}
+          onChange={e => this.change(e)}
+          floatingLabelFixed
+        />
+        <div class="divider"/>
+        <TextField
+          name="travel_start_date"
+          floatingLabelText="Travel Start Date"
+          value={this.state.travel_start_date}
+          onChange={e => this.change(e)}
+          floatingLabelFixed
+        />
         <div class="divider"/>
 
         <TextField
-          name="estimated_labor_travel_time"
-          hintText="Estimated Labor Travel Time Cost"
-          floatingLabelText="Estimated Labor Travel Time Cost"
-          value={this.state.estimated_labor_travel_time}
+          name="travel_end_date"
+          floatingLabelText="Travel End Date"
+          value={this.state.travel_end_date}
           onChange={e => this.change(e)}
           floatingLabelFixed
         />
-
         <div class="divider"/>
 
         <TextField
-          name="comments"
-          hintText="Comments"
-          floatingLabelText="Comments"
-          value={this.state.comments}
+          name="travel_status_days"
+          floatingLabelText="Travel Status Days"
+          value={diffDays}
           onChange={e => this.change(e)}
           floatingLabelFixed
         />
-
-
 
 
         <br />
         <br />
 
         <div className="box-submit">
-        <RaisedButton label="Submit" onClick={e => this.onSubmit(e)} primary/>
+        <RaisedButton label="Confirm" onClick={e => this.onSubmit(e)} primary/>
         </div>
 
+        <Modal
+          open={this.state.modalIsOpen}
+          center
+        >
+        <br />
+
+
+        <div><p>Click "OK" to proceed to Approval page.</p></div>
+        <br />
+        <br />
+
+        <button  type= "submit"  >
+        <a href= '/createBudget' class="text-muted"> OK </a>
+        </button>
+
+        </Modal>
+
       </form>
+
+
+
     );
   }
 }

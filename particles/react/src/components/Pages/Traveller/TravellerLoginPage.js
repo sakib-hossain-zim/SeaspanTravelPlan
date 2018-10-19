@@ -12,6 +12,7 @@ export default class TravellerLoginPage extends Component {
     super(props);
     this.state = {
       data: [],
+      name: "",
       VSY_IndexNo: "",
       password: ""
 
@@ -28,6 +29,7 @@ export default class TravellerLoginPage extends Component {
     })
 
     localStorage.setItem('VSY_IndexNo',this.state.VSY_IndexNo);
+    localStorage.setItem('traveller_name', this.state.name)
   };
 
   handlelogin = (e) => {
@@ -88,6 +90,13 @@ export default class TravellerLoginPage extends Component {
                 <h1>Travel Plan Portal Login</h1>
 
                 <form>
+
+                <div className="form-group">
+                    <label>Name</label>
+                    <input type="text" name="name" className="form-control" value={this.state.name}
+                    onChange={e => this.change(e)}/>
+                </div>
+
                     <div className="form-group">
                         <label>VSY_IndexNo</label>
                         <input type="text" name="VSY_IndexNo" className="form-control" value={this.state.VSY_IndexNo}

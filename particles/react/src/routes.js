@@ -34,6 +34,15 @@ import OnlineTravelRequestForm from './components/Pages/Traveller/OnlineTravelRe
 import TravelExpenseClaim from './components/Pages/Traveller/TravelExpenseClaim';
 import OnlineTravelRequestApproval from './components/Pages/Controller/OnlineTravelRequestApproval';
 import CheckStatus from './components/Pages/Traveller/CheckStatus';
+import TravelRequestSelectionPage from './components/Pages/Traveller/TravelRequestSelectionPage';
+import TravelExpenseClaimSelectionPage from './components/Pages/Traveller/TravelExpenseClaimSelectionPage';
+import TravelExpenseClaimApproval from './components/Pages/Controller/TravelExpenseClaimApproval';
+import EventSelectionPage from './components/Pages/Controller/EventSelectionPage';
+import OnlineTravelRequestSelectionPage from './components/Pages/Controller/OnlineTravelRequestSelectionPage';
+import BudgetSelectionPage from './components/Pages/Controller/BudgetSelectionPage';
+import ConfirmBudgetDetails from './components/Pages/Controller/ConfirmBudgetDetails';
+
+
 
 
 
@@ -239,8 +248,8 @@ export const routes = [
 
     {
       path: '/controllerDashboard',
-      title: 'ControllerDashboard',
-      breadcrumb: 'ControllerDashboard',
+      title: 'Travel Coordinator Dashboard',
+      breadcrumb: 'Travel Coordinator Dashboard',
       breadcrumb_link: false,
       exact: true,
       component: ControllerDashboard
@@ -251,8 +260,8 @@ export const routes = [
 
     {
       path: '/approvedtravelplan',
-      title: 'ApprovedTravelPlan',
-      breadcrumb: 'ApprovedTravelPlan',
+      title: 'Travel Authorization Status',
+      breadcrumb: 'TravelAuthStatus',
       breadcrumb_link: false,
       exact: true,
       component: ApprovedTravelPlan
@@ -377,6 +386,73 @@ export const routes = [
       breadcrumb_link: false,
       exact: true,
       component: CheckStatus
+
+    },
+
+    {
+      path: '/travelrequestselectionpage',
+      title: 'Travel Authorization Request Page',
+      breadcrumb: 'TravelRequestSelectionPage',
+      breadcrumb_link: false,
+      exact: true,
+      component: TravelRequestSelectionPage
+
+    },
+
+    {
+      path: '/travelexpenseclaimselectionpage',
+      title: 'TravelExpenseClaimSelectionPage',
+      breadcrumb: 'TravelExpenseClaimSelectionPage',
+      breadcrumb_link: false,
+      exact: true,
+      component: TravelExpenseClaimSelectionPage
+
+    },
+
+    {
+      path: '/travelexpenseclaimapproval',
+      title: 'Travel Expense Claim Approval',
+      breadcrumb: 'TravelExpenseClaimApproval',
+      breadcrumb_link: false,
+      exact: true,
+      component: TravelExpenseClaimApproval
+
+    },
+
+    {
+      path: '/eventSelectionPage',
+      title: 'Travel Plan Selection Page',
+      breadcrumb: 'EventSelectionPage',
+      breadcrumb_link: false,
+      exact: true,
+      component: EventSelectionPage
+
+    },
+    {
+      path: '/onlinetravelrequestSelectionPage',
+      title: 'Online Travel Request Selection Page',
+      breadcrumb: 'OnlineTravelRequestSelectionPage',
+      breadcrumb_link: false,
+      exact: true,
+      component: OnlineTravelRequestSelectionPage
+
+    },
+    {
+      path: '/budgetSelectionPage',
+      title: 'Budget Selection Page',
+      breadcrumb: 'BudgetSelectionPage',
+      breadcrumb_link: false,
+      exact: true,
+      component: BudgetSelectionPage
+
+    },
+    {
+      path: '/confirmBudgetDetails',
+      title: 'Budget Record Creation',
+      breadcrumb: 'Budget Record Creation',
+      breadcrumb_link: false,
+      exact: true,
+      component: ConfirmBudgetDetails
 
     },
 

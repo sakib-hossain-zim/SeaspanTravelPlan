@@ -26,7 +26,9 @@ class AddTraveller extends Component {
       data: [],
 
       Event_id: "",
-      VSY_IndexNo: ""
+      VSY_IndexNo: "",
+      travel_start_date: "",
+      travel_end_date:""
 
     };
   }
@@ -64,12 +66,17 @@ class AddTraveller extends Component {
 
       this.setState({
         Event_id: "" ,
-        VSY_IndexNo: ""
+        VSY_IndexNo: "",
+        travel_start_date: "",
+        travel_end_date: ""
+
       });
 
       var insert_data = {
         Event_id: this.state.Event_id,
-        VSY_IndexNo: this.state.VSY_IndexNo
+        VSY_IndexNo: this.state.VSY_IndexNo,
+        travel_start_date: this.state.travel_start_date,
+        travel_end_date: this.state.travel_end_date
       };
       console.log(insert_data);
       var self = this;
@@ -99,7 +106,7 @@ class AddTraveller extends Component {
 
   render() {
     return (
-      this.props.isFetching ? <Backend><div className="content-inner"><Loading /></div></Backend> :
+      this.props.isFetching ? <Backend><div className="content-inner-mobilefix"><Loading /></div></Backend> :
       <Backend>
 
 
@@ -124,6 +131,24 @@ class AddTraveller extends Component {
           hintText="Please insert event"
           floatingLabelText="Event_id"
           value={this.state.Event_id}
+          onChange={e => this.change(e)}
+          floatingLabelFixed
+        />
+        <br />
+        <TextField
+          name="travel_start_date"
+          hintText="Please enter travel start date"
+          floatingLabelText="travel_start_date"
+          value={this.state.travel_start_date}
+          onChange={e => this.change(e)}
+          floatingLabelFixed
+        />
+        <br />
+        <TextField
+          name="travel_end_date"
+          hintText="Please enter travel end date"
+          floatingLabelText="travel_end_date"
+          value={this.state.travel_end_date}
           onChange={e => this.change(e)}
           floatingLabelFixed
         />

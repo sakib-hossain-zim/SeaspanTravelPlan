@@ -22,47 +22,45 @@ export default class Navigation extends Component {
                     </li>
 
                     <li>
-                        <NavLink to="/event" class="text-muted" activeClassName="active">
+                        <NavLink to="/eventSelectionPage" class="text-muted" activeClassName="active">
                             <i className="md-icon">add</i> <span>Create Event</span>
                         </NavLink>
                     </li>
 
                     <li>
-                        <NavLink to="/addTraveller" class="text-muted" activeClassName="active">
-                            <i className="md-icon">add</i> <span>Add Traveller</span>
+                        <NavLink to="/createTraveller" class="text-muted" activeClassName="active">
+                            <i className="md-icon">create</i> <span>Create Traveller Profile</span>
                         </NavLink>
                     </li>
 
                     <li>
-                        <NavLink to="/createBudget" class="text-muted" activeClassName="active">
+                        <NavLink to="/addTraveller" class="text-muted" activeClassName="active">
+                            <i className="md-icon">add</i> <span>Add Traveller to Event</span>
+                        </NavLink>
+                    </li>
+
+
+                    <li>
+                        <NavLink to="/budgetSelectionPage" class="text-muted" activeClassName="active">
                             <i className="md-icon">add</i> <span>Create Budget</span>
                         </NavLink>
                     </li>
 
+
                     <li>
-                        <NavLink to="/createTraveller" class="text-muted" activeClassName="active">
-                            <i className="md-icon">create</i> <span>Register Travellers</span>
+                        <NavLink to="/onlinetravelrequestSelectionPage" class="text-muted" activeClassName="active">
+                            <i className="md-icon">done</i> <span>Process Travel Requests</span>
+                        </NavLink>
+                    </li>
+
+                    <li>
+                        <NavLink to="/travelexpenseclaimapproval" class="text-muted" activeClassName="active">
+                            <i className="md-icon">done</i> <span>Process Expense Claims</span>
                         </NavLink>
                     </li>
 
 
-                    <li>
-                        <NavLink to="/authorization" class="text-muted" activeClassName="active">
-                            <i className="md-icon">done</i> <span>Approvals</span>
-                        </NavLink>
-                    </li>
 
-
-                    <li>
-                        <NavLink to="/travelplanviewer" class="text-muted" activeClassName="active">
-                            <i className="md-icon">find_in_page</i> <span>Travel Plan Explorer</span>
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/invoicing"  class="text-muted"activeClassName="active">
-                            <i className="md-icon">insert_drive_file</i> <span>Invoice</span>
-                        </NavLink>
-                    </li>
 
 
 

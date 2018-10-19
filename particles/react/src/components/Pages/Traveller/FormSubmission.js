@@ -60,12 +60,12 @@ class FormSubmission extends Component {
 
 
 
-      <div className= "content-inner">
+      <div className= "content-inner-mobilefix">
       <div className="content-side-wrapper">
 
 
 
-      
+
 
 
 

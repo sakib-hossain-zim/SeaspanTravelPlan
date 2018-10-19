@@ -25,7 +25,7 @@ class ControllerBudget extends Component {
       data: [],
       items_data: [],
 
-      Budget_id: "",
+      Budget_id: localStorage.getItem('Budget_id'),
       TravelPlan_id: "",
       VSY_IndexNo: "",
       VSY_Meeting_Group_Desription : "",
@@ -70,7 +70,7 @@ class ControllerBudget extends Component {
       })
       .then (items_data => {
 
-        fetch("/users/items/view", {
+        fetch("/users/items/view/" + this.state.Budget_id, {
           method: "GET"
         })
 
@@ -102,24 +102,8 @@ class ControllerBudget extends Component {
 
 
 
-      <div className= "content-inner">
+      <div className= "content-inner-mobilefix">
       <div className="content-side-wrapper">
-      <MuiThemeProvider>
-
-
-      <h2 align="left">Step 1: Fill out the information form </h2>
-      <div className="box" >
-      <BudgetForm
-      onSubmit={submission =>
-        this.setState({
-          data: [...this.state.data, submission]
-        })}
-        />
-        </div>
-
-
-
-        </MuiThemeProvider>
         <br />
 
         <div className="container" style={{marginTop:20}}>
@@ -129,13 +113,6 @@ class ControllerBudget extends Component {
         </div>
         <br />
         <br />
-
-        <div className="container" style={{marginTop:20}}>
-        <h2 align="left"> Information Viewer </h2>
-        <p><b>* Click on the rows to edit </b></p>
-        <br />
-          <BudgetTable data={this.state.data} />
-        </div>
 
 
         </div>

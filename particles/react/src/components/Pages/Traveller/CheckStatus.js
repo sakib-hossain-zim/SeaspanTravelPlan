@@ -88,14 +88,15 @@ class CheckStatus extends Component {
         return (
             this.props.isFetching ? <Backend><div className="content-inner"><Loading /></div></Backend> :
             <Backend>
-            <div className= "content-inner">
+            <div className= "content-inner-mobilefix">
             <div className="content-side-wrapper">
 
 
+
             <div className="container" style={{marginTop:20}}>
-            <h3> Approve Requests </h3>
+            <h3>  Item Request Status </h3>
             <br />
-            <p> <b> * Click on rows to change status </b></p>
+
             <br />
               <BootstrapTable
                 data={this.state.data}

@@ -20,30 +20,31 @@ class OnlineTravelRequestApproval extends Component {
       insert_data: [],
       data: [],
       otr_data: [],
-      Request_Form_No: "",
-      VSY_IndexNo: "",
-      TravelPlan_id: "",
-      Event_id: "",
+      Request_Form_No: localStorage.getItem("Coordinator_OnlineTravelRequestFormNo"),
+      VSY_IndexNo: localStorage.getItem("Coordinator_VSY_IndexNo"),
+      TravelPlan_id: localStorage.getItem("Coordinator_TravelPlan_id"),
+      Event_id: localStorage.getItem("Coordinator_Event_id"),
       request_date: "",
       Item_id: "",
       Budget_id: "",
       item_name: "",
       amount: "",
       requested_amount: "",
+      approved_amount: "",
       comment: "",
       reasoning: "",
-      status: "",
+      status: "APPROVED",
       note_from_coordinator: "",
 
 
       Travel_Auth_No: "",
       status1: "",
       status2_bool: "No",
-      status3: "No",
+      status3: "",
       notes: "",
 
       modalIsOpen: false,
-      modal_authIsOpen: false
+      modal_redirectIsOpen: false
 
 
     };
@@ -53,7 +54,7 @@ class OnlineTravelRequestApproval extends Component {
     this.handle_edit_auth = this.handle_edit_auth.bind(this);
     this.logChange = this.logChange.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    this.closeAuthModal = this.closeAuthModal.bind(this);
+    this.closeredirectModal = this.closeredirectModal.bind(this);
 
   }
 
@@ -61,7 +62,7 @@ class OnlineTravelRequestApproval extends Component {
   componentDidMount() {
     let self = this;
 
-    fetch("/users/itemsotr/view", {
+    fetch("/users/items_otr/view/" + this.state.VSY_IndexNo + "/" + this.state.Event_id + "/" + this.state.TravelPlan_id, {
       method: "GET"
     })
       .then(function(response) {
@@ -76,23 +77,6 @@ class OnlineTravelRequestApproval extends Component {
       .catch(err => {
         console.log("caught it !, err");
       })
-      .then(function(){
-        fetch("/users/otr/view", {
-          method: "GET"
-        })
-        .then(function(response) {
-          if (response.status >= 400) {
-            throw new Error("Bad Response from server");
-          }
-          return response.json();
-        })
-        .then(function(otr_data) {
-          self.setState({ otr_data: otr_data.otr_data });
-        })
-        .catch(err => {
-          console.log("caught it !, err");
-        })
-      });
 
       }
 
@@ -103,12 +87,12 @@ class OnlineTravelRequestApproval extends Component {
     event.preventDefault();
     var data = {
       Item_id: this.state.Item_id,
-      status: this.state.status,
+      approved_amount: this.state.approved_amount,
       note_from_coordinator: this.state.note_from_coordinator
     };
 
     var self = this;
-    fetch("/users/items/editStatusandnotes", {
+    fetch("/users/items/edit_approved_amountandnotes", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -133,7 +117,7 @@ class OnlineTravelRequestApproval extends Component {
         self.setState({modalIsOpen: false})
       })
       .then(function(){
-        fetch("/users/itemsotr/view", {
+        fetch("/users/items_otr/view/" + self.state.VSY_IndexNo + "/" + self.state.Event_id + "/" + self.state.TravelPlan_id, {
           method: "GET"
         })
           .then(function(response) {
@@ -155,44 +139,22 @@ class OnlineTravelRequestApproval extends Component {
 
   handle_edit_auth(event){
     event.preventDefault();
+
     var data = {
       Request_Form_No: this.state.Request_Form_No,
-      status: this.state.status1
+      status: this.state.status
     }
 
     var auth_data = {
      Travel_Auth_No: "Auth-" + Math.floor(Math.random() * 10000000 + 1),
      Request_Form_No: this.state.Request_Form_No,
-     status1: this.state.status1,
+     status1: "APPROVED",
      status2: this.state.status2,
-     status3: this.state.status3,
      notes: this.state.notes
     }
     var self = this;
 
-    fetch("/users/otr/otr_edit", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-      .then(function(response) {
-        if (response.status >= 400) {
-          throw new Error("Bad response from server");
-        }
-        return response.json();
-      })
-      .then(function(data) {
-        console.log(data);
-        if (data === "success") {
-          this.setState({
-            msg: "User has been edited."
 
-          });
-        }
-      })
-      .then(function() {
       fetch("/users/travel_auth/new", {
         method: "POST",
         headers: {
@@ -210,37 +172,44 @@ class OnlineTravelRequestApproval extends Component {
           console.log(auth_data);
           if (auth_data === "success") {
             this.setState({
-              msg: "Item has been inserted."
-
+            msg: "Item has been inserted."
             });
           }
         })
+        .then( function(){
+          fetch("/users/otr/edit_status", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+          })
+            .then(function(response) {
+              if (response.status >= 400) {
+                throw new Error("Bad response from server");
+              }
+              return response.json();
+            })
+            .then(function(data) {
+              console.log(data);
+              if (data === "success") {
+                self.setState({
+                  msg: "User has been edited."
+                });
+              }
+            })
+        })
         .then(function(){
-          self.setState({modal_authIsOpen: false})
+          self.setState({modal_redirectIsOpen: true})
         })
 
         .catch(function(err) {
           console.log(err);
         })
-
-      })
-      .then(function(){
-        fetch("/users/otr/view", {
-          method: "GET"
+        .then(function(){console.log(self.state.otr_data)})
+        .then(function(){
+          console.log(self.state.Request_Form_No);
         })
-        .then(function(response) {
-          if (response.status >= 400) {
-            throw new Error("Bad Response from server");
-          }
-          return response.json();
-        })
-        .then(function(otr_data) {
-          self.setState({ otr_data: otr_data.otr_data });
-        })
-        .catch(err => {
-          console.log("caught it !, err");
-        })
-      });
   }
 
 
@@ -251,55 +220,23 @@ class OnlineTravelRequestApproval extends Component {
        });
      }
 
-     closeAuthModal(){
+     closeredirectModal(){
        this.setState({
-         modal_authIsOpen: false
+         modal_redirectIsOpen: false
        });
      }
 
      openModal(row,abcd) {
 
        this.setState({
-         modalIsOpen: true,
-         Request_Form_No: abcd[0],
          Item_id: abcd[5],
-         Budget_id: abcd[4],
-         VSY_IndexNo: abcd[1],
-         Event_id: abcd[2],
-         TravelPlan_id: abcd[3],
          item_name: abcd[6],
          amount: abcd[7],
-         requested_amount:abcd[8],
-         status: abcd[9],
-         comment: abcd[10],
-         reasoning: abcd[11],
-         note_from_coordinator: abcd[12]
-
-
+         requested_amount: abcd[8],
+         modalIsOpen: true,
        });
 
      }
-
-
-     openAuthModal(row,abcd) {
-
-       this.setState({
-         modal_authIsOpen: true,
-         Request_Form_No: abcd[0],
-       });
-
-     }
-
-     onRowSelect_auth = (row) => {
-       var abcd = [];
-       for(const prop in row){
-         abcd.push(row[prop]);
-
-         }
-         this.openAuthModal(row,abcd);
-
-       }
-
 
        onRowSelect = (row) => {
          var abcd = [];
@@ -320,12 +257,6 @@ class OnlineTravelRequestApproval extends Component {
 
     render() {
 
-      const selectRowProp_otr = {
-        mode:"checkbox",
-        clickToSelect: true,
-        onSelect: this.onRowSelect_auth
-      }
-
       const selectRowProp = {
         mode:"checkbox",
         clickToSelect: true,
@@ -336,12 +267,12 @@ class OnlineTravelRequestApproval extends Component {
         return (
             this.props.isFetching ? <Backend><div className="content-inner"><Loading /></div></Backend> :
             <Backend>
-            <div className= "content-inner">
+            <div className= "content-inner-mobilefix">
             <div className="content-side-wrapper">
             <div className="container" style={{marginTop:20}}>
             <h3> Approve Requests </h3>
             <br />
-            <p> <b> * Click on rows to change status </b></p>
+            <p> <b> * Click on rows to insert Approved Amount </b></p>
             <br />
               <BootstrapTable
                 data={this.state.data}
@@ -355,80 +286,69 @@ class OnlineTravelRequestApproval extends Component {
                 scrollTop={'Bottom'}
               >
 
-              <TableHeaderColumn isKey dataField="Request_Form_No" filter={{type: 'TextFilter', delay:1000}} width="300">
-                  Request Form No
+              <TableHeaderColumn isKey dataField="Request_Form_No" filter={{type: 'TextFilter', delay:1000}} width="125">
+                  Request <br /> Form No
               </TableHeaderColumn>
-
-              <TableHeaderColumn dataField="VSY_IndexNo" filter={{type: 'TextFilter', delay:1000}} width="100">
-                  VSY_IndexNo
+              <TableHeaderColumn dataField="event_name" filter={{type: 'TextFilter', delay:1000}} width="230">
+                  Event Name <br /> <p></p>
               </TableHeaderColumn>
-              <TableHeaderColumn dataField="Event_id" filter={{type: 'TextFilter', delay:1000}} width="100">
-                  Event Id
-              </TableHeaderColumn>
-              <TableHeaderColumn dataField="TravelPlan_id" filter={{type: 'TextFilter', delay:1000}} width="200">
-                  Travel Plan Id
-              </TableHeaderColumn>
-              <TableHeaderColumn dataField="Budget_id" filter={{type: 'TextFilter', delay:1000}} width="200">
-                  Assigned Budget Id
+              <TableHeaderColumn dataField="name" filter={{type: 'TextFilter', delay:1000}} width="230">
+                  Traveller Name <br /> <p></p>
               </TableHeaderColumn>
               <TableHeaderColumn dataField="Item_id" filter={{type: 'TextFilter', delay:1000}} width="100">
-                  Item Id
+                  Item Id <br /> <p></p>
               </TableHeaderColumn>
-              <TableHeaderColumn dataField="item_name" filter={{type: 'TextFilter', delay:1000}} width="200">
-                  Item Name
+              <TableHeaderColumn dataField="item_name" filter={{type: 'TextFilter', delay:1000}} width="125">
+                  Item Name <br /> <p> </p>
               </TableHeaderColumn>
-              <TableHeaderColumn dataField="amount" filter={{type: 'TextFilter', delay:1000}} width="100">
-                  Budgeted Amount
+              <TableHeaderColumn dataField="amount" filter={{type: 'TextFilter', delay:1000}} width="90">
+                  Budgeted <br /> Amount
               </TableHeaderColumn>
-              <TableHeaderColumn dataField="requested_amount" filter={{type: 'TextFilter', delay:1000}} width="200">
-                 Requested Amount
+              <TableHeaderColumn dataField="requested_amount" filter={{type: 'TextFilter', delay:1000}} width="90">
+                 Requested <br /> Amount
               </TableHeaderColumn>
-              <TableHeaderColumn dataField="status" filter={{type: 'TextFilter', delay:1000}} width="200">
-                 Status
+              <TableHeaderColumn dataField="approved_amount" filter={{type: 'TextFilter', delay:1000}} width="90">
+                 Approved <br /> Amount
               </TableHeaderColumn>
-              <TableHeaderColumn dataField="comment" filter={{type: 'TextFilter', delay:1000}} width="200">
-                 Comment
-              </TableHeaderColumn>
-              <TableHeaderColumn dataField="reasoning" filter={{type: 'TextFilter', delay:1000}} width="300">
-                 Reasoning
+              <TableHeaderColumn dataField="reasoning" filter={{type: 'TextFilter', delay:1000}} width="200">
+                 Traveller's Reason <br /> <p></p>
               </TableHeaderColumn>
               <TableHeaderColumn dataField="note_from_coordinator" filter={{type: 'TextFilter', delay:1000}} width="300">
-                 Note from coordinator
+                 Note from coordinator <br /> <p></p>
               </TableHeaderColumn>
-
-
 
               <Modal
                      open={this.state.modalIsOpen}
                      onClose={this.closeModal}
                      center
                    >
+                   <p> <b>{this.state.item_name}</b> </p>
+                   <p> <b> The budgeted amount for this item is ${this.state.amount} and the requested amount is ${this.state.requested_amount}</b></p>
+                   <p> <b> {this.state.reasoning} </b> </p>
                      <form onSubmit={this.handleEdit}>
 
 
                          <label>
-                              Status:
-                              <select
+                              Approved Amount:
+                              <input
                                 type="text"
                                 onChange={this.logChange}
-                                value={this.state.status}
+                                value={this.state.approved_amount}
                                 className="form-control"
-                                name="status">
-                                <option value="Approved"> Approved </option>
-                                <option value="Rejected"> Rejected </option>
-
-                              </select>
+                                name="approved_amount"
+                               />
                         </label>
 
                         <label>
-                             Notes:
-                                 <input
-                                   type="text"
-                                   onChange={this.logChange}
-                                   value={this.state.note_from_coordinator}
-                                   className="form-control"
-                                   name="note_from_coordinator"
-                                 />
+                             Coordinator Notes:
+                             <input
+                               type="text"
+                               onChange={this.logChange}
+                               value={this.state.note_from_coordinator}
+                               className="form-control"
+                               name="note_from_coordinator"
+
+                              />
                        </label>
 
                        <div className="submit-section">
@@ -439,88 +359,32 @@ class OnlineTravelRequestApproval extends Component {
 
 
             </BootstrapTable>
+            <br />
+            <br />
+            <button class="button_submit button_item" onClick={e => this.handle_edit_auth(e)}> Authorize </button>
+
+
+            <Modal
+              open={this.state.modal_redirectIsOpen}
+              center
+            >
+            <br />
+
+
+            <div><p>Budget has been created. Click "OK" to process other requests.</p></div>
+            <br />
+            <br />
+
+            <button  type= "submit"  >
+            <a href= '/onlinetravelrequestSelectionPage' class="text-muted"> OK </a>
+            </button>
+
+            </Modal>
+
+            <br/>
+            <br/>
+
             </div>
-            <br/>
-            <br/>
-
-
-            <h3> Request Approval </h3>
-            <br />
-            <p> <b> * Click on the button to authorize a online travel request</b></p>
-            <br />
-            <div className="container" style={{marginTop:20}}>
-              <BootstrapTable
-                data={this.state.otr_data}
-                hover
-                striped
-                responsive
-                exportCSV
-                csvFileName="data.csv"
-                selectRow={selectRowProp_otr}
-                height='350'
-                scrollTop={'Bottom'}
-              >
-
-              <TableHeaderColumn isKey dataField="Request_Form_No" filter={{type: 'TextFilter', delay:1000}} width="600">
-                 Request Form No
-              </TableHeaderColumn>
-              <TableHeaderColumn dataField="status" filter={{type: 'TextFilter', delay:1000}} width="600">
-                 Status
-              </TableHeaderColumn>
-
-              <Modal
-                     open={this.state.modal_authIsOpen}
-                     onClose={this.closeAuthModal}
-                     center
-                   >
-                     <form onSubmit={this.handle_edit_auth}>
-
-
-                        <label>
-                              Request_Form_No:
-                              <input
-                                type="text"
-                                value={this.state.Request_Form_No}
-                                className="form-control"
-                                name="Request_Form_No"
-                              />
-                        </label>
-
-
-                         <label>
-                              Status:
-                              <select
-                                type="text"
-                                onChange={this.logChange}
-                                value={this.state.status1}
-                                className="form-control"
-                                name="status1">
-
-                                <option value="Approved"> Approved </option>
-                              
-                              </select>
-                        </label>
-
-                        <label>
-                             Notes:
-                                 <input
-                                   type="text"
-                                   onChange={this.logChange}
-                                   value={this.state.notes}
-                                   className="form-control"
-                                   name="notes"
-                                 />
-                       </label>
-
-                       <div className="submit-section">
-                         <button>Authorize</button>
-                       </div>
-                     </form>
-                   </Modal>
-
-
-              </BootstrapTable>
-              </div>
 
 
 

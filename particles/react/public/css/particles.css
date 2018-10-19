@@ -536,12 +536,23 @@ a {
     padding-right: 0; }
   .content-inner.no-padding-top {
     padding-top: 0; }
+  .content-inner-mobilefix {
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    margin: auto;
+    margin-top: 0;
+  }
+
+
   @media (max-width: 1281px) {
     .content-inner {
       width: calc(100vw - 319px); } }
   @media (max-width: 992px) {
     .content-inner {
       padding: 30px 30px; } }
+
+
 
 /**
  * 04. Sidebar
@@ -2494,4 +2505,8 @@ table {
    .button_item:hover {
      background-color: white;
      color: black;
+   }
+
+   .div_upload {
+     outline: 2px solid #ADD8E6;
    }

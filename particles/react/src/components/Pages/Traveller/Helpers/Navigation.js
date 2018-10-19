@@ -14,33 +14,31 @@ export default class Navigation extends Component {
                     </li>
                     <li>
                         <NavLink to="/TravelTracker" class="text-muted" activeClassName="active">
-                            <i className="md-icon">find_in_page</i> <span>Travel Plan Explorer</span>
+                            <i className="md-icon">find_in_page</i> <span>View Travel Plan Events</span>
                         </NavLink>
                     </li>
 
                     <li>
-                        <NavLink to="/OnlineTravelRequestForm" class="text-muted" activeClassName="active">
-                            <i className="md-icon">library_books</i> <span>Travel Request</span>
-                        </NavLink>
-                    </li>
-
-                    <li>
-                        <NavLink to="/TravelExpenseClaim" class="text-muted" activeClassName="active">
-                            <i className="md-icon">library_books</i> <span>Expense Claim</span>
-                        </NavLink>
-                    </li>
-
-                    <li>
-                        <NavLink to="/CheckStatus" class="text-muted" activeClassName="active">
-                            <i className="md-icon">library_books</i> <span>Check Status</span>
+                        <NavLink to="/TravelRequestSelectionPage" class="text-muted" activeClassName="active">
+                            <i className="md-icon">library_books</i> <span>Request Travel Auth</span>
                         </NavLink>
                     </li>
 
                     <li>
                         <NavLink to="/ApprovedTravelPlan" class="text-muted" activeClassName="active">
-                            <i className="md-icon">done</i> <span>Approved</span>
+                            <i className="md-icon">done</i> <span>View Request Status</span>
                         </NavLink>
                     </li>
+
+
+                    <li>
+                        <NavLink to="/TravelExpenseClaimSelectionPage" class="text-muted" activeClassName="active">
+                            <i className="md-icon">library_books</i> <span>Submit Expense Claim</span>
+                        </NavLink>
+                    </li>
+
+
+                  
 
 
 
