@@ -35,7 +35,8 @@ class ControllerBudget extends Component {
       from_location : "",
       to_location : "",
       travel_status_days : "",
-      traveller_name : "",
+      traveller_name : localStorage.getItem('BudgetSelection_TravellerName'),
+      event_name: localStorage.getItem('BudgetSelection_EventName'),
       traveller_labor_category : "",
       estimated_labor_travel_time : "",
       comments : "",
@@ -44,7 +45,10 @@ class ControllerBudget extends Component {
       per_diem_cost: "",
       flight_or_car_cost : "",
       taxi_mileage_gas : "",
-      total : ""
+      total : "",
+      event_start_date: localStorage.getItem('BudgetSelection_EventStartDate'),
+      travel_program: localStorage.getItem('BudgetSelection_TravelProgram'),
+      travel_start_date: localStorage.getItem('BudgetSelection_TravelStartDate')
 
     };
 
@@ -70,7 +74,7 @@ class ControllerBudget extends Component {
       })
       .then (items_data => {
 
-        fetch("/users/items/view/" + this.state.Budget_id, {
+        fetch("/users/items/viewer/" + this.state.Budget_id, {
           method: "GET"
         })
 
@@ -107,7 +111,7 @@ class ControllerBudget extends Component {
         <br />
 
         <div className="container" style={{marginTop:20}}>
-          <h2 align="left">Step 2: Budgeting </h2>
+          <h4 align="left">Click the <b>Add Item</b> button below to start building {this.state.traveller_name}'s budget for <br />  {this.state.travel_program} | {this.state.event_name} | Travel starting on {this.state.travel_start_date}</h4>
           <br />
           <ItemAdditionTable items_data={this.state.items_data} />
         </div>

@@ -42,30 +42,31 @@ export default class Navigation extends Component {
 
                     <li>
                         <NavLink to="/budgetSelectionPage" class="text-muted" activeClassName="active">
-                            <i className="md-icon">add</i> <span>Create Budget</span>
+                            <i className="md-icon">create</i> <span>Create Budget</span>
                         </NavLink>
                     </li>
-
-
+                    <li>
+                        <NavLink to="/editBudgetSelectionPage" class="text-muted" activeClassName="active">
+                            <i className="md-icon">add</i> <span>View/Edit Budget</span>
+                        </NavLink>
+                    </li>
                     <li>
                         <NavLink to="/onlinetravelrequestSelectionPage" class="text-muted" activeClassName="active">
                             <i className="md-icon">done</i> <span>Process Travel Requests</span>
                         </NavLink>
-                    </li>
-
+                     </li>
+                     <li>
+                         <NavLink to="/travelStatusUpdate" class="text-muted" activeClassName="active">
+                             <i className="md-icon">create</i> <span>Update Travel Status</span>
+                         </NavLink>
+                      </li>
                     <li>
-                        <NavLink to="/travelexpenseclaimapproval" class="text-muted" activeClassName="active">
+                        <NavLink to="/travelProgramSelectionPageForTravelExpenseClaimApproval" class="text-muted" activeClassName="active">
                             <i className="md-icon">done</i> <span>Process Expense Claims</span>
                         </NavLink>
                     </li>
 
-
-
-
-
-
-
-                </ul>
+              </ul>
 
                 {/* <strong>Additional Links</strong>
 

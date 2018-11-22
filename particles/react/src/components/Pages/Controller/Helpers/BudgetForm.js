@@ -400,7 +400,7 @@ export default class BudgetForm extends React.Component {
         <br />
 
 
-        <div><p>Click "OK" to proceed to Approval page.</p></div>
+        <div><p>Click "OK" to start adding budget items.</p></div>
         <br />
         <br />
 

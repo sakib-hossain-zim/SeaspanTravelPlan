@@ -113,6 +113,7 @@ class OnlineTravelRequestSelectionPage extends Component {
 
       <div className= "content-inner-mobilefix">
       <div className="content-side-wrapper">
+      <div className="container" style={{marginTop:20}}>
 
         <div>
         <h4> Please select a travel request to review  </h4>
@@ -183,6 +184,7 @@ class OnlineTravelRequestSelectionPage extends Component {
 
 
 
+        </div>
         </div>
         </div>
 

@@ -228,8 +228,8 @@ class TravelRequestSelectionPage extends Component {
           <TableHeaderColumn dataField="event_location" filter={{type: 'TextFilter', delay:1000}} width="150">
             Event Location
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="dummy_status" filter={{type: 'TextFilter', delay:1000}} width="150">
-            Current Status
+          <TableHeaderColumn dataField="dummy_status" filter={{type: 'TextFilter', delay:1000}} width="200">
+            Travel Request Approval Status
           </TableHeaderColumn>
 
 

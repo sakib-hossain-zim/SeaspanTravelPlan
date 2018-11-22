@@ -37,8 +37,14 @@ export default class Navigation extends Component {
                         </NavLink>
                     </li>
 
+                    <li>
+                        <NavLink to="/ViewExpenseClaimStatus" class="text-muted" activeClassName="active">
+                            <i className="md-icon">library_books</i> <span>View Travel Expense Claim Status</span>
+                        </NavLink>
+                    </li>
 
-                  
+
+
 
 
 

@@ -28,7 +28,7 @@ class FileUpload extends React.Component {
         this.setState({ imageURL: `http://localhost:4000/${body.file}` });
       });
     }).then(window.alert("Upload successful"))
-    .then(localStorage.setItem('imageURL',this.state.imageURL));
+    .then(localStorage.setItem('imageURL',self.state.imageURL));
   }
 
   render() {
@@ -36,7 +36,7 @@ class FileUpload extends React.Component {
       <div className='div_upload'>
       <br />
       <br />
-      <p><b> * Please merge all receipts into a single pdf. You can use this website to merge pdf <a href="https://www.pdfmerge.com/">https://www.pdfmerge.com/</a></b> </p>
+      <p><b> * Please merge all receipts into a single pdf for this Expense Claim Only</b> </p>
       <form onSubmit={this.handleUploadImage}>
         <div>
           <input ref={(ref) => { this.uploadInput = ref; }} type="file" />

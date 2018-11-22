@@ -80,6 +80,18 @@ class BudgetSelectionPage extends Component {
     }
 
 
+    dateDiffInDays(a , b){
+    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+    // Discard the time and time-zone information.
+    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+    return Math.floor((utc2 - utc1) / _MS_PER_DAY) + 1;
+  }
+
+
+
+
 
   componentDidMount(){
 
@@ -110,6 +122,27 @@ class BudgetSelectionPage extends Component {
       clickToSelect: true,
       onSelect: this.onRowSelect
     }
+
+    const self = this;
+
+
+    function revertSortFunc(a, b, order) {   // order is desc or asc
+
+      var date1 = new Date(a.travel_start_date);
+      console.log(date1);
+      var date2 = new Date(b.travel_start_date);
+      var diffDays1 = self.dateDiffInDays(date1,date2);
+      var diffDays2 = self.dateDiffInDays(date2,date1);
+
+
+      if (order === 'desc') {
+    return diffDays1;
+  } else {
+    return diffDays2;
+  }
+}
+
+
 
 
 
@@ -150,7 +183,7 @@ class BudgetSelectionPage extends Component {
           <TableHeaderColumn dataField="name" filter={{type: 'TextFilter', delay:1000}} width="250">
             Traveller Name
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="travel_start_date" filter={{type: 'TextFilter', delay:1000}} width="250">
+          <TableHeaderColumn dataField="travel_start_date" dataSort  sortFunc={ revertSortFunc } filter={{type: 'TextFilter', delay:1000}} width="250">
             Travel Start Date
           </TableHeaderColumn>
             <Modal

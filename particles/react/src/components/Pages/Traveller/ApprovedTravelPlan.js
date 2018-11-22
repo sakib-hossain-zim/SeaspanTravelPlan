@@ -28,12 +28,15 @@ class ApprovedTravelPlan extends Component {
               Travel_Auth_No: "",
               VSY_IndexNo: localStorage.getItem('VSY_IndexNo'),
               Event_id: "",
+              event_name:"",
               TravelPlan_id: "",
               status1: "",
               status2_bool: "",
               status3: "",
               notes: "",
               modalIsOpen: false,
+              total_sum: "",
+
 
 
             };
@@ -47,16 +50,11 @@ class ApprovedTravelPlan extends Component {
           openModal(row,abcd) {
 
             this.setState({
-              modalIsOpen: true,
-              Event_id: abcd[2],
-              TravelPlan_id: abcd[3]
-
-
+              modalIsOpen: true
             })
 
-
             let self = this;
-            fetch("/users/items_otr/view/" + this.state.VSY_IndexNo + "/"+ this.state.Event_id + "/" + this.state.TravelPlan_id, {
+            fetch("/users/items_otr/view/" + this.state.VSY_IndexNo + "/"+ abcd[7] + "/" + abcd[6] , {
               method: "GET"
             })
               .then(function(response) {
@@ -110,16 +108,33 @@ class ApprovedTravelPlan extends Component {
          }
 
          this.setState({
-           modalIsOpen: true,
-           Event_id: abcd[2],
-           TravelPlan_id: abcd[3],
-
+           Event_id: abcd[7],
+           TravelPlan_id: abcd[6],
+           event_name: abcd[8]
 
          })
 
 
 
          this.openModal(row,abcd);
+
+       }
+
+
+       sumTotal(){
+         var sumTotal = 0;
+         for (var i = 0; i < (this.state.data).length; i++){
+
+            var Total = (this.state.data)[i].approved_amount
+            sumTotal = sumTotal + Total;
+
+         }
+
+         this.setState({
+           total_sum: sumTotal
+
+         })
+
 
        }
 
@@ -196,8 +211,13 @@ class ApprovedTravelPlan extends Component {
               center
               >
               <br />
-              <p> <b> Here are your budget details for "get the event name" event </b> </p>
+              <p> <b> Here are your budget details for {this.state.event_name} event </b> </p>
               <br />
+              <div style={{width: 552.5,
+                        padding: 10,
+                        border: 5,
+                        margin: 0}}
+                        >
               <BootstrapTable
               data={this.state.items_data}
               hover
@@ -213,14 +233,20 @@ class ApprovedTravelPlan extends Component {
 
 
               >
-              <TableHeaderColumn isKey dataField="Request_Form_No" filter={{type: 'TextFilter', delay:1000}} width="200">
+              <TableHeaderColumn isKey dataField="item_name" filter={{type: 'TextFilter', delay:1000}} width="70">
                   Budget Item Name
               </TableHeaderColumn>
 
-              <TableHeaderColumn dataField="VSY_IndexNo" filter={{type: 'TextFilter', delay:1000}} width="100">
+              <TableHeaderColumn dataField="requested_amount" filter={{type: 'TextFilter', delay:1000}} width="75">
+                  Requested Amount
+              </TableHeaderColumn>
+              <TableHeaderColumn dataField="approved_amount" filter={{type: 'TextFilter', delay:1000}} width="75">
                   Approved Amount
               </TableHeaderColumn>
               </BootstrapTable>
+              </div>
+
+               <p> {this.state.total_sum} </p>
 
               </Modal>
 
@@ -230,6 +256,12 @@ class ApprovedTravelPlan extends Component {
 
 
              </BootstrapTable>
+
+
+             
+
+
+
 
 
 

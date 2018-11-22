@@ -78,8 +78,20 @@ class TravelExpenseClaimSelectionPage extends Component {
       console.log("reached here on click")
       localStorage.setItem('Travel_Auth_No',abcd[0]);
       localStorage.setItem('Request_Form_No',abcd[1]);
-      localStorage.setItem('Event_id',abcd[7]);
-      localStorage.setItem('TravelPlan_id',abcd[6]);
+      localStorage.setItem('Event_id',abcd[2]);
+      localStorage.setItem('TravelPlan_id',abcd[4]);
+      localStorage.setItem('TravelExpenseSelection_TravellerName',abcd[8]);
+      localStorage.setItem('TravelExpenseSelection_EventName',abcd[7]);
+      localStorage.setItem('TravelExpenseSelection_TravelEndDate',abcd[5]);
+      localStorage.setItem('TravelExpenseSelection_EventStartDate',abcd[10]);
+      localStorage.setItem('TravelExpenseSelection_EventEndDate',abcd[11]);
+      localStorage.setItem('TravelExpenseSelection_TravelStartDate',abcd[12]);
+      localStorage.setItem('CategoryGSTHST', abcd[13]);
+
+
+
+
+
       this.openModal();
 
     }
@@ -89,7 +101,7 @@ class TravelExpenseClaimSelectionPage extends Component {
   componentDidMount(){
 
       let self = this;
-      fetch("/users/authorizationplan_otr/check/view/" + this.state.VSY_IndexNo + "/" + this.state.status3, {
+      fetch("/users/travelexpenseclaim_selectionpage/view/" + this.state.VSY_IndexNo, {
         method: "GET"
       })
         .then(function(response) {
@@ -146,28 +158,35 @@ class TravelExpenseClaimSelectionPage extends Component {
             height='350'
             scrollTop={'Bottom'}
           >
-          <TableHeaderColumn dataField="Travel_Auth_no" filter={{type: 'TextFilter', delay:1000}} width="200">
+          <TableHeaderColumn dataField="status2_bool" filter={{type: 'TextFilter', delay:1000}} width="200">
               Travel Completion Status
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="Travel_Auth_no" filter={{type: 'TextFilter', delay:1000}} width="200">
+          <TableHeaderColumn dataField="nss_program" filter={{type: 'TextFilter', delay:1000}} width="200">
               Travel Program
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="Travel_Auth_no" filter={{type: 'TextFilter', delay:1000}} width="200">
+          <TableHeaderColumn dataField="Event_id" filter={{type: 'TextFilter', delay:1000}} width="200">
              Event Id
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="Travel_Auth_no" filter={{type: 'TextFilter', delay:1000}} width="200">
+          <TableHeaderColumn dataField="event_name" filter={{type: 'TextFilter', delay:1000}} width="200">
               Event Name
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="Travel_Auth_no" filter={{type: 'TextFilter', delay:1000}} width="200">
+          <TableHeaderColumn dataField="travel_end_date" filter={{type: 'TextFilter', delay:1000}} width="200">
              Travel End Date
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="Travel_Auth_no" filter={{type: 'TextFilter', delay:1000}} width="200">
+          <TableHeaderColumn dataField="" filter={{type: 'TextFilter', delay:1000}} width="200">
              Approved Budget
           </TableHeaderColumn>
 
-          <TableHeaderColumn isKey dataField="Travel_Auth_no" filter={{type: 'TextFilter', delay:1000}} width="200">
+          <TableHeaderColumn isKey dataField="Travel_Auth_No" filter={{type: 'TextFilter', delay:1000}} width="200">
               Travel_Auth_No
           </TableHeaderColumn>
+          <TableHeaderColumn  dataField="name" filter={{type: 'TextFilter', delay:1000}} width="200">
+              Traveller Name
+          </TableHeaderColumn>
+          <TableHeaderColumn  dataField="" filter={{type: 'TextFilter', delay:1000}} width="200">
+              Expense Claim Amount
+          </TableHeaderColumn>
+
 
 
             <Modal

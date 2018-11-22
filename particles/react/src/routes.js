@@ -41,6 +41,18 @@ import EventSelectionPage from './components/Pages/Controller/EventSelectionPage
 import OnlineTravelRequestSelectionPage from './components/Pages/Controller/OnlineTravelRequestSelectionPage';
 import BudgetSelectionPage from './components/Pages/Controller/BudgetSelectionPage';
 import ConfirmBudgetDetails from './components/Pages/Controller/ConfirmBudgetDetails';
+import EditBudgetSelectionPage from './components/Pages/Controller/EditBudgetSelectionPage';
+import EditBudgetEventSelectionPage from './components/Pages/Controller/EditBudgetEventSelectionPage';
+import EditBudgetTravellerSelectionPage from './components/Pages/Controller/EditBudgetTravellerSelectionPage';
+import ViewAndEditBudget from './components/Pages/Controller/ViewAndEditBudget';
+import TravelStatusUpdate from './components/Pages/Controller/TravelStatusUpdate';
+import TravelExpenseClaimApprovalSelectionPage from './components/Pages/Controller/TravelExpenseClaimApprovalSelectionPage';
+import TravelProgramSelectionPageForTravelExpenseClaimApproval from './components/Pages/Controller/TravelProgramSelectionPageForTravelExpenseClaimApproval';
+import TravellerTypeSelectionPage from './components/Pages/Controller/TravellerTypeSelectionPage';
+import ViewExpenseClaimStatus from './components/Pages/Traveller/ViewExpenseClaimStatus';
+
+
+
 
 
 
@@ -330,8 +342,8 @@ export const routes = [
 
     {
       path: '/createBudget',
-      title: 'ControllerBudget',
-      breadcrumb: 'ControllerBudget',
+      title: 'Add Budget Items',
+      breadcrumb: 'Add Budget Items',
       breadcrumb_link: false,
       exact: true,
       component: ControllerBudget
@@ -455,6 +467,90 @@ export const routes = [
       component: ConfirmBudgetDetails
 
     },
+    {
+      path: '/editBudgetSelectionPage',
+      title: 'Program Selection page',
+      breadcrumb: 'ProgramSelectionPage',
+      breadcrumb_link: false,
+      exact: true,
+      component: EditBudgetSelectionPage
+
+    },
+    {
+      path: '/editBudgetEventSelectionPage',
+      title: 'Event Selection page',
+      breadcrumb: 'EventSelectionPage',
+      breadcrumb_link: false,
+      exact: true,
+      component: EditBudgetEventSelectionPage
+
+    },
+    {
+      path: '/editBudgetTravellerSelectionPage',
+      title: 'Traveller Selection page',
+      breadcrumb: 'TravellerSelectionPage',
+      breadcrumb_link: false,
+      exact: true,
+      component: EditBudgetTravellerSelectionPage
+
+    },
+    {
+      path: '/viewAndEditBudget',
+      title: 'Budget Editor',
+      breadcrumb: 'BudgetEditor',
+      breadcrumb_link: false,
+      exact: true,
+      component: ViewAndEditBudget
+
+    },
+    {
+      path: '/travelStatusUpdate',
+      title: 'Travel Status Update',
+      breadcrumb: 'TravelStatusUpdate',
+      breadcrumb_link: false,
+      exact: true,
+      component: TravelStatusUpdate
+
+    },
+    {
+      path: '/travelExpenseClaimApprovalSelectionPage',
+      title: 'Travel Expense Claim Approval Selection Page',
+      breadcrumb: 'TravelExpenseClaimApprovalSelectionPage',
+      breadcrumb_link: false,
+      exact: true,
+      component: TravelExpenseClaimApprovalSelectionPage
+
+    },
+    {
+      path: '/travelProgramSelectionPageForTravelExpenseClaimApproval',
+      title: 'Travel Program Selection Page For TravelExpenseClaimApproval',
+      breadcrumb: 'TravelProgramSelectionPageForTravelExpenseClaimApproval',
+      breadcrumb_link: false,
+      exact: true,
+      component: TravelProgramSelectionPageForTravelExpenseClaimApproval
+
+    },
+    {
+      path: '/travellerTypeSelectionPage',
+      title: 'Traveller Type Selection Page',
+      breadcrumb: 'Traveller Type Selection Page',
+      breadcrumb_link: false,
+      exact: true,
+      component: TravellerTypeSelectionPage
+
+    },
+
+    {
+      path: '/viewExpenseClaimStatus',
+      title: 'View Expense Claim Status',
+      breadcrumb: 'View Expense Claim Status',
+      breadcrumb_link: false,
+      exact: true,
+      component: ViewExpenseClaimStatus
+
+    },
+
+
 
 
 

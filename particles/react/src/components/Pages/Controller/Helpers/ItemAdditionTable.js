@@ -19,6 +19,10 @@ class ItemAdditionTable extends Component {
       VSY_IndexNo: "",
       item_name: "",
       amount: "",
+      comment: "",
+      traveller_name:   "",
+      event_name: "",
+      travel_program: "",
 
       modalIsOpen: false,
       editor_modalIsOpen: false,
@@ -42,7 +46,8 @@ class ItemAdditionTable extends Component {
       VSY_IndexNo: localStorage.getItem('BudgetSelection_VSY_IndexNo'),
       Event_id: localStorage.getItem('BudgetSelection_Event_id'),
       item_name: "",
-      amount: ""
+      amount: "",
+      comment: "",
     });
 
   }
@@ -57,7 +62,12 @@ class ItemAdditionTable extends Component {
       VSY_IndexNo: abcd[3],
       Event_id: abcd[4],
       item_name: abcd[5],
-      amount: abcd[6]
+      amount: abcd[6],
+      comment: abcd[11],
+      traveller_name:   localStorage.getItem('BudgetSelection_TravellerName'),
+      event_name: localStorage.getItem('BudgetSelection_EventName'),
+      travel_program: localStorage.getItem('BudgetSelection_TravelProgram'),
+
     });
 
   }
@@ -100,7 +110,8 @@ class ItemAdditionTable extends Component {
       VSY_IndexNo: localStorage.getItem('BudgetSelection_VSY_IndexNo'),
       Event_id: localStorage.getItem('BudgetSelection_Event_id'),
       item_name: this.state.item_name,
-      amount: this.state.amount
+      amount: this.state.amount,
+      comment: this.state.comment
     };
     var self = this;
     fetch("/users/items/new", {
@@ -160,7 +171,8 @@ class ItemAdditionTable extends Component {
       Event_id: this.state.Event_id,
       VSY_IndexNo: this.state.VSY_IndexNo,
       item_name: this.state.item_name,
-      amount: this.state.amount
+      amount: this.state.amount,
+      comment: this.state.comment
 
     };
     var self = this;
@@ -313,6 +325,7 @@ const selectRowProp = {
           height='350'
           scrollTop={'Bottom'}
 
+
         >
         <TableHeaderColumn isKey dataField="Item_id" filter={{type: 'TextFilter', delay:1000}} width="200">
           Item ID
@@ -321,7 +334,10 @@ const selectRowProp = {
             Item Name
           </TableHeaderColumn>
           <TableHeaderColumn dataField="amount" filter={{type: 'TextFilter', delay:1000}} width="200">
-           Amount
+           Planned Amount
+          </TableHeaderColumn>
+          <TableHeaderColumn dataField="comment" filter={{type: 'TextFilter', delay:1000}} width="200">
+           Comment
           </TableHeaderColumn>
 
 
@@ -332,6 +348,7 @@ const selectRowProp = {
                  onClose={this.closeModal}
                  center
                >
+               <p><b> Please select Item Name from the dropdown list and enter budget amount </b> </p>
                  <form onSubmit={this.handleEdit}>
 
                  <label>
@@ -379,6 +396,16 @@ const selectRowProp = {
                        name="amount"
                      />
                     </label>
+                    <label>
+                      Comment:
+                      <input
+                        type="text"
+                        onChange={this.logChange}
+                        value={this.state.comment}
+                        className="form-control"
+                        name="comment"
+                      />
+                     </label>
 
 
 
@@ -421,35 +448,35 @@ const selectRowProp = {
                    />
                  </label>
                  <label>
-                   TravelPlan_id:
+                   Traveller Name:
                    <input
                      type="text"
-                     value={this.state.TravelPlan_id}
+                     value={this.state.traveller_name}
                      className="form-control"
                       onChange={this.logChange}
-                     name="TravelPlan_id"
+                     name="traveller_name"
 
                    />
                  </label>
                  <label>
-                   VSY_IndexNo:
+                   Travel Plan Program:
                    <input
                      type="text"
-                     value={this.state.VSY_IndexNo}
+                     value={this.state.travel_program}
                      className="form-control"
                     onChange={this.logChange}
-                     name="VSY_IndexNo"
+                     name="travel_program"
 
                    />
                  </label>
                  <label>
-                   Event Id:
+                   Event Name:
                    <input
                      type="text"
-                     value={this.state.Event_id}
+                     value={this.state.event_name}
                      className="form-control"
                     onChange={this.logChange}
-                     name="Event_id"
+                     name="event_name"
 
                    />
                  </label>
@@ -475,6 +502,16 @@ const selectRowProp = {
                      name="amount"
                    />
                   </label>
+                  <label>
+                    Comment:
+                    <input
+                      type="text"
+                      onChange={this.logChange}
+                      value={this.state.comment}
+                      className="form-control"
+                      name="comment"
+                    />
+                   </label>
 
 
 
