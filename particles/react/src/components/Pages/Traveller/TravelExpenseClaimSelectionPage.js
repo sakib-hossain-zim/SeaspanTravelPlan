@@ -26,7 +26,8 @@ class TravelExpenseClaimSelectionPage extends Component {
       Event_id: localStorage.getItem('Event_id'),
       status3: "NOT CLAIMED",
       modalIsOpen: false,
-      errorModalIsOpen: false
+      errorModalIsOpen: false,
+        modalCannotSubmitIsOpen: false
 
 
     };
@@ -34,6 +35,8 @@ class TravelExpenseClaimSelectionPage extends Component {
     this.closeModal = this.closeModal.bind(this);
     this.openAlreadySubmittedModal = this.openAlreadySubmittedModal.bind(this);
     this.closeAlreadySubmittedModal = this.closeAlreadySubmittedModal.bind(this);
+    this.openCannotSubmitAgainModal = this.openCannotSubmitAgainModal.bind(this);
+    this.closeCannotSubmitAgainModal = this.closeCannotSubmitAgainModal.bind(this);
 
   }
 
@@ -54,6 +57,14 @@ class TravelExpenseClaimSelectionPage extends Component {
 
   }
 
+  openCannotSubmitAgainModal() {
+
+    this.setState({
+      modalCannotSubmitIsOpen: true,
+    });
+
+  }
+
 
   closeModal() {
     this.setState({
@@ -64,6 +75,12 @@ class TravelExpenseClaimSelectionPage extends Component {
   closeAlreadySubmittedModal() {
     this.setState({
      errorModalIsOpen: false
+    });
+  }
+
+  closeCannotSubmitAgainModal() {
+    this.setState({
+      modalCannotSubmitIsOpen: false
     });
   }
 
@@ -90,9 +107,12 @@ class TravelExpenseClaimSelectionPage extends Component {
 
 
 
-
+      if(abcd[14] === "REQUESTED"){
+        this.openCannotSubmitAgainModal();
+      }else {
 
       this.openModal();
+    }
 
     }
 
@@ -161,6 +181,10 @@ class TravelExpenseClaimSelectionPage extends Component {
           <TableHeaderColumn dataField="status2_bool" filter={{type: 'TextFilter', delay:1000}} width="200">
               Travel Completion Status
           </TableHeaderColumn>
+          <TableHeaderColumn dataField="travel_expense_claim_status" filter={{type: 'TextFilter', delay:1000}} width="200">
+              Submission Status
+          </TableHeaderColumn>
+
           <TableHeaderColumn dataField="nss_program" filter={{type: 'TextFilter', delay:1000}} width="200">
               Travel Program
           </TableHeaderColumn>
@@ -197,6 +221,7 @@ class TravelExpenseClaimSelectionPage extends Component {
             <br />
 
 
+
             <div><p>You will be redirected to the TravelExpenseClaimPage</p></div>
             <br />
             <br />
@@ -204,6 +229,22 @@ class TravelExpenseClaimSelectionPage extends Component {
             <button  type= "submit"  >
             <a href= '/travelexpenseclaim' class="text-muted"> OK </a>
             </button>
+
+            </Modal>
+
+
+            <Modal
+              open={this.state.modalCannotSubmitIsOpen}
+              onClose={this.closeCannotSubmitAgainModal}
+              center
+            >
+            <br />
+          
+
+
+
+            <p>You have already submitted a claim for this event.</p>
+
 
             </Modal>
 

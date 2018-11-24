@@ -11,6 +11,8 @@ import Box from './UI/Box';
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import "../../../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css";
 import Modal from "react-responsive-modal";
+let item_update_status;
+let auth_status;
 
 class TravelExpenseClaimApproval extends Component {
 
@@ -24,6 +26,7 @@ class TravelExpenseClaimApproval extends Component {
       otr_data: [],
       auth_data: [],
       pending_data: [],
+      items_rejection_check_data: [],
       Invoice_No: localStorage.getItem("Coordinator_InvoiceNo"),
       VSY_IndexNo: localStorage.getItem("Coordinator_VSY_IndexNo"),
       TravelPlan_id: localStorage.getItem("Coordinator_TravelPlan_id"),
@@ -62,13 +65,16 @@ class TravelExpenseClaimApproval extends Component {
       notes: "",
       rejection_reasoning: "",
       expenseclaim_coordinator_approval: "",
+      item_update_status: "",
+      auth_status: "",
 
 
       modalIsOpen: false,
       modal_redirectIsOpen: false,
       handleViewModalIsOpen: false,
       handleSubItemReviewModalIsOpen: false,
-      pendingRequestModalIsOpen: false
+      pendingRequestModalIsOpen: false,
+      redirect_to_travelexpenseclaim_modalIsOpen: false
 
 
     };
@@ -77,12 +83,14 @@ class TravelExpenseClaimApproval extends Component {
     this.handleEdit = this.handleEdit.bind(this);
     this.handle_edit_auth = this.handle_edit_auth.bind(this);
     this.handle_travelexpenseclaim_auth = this.handle_travelexpenseclaim_auth.bind(this);
+    this.handle_travelexpenseclaim_status_update = this.handle_travelexpenseclaim_status_update.bind(this);
     this.logChange = this.logChange.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.closeredirectModal = this.closeredirectModal.bind(this);
     this.close_handleView_modal = this.close_handleView_modal.bind(this);
     this.close_handleReview_modal = this.close_handleReview_modal.bind(this);
     this.close_pending_SubItemModal = this.close_pending_SubItemModal.bind(this);
+
 
   }
 
@@ -258,14 +266,47 @@ class TravelExpenseClaimApproval extends Component {
   handle_subitem_confirmation(event){
     event.preventDefault();
 
+
+
+    let status_update_var;
+
+
     var data = {
       Sub_Item_id: this.state.Sub_Item_id,
       coordinator_approval_status: "APPROVED"
     }
 
+    var item_data = {
+      Item_id: this.state.Item_id,
+      expenseclaim_approval: status_update_var
+    }
+
+
+
+
 
     var self = this;
 
+
+    return new Promise(function (resolve,reject) {
+
+        setTimeout(()  => resolve(1),1000);})
+    //     .then(function(){
+    //       fetch("/users/travelexpenseclaimselection_items_subitems/view/data/" + self.state.VSY_IndexNo + "/" + self.state.Event_id, {
+    //   method: "GET"
+    // })
+    //   .then(function(response) {
+    //     if (response.status >= 400) {
+    //       throw new Error("Bad Response from server");
+    //     }
+    //     return response.json();
+    //   })
+    //   .then(function(data) {
+    //     self.setState({ items_rejection_check_data: data.data });
+    //   })
+    // })
+
+    .then(function(){
 
           fetch("/users/subitem/edit_coordinator_approval_status/", {
             method: "PUT",
@@ -288,12 +329,57 @@ class TravelExpenseClaimApproval extends Component {
                 });
               }
             })
-            .then(
-              window.location.reload()
-            )
-        .catch(function(err) {
-          console.log(err);
+      })
+      .then(function(){
+        for(var i=0; i< (self.state.sub_items_data).length; i++){
+        if (self.state.sub_items_data[i].coordinator_approval_status === "REJECTED") {
+                status_update_var = "REJECTED"
+                item_data.expenseclaim_approval = status_update_var
+                  break;
+        } else if(self.state.sub_items_data[i].coordinator_approval_status === "PENDING") {
+                status_update_var = "PENDING"
+               item_data.expenseclaim_approval = status_update_var
+                  break;
+
+        } else {
+            status_update_var = "APPROVED"
+          item_data.expenseclaim_approval = status_update_var
+        }
+      }
+      })
+      .then(function(event){
+
+        fetch("/users/item/expenseclaim_approval_status", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(item_data)
         })
+          .then(function(response) {
+            if (response.status >= 400) {
+              throw new Error("Bad response from server");
+            }
+            return response.json();
+          })
+          .then(function(data) {
+            console.log(data);
+            if (data === "success") {
+              self.setState({
+                msg: "User has been edited."
+              });
+            }
+          })
+
+      })
+        .then(function(){
+          window.location.reload()
+        }
+
+      )
+  .catch(function(err) {
+    console.log(err);
+  })
   }
 
 
@@ -308,6 +394,7 @@ class TravelExpenseClaimApproval extends Component {
     }
 
     var item_data = {
+
       Item_id: this.state.Item_id,
       expenseclaim_approval: "REJECTED"
 
@@ -317,6 +404,11 @@ class TravelExpenseClaimApproval extends Component {
     var self = this;
 
 
+
+    return new Promise(function (resolve,reject) {
+
+        setTimeout(()  => resolve(1),1000);})
+        .then(function(){
           fetch("/users/subitem/edit_coordinator_approval_status/", {
             method: "PUT",
             headers: {
@@ -338,8 +430,8 @@ class TravelExpenseClaimApproval extends Component {
                 });
               }
             })
+          })
             .then(function(){
-
               fetch("/users/item/expenseclaim_approval_status", {
                 method: "PUT",
                 headers: {
@@ -363,12 +455,14 @@ class TravelExpenseClaimApproval extends Component {
                 })
 
             })
-            .then(
-              window.location.reload()
-            )
+             .then(function(){
+               window.location.reload()
+             })
         .catch(function(err) {
           console.log(err);
         })
+
+
 
   }
 
@@ -382,12 +476,16 @@ class TravelExpenseClaimApproval extends Component {
     event.preventDefault();
 
     let self = this;
-    let auth_status;
 
-    let final_auth_data = {
-      Invoice_No: this.state.Invoice_No,
-      coordinator_approval: auth_status
 
+
+
+
+    let items_data_update = {
+      VSY_IndexNo: this.state.VSY_IndexNo,
+      Event_id: this.state.Event_id,
+      TravelPlan_id: this.state.TravelPlan_id,
+      expenseclaim_approval: ""
     }
 
 
@@ -401,15 +499,16 @@ class TravelExpenseClaimApproval extends Component {
       return response.json();
     })
     .then(function(data){
-      self.setState({auth_data: data.data});
+      self.setState({sub_items_data: data.data});
     })
     .then(function(){
-      let fetched_auth_data = self.state.auth_data;
+      let fetched_auth_data = self.state.sub_items_data;
       let pending_data_checkArray = self.state.pending_data;
 
       console.log(self.state.pending_data);
 
       if((self.state.pending_data).length > 0 ){
+        console.log(self.state.pending_data);
           self.setState({pendingRequestModalIsOpen: true});
       } else {
       for(var i=0;i< fetched_auth_data.length; i++ ){
@@ -417,50 +516,100 @@ class TravelExpenseClaimApproval extends Component {
         if (fetched_auth_data[i].coordinator_approval_status === "REJECTED") {
           console.log("TESTING NOW");
           console.log(fetched_auth_data[i].coordinator_approval_status)
-            auth_status = "REJECTED";
-            console.log(auth_status)
-            final_auth_data.coordinator_approval = auth_status;
+            self.setState({auth_status: "REJECTED"});
+            self.openRedirectingToExpenseClaimSelectionModal();
             break;
         } else {
           console.log("TESTING NOW");
           console.log(fetched_auth_data[i].coordinator_approval_status)
-          self.setState({expenseclaim_coordinator_approval: "APPROVED"});
-          console.log(self.state.expenseclaim_coordinator_approval);
-          auth_status = "APPROVED";
-          final_auth_data.coordinator_approval = "APPROVED";
+          self.setState({auth_status: "APPROVED"});
+
+          items_data_update.expenseclaim_approval = "APPROVED"
+          self.openRedirectingToExpenseClaimSelectionModal();
         }
       }
     }
     })
-    .then(function(){
-      fetch("/users/travelexpenseclaim/status_update/", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(final_auth_data)
-      })
-        .then(function(response) {
-          if (response.status >= 400) {
-            throw new Error("Bad response from server");
-          }
-          return response.json();
-        })
-        .then(function(data) {
-          console.log(final_auth_data);
-          console.log(data);
-          if (data === "success") {
-            self.setState({
-              msg: "User has been edited."
-            });
-          }
-        })
-
-    })
+    // .then(function(){
+    //   fetch("/users/travelexpenseclaim/items/status/allupdate/", {
+    //     method: "PUT",
+    //     headers: {
+    //       "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify(items_data_update)
+    //   })
+    //     .then(function(response) {
+    //       if (response.status >= 400) {
+    //         throw new Error("Bad response from server");
+    //       }
+    //       return response.json();
+    //     })
+    //     .then(function(data) {
+    //       console.log(items_data_update);
+    //       console.log(data);
+    //       if (data === "success") {
+    //         self.setState({
+    //           msg: "User has been edited."
+    //         });
+    //       }
+    //     })
+    //
+    // })
     .catch(function(err){
       console.log(err);
     })
 
+  }
+
+
+  handle_travelexpenseclaim_status_update(event){
+    event.preventDefault();
+
+    var self = this;
+
+
+    let final_auth_data = {
+      Invoice_No: this.state.Invoice_No,
+      coordinator_approval: this.state.auth_status
+
+    }
+
+
+    fetch("/users/travelexpenseclaim/status_update/", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(final_auth_data)
+    })
+      .then(function(response) {
+        if (response.status >= 400) {
+          throw new Error("Bad response from server");
+        }
+        return response.json();
+      })
+      .then(function(data) {
+        console.log(final_auth_data);
+        console.log(data);
+        if (data === "success") {
+          self.setState({
+            msg: "User has been edited."
+          });
+        }
+      })
+      .then(function(){
+
+        self.props.history.push('/travelExpenseClaimApprovalSelectionPage',self.state)
+
+      })
+
+
+  }
+
+  openRedirectingToExpenseClaimSelectionModal(){
+    this.setState({
+        redirect_to_travelexpenseclaim_modalIsOpen: true
+      });
   }
 
   openPendingRequestsModal(){
@@ -499,6 +648,27 @@ class TravelExpenseClaimApproval extends Component {
       amountGST: abcd[10],
       amountNet: abcd[11],
       amountPayable: abcd[12],
+      attachment_url: abcd[13],
+      note_from_coordinator: abcd[14],
+      coordinator_approval_status: abcd[15],
+      handleSubItemReviewModalIsOpen: true
+    })
+  }
+
+  openHandlePENDINGSubItemReviewModal(row,abcd){
+    this.setState({
+      Item_id: abcd[5],
+      Sub_Item_id: abcd[7],
+      sub_item_name: abcd[8],
+      subitem_description: abcd[9],
+      receiptNo: abcd[10],
+      receiptDate: abcd[11],
+      amountTotal: abcd[12],
+      currency: abcd[13],
+      exchangeRate: abcd[14],
+      amountGST: abcd[15],
+      amountNet: abcd[16],
+      amountPayable: abcd[17],
       attachment_url: abcd[13],
       note_from_coordinator: abcd[14],
       coordinator_approval_status: abcd[15],
@@ -557,7 +727,7 @@ class TravelExpenseClaimApproval extends Component {
            }
 
            var self = this;
-           fetch("/users/sub_items_data/" + abcd[5], {
+           fetch("/users/subitems/data/" + abcd[5], {
              method:"GET"
            })
            .then(function(response) {
@@ -600,6 +770,18 @@ class TravelExpenseClaimApproval extends Component {
              }
 
 
+             onRowSelect_subItemTable_PENDING = (row) => {
+               var abcd = [];
+               for(const prop in row){
+                 abcd.push(row[prop]);
+
+                 }
+
+                 this.openHandlePENDINGSubItemReviewModal(row,abcd);
+
+                 }
+
+
       logChange(e) {
          this.setState({
            [e.target.name]: e.target.value //setting value edited by the admin in state.
@@ -618,6 +800,12 @@ class TravelExpenseClaimApproval extends Component {
         mode:"checkbox",
         clickToSelect: true,
         onSelect: this.onRowSelect_subItemTable
+      }
+
+      const selectRowProp_subItemTable_PEDNING = {
+        mode:"checkbox",
+        clickToSelect: true,
+        onSelect: this.onRowSelect_subItemTable_PENDING
       }
 
 
@@ -682,6 +870,7 @@ class TravelExpenseClaimApproval extends Component {
 
               <br />
               <h3> SubItems for {this.state.item_name}: </h3>
+              <p> Click on a row to view details</p>
 
 
 
@@ -875,7 +1064,7 @@ class TravelExpenseClaimApproval extends Component {
 
 
                                                <p><b> Click to view documents </b> </p>
-                                               <button onClick = {e => this.openInNewTab('http://10.20.3.143:4000/public/sample.pdf')}>
+                                               <button onClick = {e => this.openInNewTab('http://10.20.0.95:4000/public/sample.pdf')}>
                                                 VIEW
                                                </button>
 
@@ -925,7 +1114,7 @@ class TravelExpenseClaimApproval extends Component {
                          responsive
                          exportCSV
                          csvFileName="data.csv"
-                         selectRow={selectRowProp_subItemTable}
+                         selectRow={selectRowProp_subItemTable_PEDNING}
                          height='350'
                          scrollTop={'Bottom'}
                        >
@@ -951,18 +1140,18 @@ class TravelExpenseClaimApproval extends Component {
 
 
             <Modal
-              open={this.state.modal_redirectIsOpen}
+              open={this.state.redirect_to_travelexpenseclaim_modalIsOpen}
               center
             >
             <br />
 
 
-            <div><p>Budget has been created. Click "OK" to process other requests.</p></div>
+            <div><p>The Travel Expense Review is Complete. Click "OK" to process other travel expense claims.</p></div>
             <br />
             <br />
 
-            <button  type= "submit"  >
-            <a href= '/onlinetravelrequestSelectionPage' class="text-muted"> OK </a>
+            <button  type= "submit"  onClick={e => this.handle_travelexpenseclaim_status_update(e)}  >
+                    OK
             </button>
 
             </Modal>

@@ -814,7 +814,7 @@ const multerConfig = multer.diskStorage({
 
 
     router.get('/travelexpenseclaim_selectionpage/view/:VSY_IndexNo', (req,res) => {
-      connection.query('SELECT authorizationplan.Travel_Auth_No, authorizationplan.Request_Form_No, traveller_event.Event_id, traveller_event.VSY_IndexNo,travelplan.TravelPlan_id,traveller_event.travel_end_date, authorizationplan.status2_bool, event.event_name, traveller.name, travelplan.nss_program,event.event_start_date, event.event_end_date,traveller_event.travel_start_date, traveller.category_GSTHST_treatment from (((((traveller_event inner join event on event.Event_id = traveller_event.Event_id) inner join traveller on traveller_event.VSY_IndexNo = traveller.VSY_IndexNo) inner join travelplan on event.TravelPlan_id = travelplan.TravelPlan_id) inner join onlinetravelrequest on onlinetravelrequest.Event_id = event.Event_id and onlinetravelrequest.TravelPlan_id = travelplan.TravelPlan_id and traveller.VSY_IndexNo = onlinetravelrequest.VSY_IndexNo) inner join authorizationplan on onlinetravelrequest.Request_Form_No = authorizationplan.Request_Form_No) where authorizationplan.status1 = "APPROVED" and authorizationplan.status2_bool = "COMPLETED" and traveller.VSY_IndexNo=? ', [req.params.VSY_IndexNo], (err,results) => {
+      connection.query('SELECT authorizationplan.Travel_Auth_No, authorizationplan.Request_Form_No, traveller_event.Event_id, traveller_event.VSY_IndexNo,travelplan.TravelPlan_id,traveller_event.travel_end_date, authorizationplan.status2_bool, event.event_name, traveller.name, travelplan.nss_program,event.event_start_date, event.event_end_date,traveller_event.travel_start_date, traveller.category_GSTHST_treatment, traveller_event.travel_expense_claim_status from (((((traveller_event inner join event on event.Event_id = traveller_event.Event_id) inner join traveller on traveller_event.VSY_IndexNo = traveller.VSY_IndexNo) inner join travelplan on event.TravelPlan_id = travelplan.TravelPlan_id) inner join onlinetravelrequest on onlinetravelrequest.Event_id = event.Event_id and onlinetravelrequest.TravelPlan_id = travelplan.TravelPlan_id and traveller.VSY_IndexNo = onlinetravelrequest.VSY_IndexNo) inner join authorizationplan on onlinetravelrequest.Request_Form_No = authorizationplan.Request_Form_No) where authorizationplan.status1 = "APPROVED" and authorizationplan.status2_bool = "COMPLETED" and traveller.VSY_IndexNo=? ', [req.params.VSY_IndexNo], (err,results) => {
         if(err){
           return res.send(err);
         } else {
@@ -827,7 +827,7 @@ const multerConfig = multer.diskStorage({
 
     router.get('/sub_items_data/:Item_id',(req,res) => {
       console.log(req)
-      connection.query('SELECT * from subitems where `Item_id`=?',[req.params.Item_id],(err,results) => {
+      connection.query('SELECT * from subitems where `Item_id`=? and `coordinator_approval_status`="REJECTED"',[req.params.Item_id,req.params.coordinator_approval_status],(err,results) => {
         if(err){
           return res.send(err);
           console.log(err)
@@ -921,11 +921,166 @@ const multerConfig = multer.diskStorage({
     });
 
     router.get('/subitems/data', function(req,res,next) {
-      connection.query('Select * from subitems', function(error, results, fields){
-        if(error) throw error;
-        res.send(JSON.stringify(results))
+      connection.query('Select * from subitems', function(err, results, fields){
+        if(err) {
+          return res.send(err);
+          console.log(err)
+        } else {
+          return res.json({
+            data: results
+          })
+        }
       });
     });
+
+
+
+    router.put('/travelexpenseclaim/status_update/', function(req, res, next) {
+        connection.query('UPDATE travelexpenseclaim SET `coordinator_approval`=? where `Invoice_No`=?',[req.body.coordinator_approval,req.body.Invoice_No], function (error, results, fields) {
+            if(error) throw error;
+            res.send(JSON.stringify(results));
+        });
+    });
+
+
+    router.get('/subitems/pending_data', function(req,res,next) {
+      connection.query('Select * from subitems where `coordinator_approval_status`="PENDING"', function(err, results, fields){
+        if(err) {
+          return res.send(err);
+          console.log(err)
+        } else {
+          return res.json({
+            pending: results
+          })
+        }
+      });
+    });
+
+
+    router.get('/travelexpenseclaimselection_items_subitems/view/pendingData/:VSY_IndexNo/:Event_id', (req,res) => {
+      connection.query('SELECT travelexpenseclaim.Invoice_No,travelexpenseclaim.Travel_Auth_No, travelexpenseclaim.VSY_IndexNo,travelexpenseclaim.TravelPlan_id, travelexpenseclaim.Event_id, items.Item_id, items.item_name, subitems.Sub_Item_id, subitems.sub_item_name, subitems.subitem_description,subitems.receiptNo, subitems.receiptDate, subitems.amountTotal, subitems.currency, subitems.exchangeRate, subitems.amountGST, subitems.amountNet, subitems.amountPayable, subitems.coordinator_approval_status, subitems.rejection_reasoning from  ((travelexpenseclaim inner join items on items.VSY_IndexNo = travelexpenseclaim.VSY_IndexNo and items.Event_id = travelexpenseclaim.Event_id) inner join subitems on subitems.Item_id = items.Item_id) where items.VSY_IndexNo=? and items.Event_id = ? and subitems.coordinator_approval_status = "PENDING"  ', [req.params.VSY_IndexNo,req.params.Event_id, req.params.coordinator_approval_status], (err,results) => {
+        if(err){
+          return res.send(err);
+        } else {
+          return res.json({
+            pendingData:results
+          })
+        }
+      });
+    });
+
+    router.get('/travelexpenseclaimselection_items_subitems/view/data/:VSY_IndexNo/:Event_id', (req,res) => {
+      connection.query('SELECT travelexpenseclaim.Invoice_No,travelexpenseclaim.Travel_Auth_No, travelexpenseclaim.VSY_IndexNo,travelexpenseclaim.TravelPlan_id, travelexpenseclaim.Event_id, items.Item_id, items.item_name, subitems.Sub_Item_id, subitems.sub_item_name, subitems.subitem_description, subitems.amountPayable, subitems.coordinator_approval_status, subitems.rejection_reasoning from  ((travelexpenseclaim inner join items on items.VSY_IndexNo = travelexpenseclaim.VSY_IndexNo and items.Event_id = travelexpenseclaim.Event_id) inner join subitems on subitems.Item_id = items.Item_id) where items.VSY_IndexNo=? and items.Event_id = ?', [req.params.VSY_IndexNo,req.params.Event_id], (err,results) => {
+        if(err){
+          return res.send(err);
+        } else {
+          return res.json({
+            data:results
+          })
+        }
+      });
+    });
+
+    router.get('/traveller/travelexpenseclaim/view/:VSY_IndexNo', function(req,res,next)  {
+      connection.query('SELECT * from travelexpenseclaim where `VSY_IndexNo` = ? and `coordinator_approval` = "REJECTED" or `coordinator_approval`= "PENDING" ', [req.params.VSY_IndexNo,req.params.coordinator_approval], (err,results) => {
+        if(err){
+          return res.send(err);
+        } else {
+          return res.json({
+            data: results
+          })
+        }
+      });
+    });
+
+
+    router.put('/travelexpenseclaim/subItem/update/', function(req, res, next) {
+        connection.query('UPDATE subitems SET `sub_item_name`=?, `subitem_description`=?,`receiptNo`=?, `receiptDate`=?, `amountTotal`=?, `currency`=?, `exchangeRate`=?, `amountGST`=?, `amountNet`=?, `amountPayable`=?, `coordinator_approval_status`=?  where `Sub_Item_id`=?',[req.body.sub_item_name,req.body.subitem_description,req.body.receiptNo,req.body.receiptDate,req.body.amountTotal,req.body.currency,req.body.exchangeRate,req.body.amountGST,req.body.amountNet,req.body.amountPayable,req.body.coordinator_approval_status,req.body.Sub_Item_id], function (error, results, fields) {
+            if(error) throw error;
+            res.send(JSON.stringify(results));
+        });
+    });
+
+
+    router.get('/travelexpenseclaim/items/view/:VSY_IndexNo/:TravelPlan_id/:Event_id',(req,res) => {
+      console.log(req)
+      connection.query('SELECT * from items where VSY_IndexNo=? and TravelPlan_id=? and Event_id=? and `expenseclaim_approval`="REJECTED"', [req.params.VSY_IndexNo,req.params.TravelPlan_id,req.params.Event_id,req.params.expenseclaim_approval], (err,results) => {
+        if(err){
+          return res.send(err);
+          console.log(err)
+        } else {
+          return res.json({
+            data: results
+        })
+        }
+      });
+    });
+
+
+    router.put('/travelexpenseclaim/status/update/', function(req, res, next) {
+        connection.query('UPDATE travelexpenseclaim SET `coordinator_approval`=?  where `Invoice_No`=?',[req.body.coordinator_approval,req.body.Invoice_No], function (error, results, fields) {
+            if(error) throw error;
+            res.send(JSON.stringify(results));
+        });
+    });
+
+
+    router.put('/travelexpenseclaim/items/status/update/', function(req, res, next) {
+        connection.query('UPDATE items SET `expenseclaim_approval`=?  where `Item_id`=?',[req.body.expenseclaim_approval,req.body.Item_id], function (error, results, fields) {
+            if(error) throw error;
+            res.send(JSON.stringify(results));
+        });
+    });
+
+
+
+    router.get('/subitems/data/:Item_id',(req,res) => {
+      console.log(req)
+      connection.query('SELECT * from subitems where `Item_id`=?',[req.params.Item_id,req.params.coordinator_approval_status],(err,results) => {
+        if(err){
+          return res.send(err);
+          console.log(err)
+        } else {
+          return res.json({
+            data: results
+        })
+        }
+      });
+    });
+
+
+    router.put('/travelexpenseclaim/items/status/allupdate/', function(req, res, next) {
+        connection.query('UPDATE items SET `expenseclaim_approval`=?     where `VSY_IndexNo`= ? and `Event_id`= ? and `TravelPlan_id`=? ',[req.body.expenseclaim_approval, req.body.VSY_IndexNo, req.body.Event_id,req.body.TravelPlan_id], function (error, results, fields) {
+            if(error) throw error;
+            res.send(JSON.stringify(results));
+        });
+    });
+
+
+    router.get('/subitems/data/view/:VSY_IndexNo/:Event_id/:TravelPlan_id',(req,res) => {
+      connection.query('SELECT * from subitems where `VSY_IndexNo`=? and `Event_id`= ? and `TravelPlan_id`= ?',[req.params.VSY_IndexNo,req.params.Event_id,req.params.TravelPlan_id],(err,results) => {
+        if(err){
+          return res.send(err);
+          console.log(err)
+        } else {
+          return res.json({
+            data: results
+        })
+        }
+      });
+    });
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
