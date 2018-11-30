@@ -381,7 +381,7 @@ router.get('/itemsotr/view/:VSY_IndexNo/:TravelPlan_id',(req,res) => {
 
 
 router.get('/items_otr/view/:VSY_IndexNo/:Event_id/:TravelPlan_id',(req,res) => {
-  connection.query('SELECT onlinetravelrequest.Request_Form_No, items.VSY_IndexNo, items.Event_id, items.TravelPlan_id, items.Budget_id, items.Item_id, items.item_name, items.amount, items.requested_amount, items.approved_amount , items.status, items.comment, items.reasoning, items.note_from_coordinator, event.event_name , traveller.name from (((items Inner Join onlinetravelrequest on items.VSY_IndexNo = onlinetravelrequest.VSY_IndexNo and items.TravelPlan_id = onlinetravelrequest.TravelPlan_id and items.Event_id = onlinetravelrequest.Event_id) inner join traveller on onlinetravelrequest.VSY_IndexNo = traveller.VSY_IndexNo) inner join event on onlinetravelrequest.Event_id = event.Event_id)  where onlinetravelrequest.VSY_IndexNo=? and items.Event_id=? and items.TravelPlan_id=?',[req.params.VSY_IndexNo,req.params.Event_id,req.params.TravelPlan_id],(err,results) => {
+  connection.query('SELECT onlinetravelrequest.Request_Form_No, items.VSY_IndexNo, items.Event_id, items.TravelPlan_id, items.Budget_id, items.Item_id, items.item_name, items.amount, items.requested_amount, items.approved_amount , items.status, items.comment, items.reasoning, items.note_from_coordinator, event.event_name , traveller.name, items.expenseclaim_approval from (((items Inner Join onlinetravelrequest on items.VSY_IndexNo = onlinetravelrequest.VSY_IndexNo and items.TravelPlan_id = onlinetravelrequest.TravelPlan_id and items.Event_id = onlinetravelrequest.Event_id) inner join traveller on onlinetravelrequest.VSY_IndexNo = traveller.VSY_IndexNo) inner join event on onlinetravelrequest.Event_id = event.Event_id)  where onlinetravelrequest.VSY_IndexNo=? and items.Event_id=? and items.TravelPlan_id=?',[req.params.VSY_IndexNo,req.params.Event_id,req.params.TravelPlan_id],(err,results) => {
     if(err){
       return res.send(err);
       console.log(err)
@@ -905,7 +905,7 @@ const multerConfig = multer.diskStorage({
 
 
     router.put('/subitem/edit_coordinator_approval_status/', function(req, res, next) {
-        connection.query('UPDATE subitems SET `coordinator_approval_status`=? where `Sub_Item_id`=?',[req.body.coordinator_approval_status,req.body.Sub_Item_id], function (error, results, fields) {
+        connection.query('UPDATE subitems SET `coordinator_approval_status`=? , `rejection_reasoning`=?  where `Sub_Item_id`=?',[req.body.coordinator_approval_status,req.body.rejection_reasoning,req.body.Sub_Item_id], function (error, results, fields) {
             if(error) throw error;
             res.send(JSON.stringify(results));
         });

@@ -35,7 +35,8 @@ class ApprovedTravelPlan extends Component {
               status3: "",
               notes: "",
               modalIsOpen: false,
-              total_sum: "",
+              total_approved_sum: "",
+              total_requested_sum: ""
 
 
 
@@ -65,6 +66,9 @@ class ApprovedTravelPlan extends Component {
               })
               .then(function(data) {
                 self.setState({ items_data: data.data });
+              })
+              .then(function(){
+                self.sumTotal()
               })
               .catch(err => {
                 console.log("caught it !, err");
@@ -122,16 +126,26 @@ class ApprovedTravelPlan extends Component {
 
 
        sumTotal(){
-         var sumTotal = 0;
-         for (var i = 0; i < (this.state.data).length; i++){
+         let self = this;
+         var approvedSum = 0;
+         var requestedSum = 0;
+          console.log ("Reached here");
+          console.log(self.state.items_data);
+         for (var i = 0; i < (self.state.items_data).length; i++){
 
-            var Total = (this.state.data)[i].approved_amount
-            sumTotal = sumTotal + Total;
+            let approvedTotal = self.state.items_data[i].approved_amount
+            let requestedTotal = self.state.items_data[i].requested_amount
+
+            approvedSum = approvedSum + approvedTotal;
+            requestedSum = requestedSum + requestedTotal;
+
+
 
          }
 
          this.setState({
-           total_sum: sumTotal
+           total_approved_sum: approvedSum,
+           total_requested_sum: requestedSum
 
          })
 
@@ -246,7 +260,11 @@ class ApprovedTravelPlan extends Component {
               </BootstrapTable>
               </div>
 
-               <p> {this.state.total_sum} </p>
+              <div>
+              <p style = {{color: 'green'}}> <b> Total Requested Amount =  {this.state.total_requested_sum} </b> </p>
+
+              <p style = {{color: 'green'}}> <b> Total Approved Amount =  {this.state.total_approved_sum} </b> </p>
+              </div>
 
               </Modal>
 
@@ -258,7 +276,7 @@ class ApprovedTravelPlan extends Component {
              </BootstrapTable>
 
 
-             
+
 
 
 

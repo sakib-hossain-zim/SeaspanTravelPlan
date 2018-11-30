@@ -9,6 +9,7 @@ import Loading from '../Helpers/Loading';
 import PageTitle from '../Helpers/PageTitle'
 import Box from '../UI/Box';
 import PageHeader from '../Helpers/PageHeader'
+import AutoScale from "react-auto-scale";
 
 
 class LandingPage extends Component {
@@ -30,26 +31,30 @@ class LandingPage extends Component {
 
 
     render() {
+       var displayNone ={display: 'none'}
         return (
 
-            <Backend_LandingPage>
 
 
 
 
-                
-                  <div className="content-inner padding-top padding-left no-padding-right">
+
+
+                  <div className="content-inner">
 
 
 
                    <PageHeader/>
 
 
+                     <div className= "center-div">
 
-                   <div className="content-inner-mobilefix">
 
 
-                   <Box classes="side-margins vertical-center">
+
+
+
+                   <div>
                    <div><img src={require('../../media/logo.png')} alt="Seaspan_logo" style={{height: 50, marginLeft: 100,marginBottom: 30}}/></div>
                    <button type = "submit" className = "button-new"  bsSize="large" >
                     <a href= '/travellerloginpage' class="text-muted"> Traveller </a>
@@ -59,15 +64,22 @@ class LandingPage extends Component {
                     <a href= '/controllerloginpage' class="text-muted"> Coordinator </a>
                       </button>
 
-                    </Box>
+                    </div>
+
+
+
+
+
 
 
 
 
 
                 </div>
+
+
                 </div>
-            </Backend_LandingPage>
+
         );
     }
   }

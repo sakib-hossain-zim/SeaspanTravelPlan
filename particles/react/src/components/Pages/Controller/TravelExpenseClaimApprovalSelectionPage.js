@@ -135,7 +135,7 @@ class TravelExpenseClaimApprovalSelectionPage extends Component {
             height='350'
             scrollTop={'Bottom'}
           >
-          <TableHeaderColumn isKey dataField="Invoice_No" filter={{type: 'TextFilter', delay:1000}} width="150">
+          <TableHeaderColumn isKey dataField="Invoice_No" filter={{type: 'TextFilter', delay:1000}} width="170">
             Travel Expense Claim No
           </TableHeaderColumn>
           <TableHeaderColumn  dataField="name" filter={{type: 'TextFilter', delay:1000}} width="200">

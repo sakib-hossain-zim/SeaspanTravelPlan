@@ -181,7 +181,7 @@ class TravelExpenseClaimSelectionPage extends Component {
           <TableHeaderColumn dataField="status2_bool" filter={{type: 'TextFilter', delay:1000}} width="200">
               Travel Completion Status
           </TableHeaderColumn>
-          <TableHeaderColumn dataField="travel_expense_claim_status" filter={{type: 'TextFilter', delay:1000}} width="200">
+          <TableHeaderColumn dataField="travel_expense_claim_status" filter={{type: 'TextFilter', delay:1000}} width="250">
               Submission Status
           </TableHeaderColumn>
 
@@ -239,7 +239,7 @@ class TravelExpenseClaimSelectionPage extends Component {
               center
             >
             <br />
-          
+
 
 
 

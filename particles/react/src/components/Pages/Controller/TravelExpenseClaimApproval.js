@@ -11,7 +11,6 @@ import Box from './UI/Box';
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import "../../../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css";
 import Modal from "react-responsive-modal";
-let item_update_status;
 let auth_status;
 
 class TravelExpenseClaimApproval extends Component {
@@ -67,6 +66,7 @@ class TravelExpenseClaimApproval extends Component {
       expenseclaim_coordinator_approval: "",
       item_update_status: "",
       auth_status: "",
+      RejectionReasonerror: "",
 
 
       modalIsOpen: false,
@@ -74,7 +74,10 @@ class TravelExpenseClaimApproval extends Component {
       handleViewModalIsOpen: false,
       handleSubItemReviewModalIsOpen: false,
       pendingRequestModalIsOpen: false,
-      redirect_to_travelexpenseclaim_modalIsOpen: false
+      redirect_to_travelexpenseclaim_modalIsOpen: false,
+      errorModalIsOpen: false,
+      confirmationModalIsOpen: false
+
 
 
     };
@@ -90,6 +93,7 @@ class TravelExpenseClaimApproval extends Component {
     this.close_handleView_modal = this.close_handleView_modal.bind(this);
     this.close_handleReview_modal = this.close_handleReview_modal.bind(this);
     this.close_pending_SubItemModal = this.close_pending_SubItemModal.bind(this);
+    this.close_errorModal = this.close_errorModal.bind(this);
 
 
   }
@@ -269,11 +273,13 @@ class TravelExpenseClaimApproval extends Component {
 
 
     let status_update_var;
+    let sub_item_data_store;
 
 
     var data = {
       Sub_Item_id: this.state.Sub_Item_id,
-      coordinator_approval_status: "APPROVED"
+      coordinator_approval_status: "APPROVED",
+      rejection_reasoning: ""
     }
 
     var item_data = {
@@ -331,61 +337,141 @@ class TravelExpenseClaimApproval extends Component {
             })
       })
       .then(function(){
-        for(var i=0; i< (self.state.sub_items_data).length; i++){
-        if (self.state.sub_items_data[i].coordinator_approval_status === "REJECTED") {
-                status_update_var = "REJECTED"
-                item_data.expenseclaim_approval = status_update_var
-                  break;
-        } else if(self.state.sub_items_data[i].coordinator_approval_status === "PENDING") {
-                status_update_var = "PENDING"
-               item_data.expenseclaim_approval = status_update_var
+      fetch("/users/subitems/data/" + self.state.Item_id, {
+        method:"GET"
+      })
+      .then(function(response) {
+        if (response.status >= 400) {
+          throw new Error("Bad Response from server");
+        }
+        return response.json();
+      })
+      .then(function(data) {
+        sub_item_data_store = data.data
+      })
+      .then(function(){
+        console.log(sub_item_data_store);
+      })
+    .then(function(event){
+        for(var i=0; i< sub_item_data_store.length; i++){
+
+        if (sub_item_data_store[i].coordinator_approval_status === "APPROVED") {
+                // status_update_var = "APPROVED"
+                //   item_data.expenseclaim_approval = status_update_var
+                self.setState({item_update_status: "APPROVED"});
+                console.log("reached here")
+
+
+
+        } else if(sub_item_data_store[i].coordinator_approval_status === "REJECTED") {
+               //  status_update_var = "REJECTED"
+               // item_data.expenseclaim_approval = status_update_var
+               self.setState({item_update_status: "REJECTED"})
                   break;
 
         } else {
-            status_update_var = "APPROVED"
-          item_data.expenseclaim_approval = status_update_var
+          //   status_update_var = "PENDING"
+          // item_data.expenseclaim_approval = status_update_var
+          self.setState({item_update_status: "PENDING"})
+          break;
         }
       }
-      })
-      .then(function(event){
-
-        fetch("/users/item/expenseclaim_approval_status", {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(item_data)
-        })
-          .then(function(response) {
-            if (response.status >= 400) {
-              throw new Error("Bad response from server");
-            }
-            return response.json();
-          })
-          .then(function(data) {
-            console.log(data);
-            if (data === "success") {
-              self.setState({
-                msg: "User has been edited."
-              });
-            }
-          })
 
       })
-        .then(function(){
-          window.location.reload()
-        }
+    })
+      .then(function(){
+        self.openConfirmationModal();
+      })
+      // .then(function(){
+      //
+      //   fetch("/users/item/expenseclaim_approval_status", {
+      //     method: "PUT",
+      //     headers: {
+      //       "Content-Type": "application/json"
+      //     },
+      //     body: JSON.stringify(item_data)
+      //   })
+      //     .then(function(response) {
+      //       if (response.status >= 400) {
+      //         throw new Error("Bad response from server");
+      //       }
+      //       return response.json();
+      //     })
+      //     .then(function(data) {
+      //       console.log(data);
+      //       if (data === "success") {
+      //         self.setState({
+      //           msg: "User has been edited."
+      //         });
+      //       }
+      //     })
+      //
+      // })
 
-      )
   .catch(function(err) {
     console.log(err);
   })
   }
 
 
+  openConfirmationModal(){
+   this.setState({
+     confirmationModalIsOpen: true,
+   })
+ }
+
+
+ handleConfirmButtonClick(event){
+   var self = this;
+   event.preventDefault();
+
+   var item_data = {
+       Item_id: this.state.Item_id,
+       expenseclaim_approval: this.state.item_update_status
+     }
+
+
+     fetch("/users/item/expenseclaim_approval_status", {
+       method: "PUT",
+       headers: {
+         "Content-Type": "application/json"
+       },
+       body: JSON.stringify(item_data)
+     })
+       .then(function(response) {
+         if (response.status >= 400) {
+           throw new Error("Bad response from server");
+         }
+         return response.json();
+       })
+       .then(function(data) {
+         console.log(data);
+         if (data === "success") {
+           self.setState({
+             msg: "User has been edited."
+           });
+         }
+       })
+       .then(function(){
+         console.log(self.state.item_update_status);
+       })
+       .then(function(){
+         window.location.reload()
+       })
+
+
+
+ }
+
+
 
   handle_subitem_rejection(event){
     event.preventDefault();
+    const err = this.validate();
+
+    if(err){
+      this.setState({errorModalIsOpen: true})}
+      else {
 
     var data = {
       Sub_Item_id: this.state.Sub_Item_id,
@@ -461,6 +547,9 @@ class TravelExpenseClaimApproval extends Component {
         .catch(function(err) {
           console.log(err);
         })
+
+
+      }
 
 
 
@@ -689,6 +778,13 @@ class TravelExpenseClaimApproval extends Component {
        });
      }
 
+     close_errorModal() {
+       this.setState({
+         errorModalIsOpen: false
+       });
+     }
+
+
      close_handleReview_modal() {
        this.setState({
          handleSubItemReviewModalIsOpen: false
@@ -781,6 +877,26 @@ class TravelExpenseClaimApproval extends Component {
 
                  }
 
+                 validate = () => {
+                   let isError = false;
+                   const errors = {
+                     RejectionReasonerror: "",
+
+
+                   };
+                   if (this.state.rejection_reasoning.length < 5) {
+                     isError = true;
+                     errors.RejectionReasonerror = "Rejection Reason cannot be empty";
+                   }
+
+                       this.setState({
+                         ...this.state,
+                         ...errors
+                       });
+
+                       return isError;
+                 }
+
 
       logChange(e) {
          this.setState({
@@ -809,6 +925,8 @@ class TravelExpenseClaimApproval extends Component {
       }
 
 
+
+
         return (
             this.props.isFetching ? <Backend><div className="content-inner"><Loading /></div></Backend> :
             <Backend>
@@ -818,6 +936,7 @@ class TravelExpenseClaimApproval extends Component {
             <h3> Approve Requests </h3>
             <br />
             <p> <b> * Click on rows to review sub items </b></p>
+            <p> <b> * Click VALIDATE when all sub items have been reviewed </b></p>
             <br />
               <BootstrapTable
                 data={this.state.data}
@@ -831,10 +950,8 @@ class TravelExpenseClaimApproval extends Component {
                 scrollTop={'Bottom'}
               >
 
-              <TableHeaderColumn isKey dataField="Request_Form_No" filter={{type: 'TextFilter', delay:1000}} width="125">
-                  Request <br /> Form No
-              </TableHeaderColumn>
-              <TableHeaderColumn dataField="event_name" filter={{type: 'TextFilter', delay:1000}} width="230">
+
+              <TableHeaderColumn isKey dataField="event_name" filter={{type: 'TextFilter', delay:1000}} width="230">
                   Event Name <br /> <p></p>
               </TableHeaderColumn>
               <TableHeaderColumn dataField="name" filter={{type: 'TextFilter', delay:1000}} width="230">
@@ -855,11 +972,8 @@ class TravelExpenseClaimApproval extends Component {
               <TableHeaderColumn dataField="approved_amount" filter={{type: 'TextFilter', delay:1000}} width="90">
                  Approved <br /> Amount
               </TableHeaderColumn>
-              <TableHeaderColumn dataField="reasoning" filter={{type: 'TextFilter', delay:1000}} width="200">
-                 Traveller's Reason <br /> <p></p>
-              </TableHeaderColumn>
-              <TableHeaderColumn dataField="note_from_coordinator" filter={{type: 'TextFilter', delay:1000}} width="300">
-                 Note from coordinator <br /> <p></p>
+              <TableHeaderColumn dataField="expenseclaim_approval" filter={{type: 'TextFilter', delay:1000}} width="300">
+               Status <br /> <p></p>
               </TableHeaderColumn>
 
               <Modal
@@ -904,6 +1018,10 @@ class TravelExpenseClaimApproval extends Component {
               <TableHeaderColumn dataField="amountPayable" filter={{type: 'TextFilter', delay:1000}} width="140">
                   Amount Payable
               </TableHeaderColumn>
+              <TableHeaderColumn dataField="coordinator_approval_status" filter={{type: 'TextFilter', delay:1000}} width="140">
+                  Status
+              </TableHeaderColumn>
+
               </BootstrapTable>
               </div>
 
@@ -1064,7 +1182,7 @@ class TravelExpenseClaimApproval extends Component {
 
 
                                                <p><b> Click to view documents </b> </p>
-                                               <button onClick = {e => this.openInNewTab('http://10.20.0.95:4000/public/sample.pdf')}>
+                                               <button onClick = {e => this.openInNewTab('http://10.20.3.8:4000/public/sample.pdf')}>
                                                 VIEW
                                                </button>
 
@@ -1079,6 +1197,7 @@ class TravelExpenseClaimApproval extends Component {
                                                    className="form-control-rejection"
                                                    onChange={this.logChange}
                                                    name="rejection_reasoning"
+
 
 
 
@@ -1100,6 +1219,12 @@ class TravelExpenseClaimApproval extends Component {
                        onClose={this.close_pending_SubItemModal}
                        center
                        >
+                       <br />
+
+                       <h4 style = {{color: 'red'}}> The following items must be reviewed before proceeding. </h4>
+                       <br />
+
+                       <p> Click on the row to resume review of expense Sub item</p>
 
                        <br />
                        <div style={{width: 700,
@@ -1153,6 +1278,43 @@ class TravelExpenseClaimApproval extends Component {
             <button  type= "submit"  onClick={e => this.handle_travelexpenseclaim_status_update(e)}  >
                     OK
             </button>
+
+            </Modal>
+
+            <Modal
+              open={this.state.errorModalIsOpen}
+                onClose={this.close_errorModal}
+              center
+
+            >
+            <br />
+
+
+            <div><p> Please provide reasoning for rejection</p></div>
+            <br />
+            <br />
+
+
+            </Modal>
+
+            <Modal
+              open={this.state.confirmationModalIsOpen}
+                onClose={this.close_confirmationModal}
+              center
+
+            >
+            <br />
+
+
+            <div><p> Status has been updated </p></div>
+            <br />
+            <br />
+
+            <button  type= "submit"  onClick={e => this.handleConfirmButtonClick(e)}  >
+                    OK
+            </button>
+
+
 
             </Modal>
 

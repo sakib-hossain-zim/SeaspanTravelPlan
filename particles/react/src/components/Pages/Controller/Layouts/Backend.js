@@ -19,7 +19,9 @@ export default class Backend extends Component {
                 <PageTitle />
 
                 <div className="content">
+                <div className="content-inner">
                   {this.props.children}
+                  </div>
                 </div>
 
                 <Footer />
@@ -34,7 +36,7 @@ export default class Backend extends Component {
                 </div>
             </div>
           </div>
-        
+
         );
     }
 }
