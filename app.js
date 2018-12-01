@@ -30,6 +30,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'particles/react/build')));
+
+
+
 
  app.use('/', indexRouter);
  app.use('/users', usersRouter);
@@ -46,6 +50,13 @@ app.use(cookieParser());
 app.use(cors());
 app.use(fileUpload());
 app.use('/public', express.static(__dirname + '/public'));
+
+
+
+
+app.get('*' (req,res) => {
+  res.sendFile(path.json(__dirname + 'particles/react/build/index.html'))
+})
 
 
 
