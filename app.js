@@ -54,9 +54,9 @@ app.use('/public', express.static(__dirname + '/public'));
 
 
 
-app.get('*' (req,res) => {
+app.get('*', (req,res) => {
   res.sendFile(path.json(__dirname + 'particles/react/build/index.html'))
-})
+});
 
 
 
