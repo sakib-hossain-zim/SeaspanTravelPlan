@@ -8,7 +8,7 @@
  },
   "scripts": {
     "start": "node ./bin/www",
-    "heroku-postbuild": "cd  particles/react && npm install && npm run build"
+    "heroku-postbuild": "cd  particles/react && npm install --only=dev && npm install && npm run build"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
