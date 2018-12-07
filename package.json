@@ -8,7 +8,7 @@
  },
   "scripts": {
     "start": "node ./bin/www",
-    "heroku-postbuild": "cd  particles/react && npm install --only=dev && npm install && npm run build"
+    "heroku-postbuild": "cd particles/react && npm install --only=dev && NODE_ENV=development npm install --no-shrinkwrap && npm run build"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
@@ -22,6 +22,7 @@
     "morgan": "~1.9.0",
     "mssql": "^4.1.0",
     "multer": "^1.3.1",
-    "mysql": "^2.15.0"
+    "mysql": "^2.15.0",
+    "react-scripts": "^1.1.5"
   }
 }
