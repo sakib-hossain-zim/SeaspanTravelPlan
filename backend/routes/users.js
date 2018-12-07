@@ -26,11 +26,11 @@ var multer = require('multer');
 
 
 var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'Topoftheworld10!',
-  database: 'travelplanmysqlserverdatabase',
-  port: 3308
+  host: 'us-cdbr-iron-east-01.cleardb.net',
+  user: 'ba2948cb621d20',
+  password: 'cdef3f13e5c2aff',
+  database: 'heroku_1251b2fbadd669d',
+  port: 3306
 });
 
 connection.connect(err => {
