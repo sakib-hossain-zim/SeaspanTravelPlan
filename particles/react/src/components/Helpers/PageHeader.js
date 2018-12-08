@@ -7,9 +7,9 @@ export default class PageHeader extends Component {
               <div className="page-header-inner">
                   <div className="page-header-content">
 
-                      <h1>Welcome to Seaspan Travel Portal</h1>
+                      <h1>Welcome to the Seaspan Travel Portal</h1>
                       <p>
-                        
+
                       </p>
 
                   </div>

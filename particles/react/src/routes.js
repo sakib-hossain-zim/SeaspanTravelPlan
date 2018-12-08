@@ -293,7 +293,7 @@ export const routes = [
 
     {
       path: '/travellerdashboard',
-      title: 'TravellerDashboard',
+      title: 'Traveller Dashboard',
       breadcrumb: 'TravellerDashboard',
       breadcrumb_link: false,
       exact: true,

@@ -87,7 +87,7 @@ export default class TravellerLoginPage extends Component {
 
         return (
             <Empty>
-                <h1>Travel Plan Portal Login</h1>
+                <h1>Travel Plan Portal Login (Traveller)</h1>
 
                 <form>
 

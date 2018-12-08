@@ -90,7 +90,7 @@ export default class TravellerLoginPage extends Component {
 
         return (
             <Empty>
-                <h1>Travel Plan Portal Login</h1>
+                <h1>Travel Plan Portal Login (Coordinator)</h1>
 
                 <form>
 

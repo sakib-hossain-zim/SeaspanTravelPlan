@@ -20,7 +20,7 @@ export default class Navigation extends Component {
 
                     <li>
                         <NavLink to="/TravelRequestSelectionPage" class="text-muted" activeClassName="active">
-                            <i className="md-icon">library_books</i> <span>Request Travel Auth</span>
+                            <i className="md-icon">library_books</i> <span>Request Travel Authorization</span>
                         </NavLink>
                     </li>
 
