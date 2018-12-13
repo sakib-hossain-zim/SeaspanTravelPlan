@@ -992,7 +992,7 @@ const multerConfig = multer.diskStorage({
     });
 
     router.get('/traveller/travelexpenseclaim/view/:VSY_IndexNo', function(req,res,next)  {
-      pool.query('SELECT * from travelexpenseclaim where `VSY_IndexNo` = ? and `coordinator_approval` = "REJECTED" or `coordinator_approval`= "PENDING" ', [req.params.VSY_IndexNo,req.params.coordinator_approval], (err,results) => {
+      pool.query('SELECT * from travelexpenseclaim where `VSY_IndexNo` = ? ', [req.params.VSY_IndexNo], (err,results) => {
         if(err){
           return res.send(err);
         } else {

@@ -465,6 +465,8 @@ class TravelExpenseClaimApproval extends Component {
 
 
 
+
+
   handle_subitem_rejection(event){
     event.preventDefault();
     const err = this.validate();
@@ -479,12 +481,6 @@ class TravelExpenseClaimApproval extends Component {
       rejection_reasoning: this.state.rejection_reasoning
     }
 
-    var item_data = {
-
-      Item_id: this.state.Item_id,
-      expenseclaim_approval: "REJECTED"
-
-    }
 
 
     var self = this;
@@ -518,31 +514,11 @@ class TravelExpenseClaimApproval extends Component {
             })
           })
             .then(function(){
-              fetch("/users/item/expenseclaim_approval_status", {
-                method: "PUT",
-                headers: {
-                  "Content-Type": "application/json"
-                },
-                body: JSON.stringify(item_data)
-              })
-                .then(function(response) {
-                  if (response.status >= 400) {
-                    throw new Error("Bad response from server");
-                  }
-                  return response.json();
-                })
-                .then(function(data) {
-                  console.log(data);
-                  if (data === "success") {
-                    self.setState({
-                      msg: "User has been edited."
-                    });
-                  }
-                })
+              self.setState({item_update_status: "REJECTED"})
 
             })
              .then(function(){
-               window.location.reload()
+                 self.openConfirmationModal();
              })
         .catch(function(err) {
           console.log(err);

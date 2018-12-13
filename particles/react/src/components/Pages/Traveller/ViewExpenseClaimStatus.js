@@ -23,13 +23,16 @@ class ViewExpenseClaimStatus extends Component {
 
       VSY_IndexNo: localStorage.getItem('VSY_IndexNo'),
       modalIsOpen: false,
-      modalCannotSubmitIsOpen: false
+      modalCannotSubmitIsOpen: false,
+      approvedModalIsOpen: false
 
 
 
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.openModalApproved = this.openModalApproved.bind(this);
+    this.closeModalApproved = this.closeModalApproved.bind(this);
     this.openCannotSubmitAgainModal = this.openCannotSubmitAgainModal.bind(this);
     this.closeCannotSubmitAgainModal = this.closeCannotSubmitAgainModal.bind(this);
 
@@ -42,6 +45,12 @@ class ViewExpenseClaimStatus extends Component {
       modalIsOpen: true,
     });
 
+  }
+
+  openModalApproved() {
+    this.setState({
+      approvedModalIsOpen: true
+    });
   }
 
   openCannotSubmitAgainModal() {
@@ -58,6 +67,12 @@ class ViewExpenseClaimStatus extends Component {
   closeModal() {
     this.setState({
       modalIsOpen: false
+    });
+  }
+
+  closeModalApproved() {
+    this.setState({
+      approvedModalIsOpen: false
     });
   }
 
@@ -86,6 +101,8 @@ class ViewExpenseClaimStatus extends Component {
 
         if(abcd[5] === "REJECTED"){
         this.openModal();
+      } else if (abcd[5]=== "APPROVED"){
+        this.openModalApproved();
       } else {
        this.openCannotSubmitAgainModal();
       }
@@ -137,7 +154,7 @@ class ViewExpenseClaimStatus extends Component {
         <div>
         <br />
 
-        <h4> Click on an event row to request authorization to travel </h4>
+        <h4> Click on a  row to view expense claim </h4>
 
         <br />
 
@@ -187,7 +204,7 @@ class ViewExpenseClaimStatus extends Component {
             <br />
 
 
-            <div><p>Click "OK" to proceed to rejected items page.</p></div>
+            <div><p> ACTION REQUIRED! Please review comments, modify and re-submit your expense claim. Click "OK" to proceed to rejected items page.</p></div>
             <br />
             <br />
 
@@ -205,11 +222,29 @@ class ViewExpenseClaimStatus extends Component {
             <br />
 
 
-            <p> Your Expense Claim Submission is currently being reviewed. </p>
+            <p> Your Expense Claim Submission is currently being reviewed. Thank you for your patience!  </p>
 
 
 
             </Modal>
+
+            <Modal
+              open={this.state.approvedModalIsOpen}
+              onClose={this.closeModalApproved}
+              center
+            >
+            <br />
+
+
+            <p> Your Expense Claim has been approved. Print your approved expense claim and attach to your Company Invoice for submission to APSeaspan@Seaspan.com  </p>
+
+
+
+            </Modal>
+
+
+
+
 
 
           </BootstrapTable>
