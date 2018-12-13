@@ -19,6 +19,8 @@ export default class ExamplePanel extends Component {
 
                     <PanelListTitle></PanelListTitle>
 
+                      <a href='/'><button class="button_logout button_log_out"> <i className="md-icon">power_settings_new</i> Log Out </button></a>
+
 
 
                 </PanelListWrapper>
