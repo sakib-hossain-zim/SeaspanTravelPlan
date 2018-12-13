@@ -20,7 +20,7 @@ export default class TravellerDashboard extends Component {
                 <div className="content-inner no-padding-top no-padding-left no-padding-right mobilefix">
                     <PageHeader/>
 
-                    <img src={require('../../../media/seaspan_jss.PNG')}  style={{width: 1300, height: 300}}/>
+                    <img src={require('../../../media/seaspan_traveller.PNG')}  style={{width: 1300, height: 300}}/>
 
 
 
