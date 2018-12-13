@@ -105,7 +105,7 @@ export default class TravellerLoginPage extends Component {
 
                     <div className="form-group">
                         <label>Password</label>
-                        <input type="text" name="password"  className="form-control" value={this.state.password}
+                        <input type="password" name="password"  className="form-control" value={this.state.password}
                         onChange={e => this.change(e)}/>
                     </div>
 
