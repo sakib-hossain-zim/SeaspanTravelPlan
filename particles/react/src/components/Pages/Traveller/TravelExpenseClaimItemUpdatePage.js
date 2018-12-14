@@ -57,7 +57,8 @@ class TravelExpenseClaimItemUpdatePage extends Component {
       attachment_url: "",
       note_from_coordinator: "",
       category_GSTHST_treatment: localStorage.getItem('CategoryGSTHST'),
-      Item_id: ""
+      Item_id: "",
+      rejection_reasoning: ""
 
 
 
@@ -364,6 +365,7 @@ class TravelExpenseClaimItemUpdatePage extends Component {
         amountGST: abcd[10],
         amountNet: abcd[11],
         amountPayable: abcd[12],
+        rejection_reasoning: abcd[15]
       })
     }
 
@@ -382,6 +384,7 @@ class TravelExpenseClaimItemUpdatePage extends Component {
         amountGST: abcd[10],
         amountNet: abcd[11],
         amountPayable: abcd[12],
+        rejection_reasoning: abcd[15]
       })
     }
 
@@ -850,7 +853,7 @@ class TravelExpenseClaimItemUpdatePage extends Component {
       </div>
 
       </MuiThemeProvider>
-      <p><b>* Please fill up the Expense Claimed Amount with your original expenditures </b></p>
+      <p><b>* The transactions below have been Rejected. Click on the item row to modify. </b></p>
       <div style={{width: 1000,
                 padding: 10,
                 border: 5,
@@ -894,167 +897,12 @@ class TravelExpenseClaimItemUpdatePage extends Component {
              onClose={this.closeModal}
              center
            >
-           <p> <b> Claim {this.state.item_name} Expense </b> </p>
+           <br />
+           <p> <b> Click OK to view and edit Rejected subItems of {this.state.item_name} </b> </p>
 
-             <form>
-
-               <label>
-                 Approved Amount:
-                 <input
-                   type="text"
-                   value={this.state.approved_amount}
-                   className="form-control"
-                   name="approved_amount"
-
-                 />
-               </label>
-               <label>
-                 Coordinator Note:
-                 <input
-                   type="text"
-                   value={this.state.note_from_coordinator}
-                   className="form-control"
-                   name="note_from_coordinator"
-
-                 />
-               </label>
-             </form>
-
-                 <button onClick = {e => this.handleView(e)}>View and Edit SubItems</button>
+                 <button onClick = {e => this.handleView(e)}>OK</button>
            </Modal>
 
-
-           <Modal
-                  open={this.state.addModalIsOpen}
-                  onClose={this.closeAddModal}
-                  center
-                >
-                  <form onSubmit={this.handleAddItemEdit}>
-
-                  <label>
-                    Item_id:
-                    <input
-                      type="text"
-                      value={this.state.Item_id}
-                      className="form-control"
-                      name="Item_id"
-
-                    />
-                  </label>
-                    <label>
-                      Budget_id:
-                      <input
-                        type="text"
-                        value={this.state.Budget_id}
-                        className="form-control"
-                         onChange={this.logChange}
-                        name="Budget_id"
-
-                      />
-                    </label>
-                    <label>
-                      TravelPlan_id:
-                      <input
-                        type="text"
-                        value={this.state.TravelPlan_id}
-                        className="form-control"
-                         onChange={this.logChange}
-                        name="TravelPlan_id"
-
-                      />
-                    </label>
-                    <label>
-                      VSY_IndexNo:
-                      <input
-                        type="text"
-                        value={this.state.VSY_IndexNo}
-                        className="form-control"
-                       onChange={this.logChange}
-                        name="VSY_IndexNo"
-
-                      />
-                    </label>
-                    <label>
-                      Event Id:
-                      <input
-                        type="text"
-                        value={this.state.Event_id}
-                        className="form-control"
-                       onChange={this.logChange}
-                        name="Event_id"
-
-                      />
-                    </label>
-
-                    <label>
-                      Item Name:
-                      <select
-                        type="text"
-                        onChange={this.logChange}
-                        value={this.state.item_name}
-                        className="form-control"
-                        name="item_name">
-                        <option value="PerDiem"> PerDiem </option>
-                        <option value="AccomodationCost"> Accomodation Cost </option>
-                        <option value="Airfare"> AirFare </option>
-                        <option value="Car_rental"> Car Rental </option>
-                        <option value="Cellphone"> Cellphone </option>
-
-
-
-                      </select>
-                    </label>
-
-                    <label>
-                      Amount:
-                      <input
-                        type="text"
-                        value={this.state.amount}
-                        className="form-control"
-                        name="amount"
-                      />
-                     </label>
-
-                     <label>
-                       Requested Amount:
-                       <input
-                         type="text"
-                         onChange={this.logChange}
-                         value={this.state.requested_amount}
-                         className="form-control"
-                         name="requested_amount"
-                       />
-                     </label>
-
-                     <label>
-                       Reasoning:
-                       <input
-                         type="text"
-                         onChange={this.logChange}
-                         value={this.state.reasoning}
-                         className="form-control"
-                         name="reasoning"
-                       />
-                     </label>
-
-                     <p><b>* Please re-check, changes cannot be made once submitted</b></p>
-
-
-                    <div className="submit-section">
-                      <button>Submit</button>
-                    </div>
-                  </form>
-                </Modal>
-
-
-                <Modal
-                open={this.state.error_modalIsOpen}
-                onClose={this.close_error_modal}
-                center
-                >
-                <br />
-                <div><p>You have already requested for this item. Please wait for approval. If you need to make changes please email coordinator.</p></div>
-                </Modal>
 
 
 
@@ -1064,6 +912,9 @@ class TravelExpenseClaimItemUpdatePage extends Component {
                 onClose={this.close_handleView_modal}
                 center
                 >
+                <br />
+                <br />
+                <h4> The following sub-items have been Rejected. Please click on a sub-item row to modify </h4>
                 <div style={{width: 700,
                           padding: 10,
                           border: 5,
@@ -1133,7 +984,9 @@ class TravelExpenseClaimItemUpdatePage extends Component {
                      <br />
                      <br />
                      <br />
-                  <h3>  You are submitting an Expense Claim for {this.state.item_name}. Enter the expense details in the fields below: </h3>
+                  <h3>  Please modify your expense details based on the coordinator feedback </h3>
+                  <br />
+                  <p> Feedback : {this.state.rejection_reasoning} </p>
                   <br />
                   <br />
                        <form onSubmit={this.handleSubmitSubItemAddition}>
@@ -1297,7 +1150,9 @@ class TravelExpenseClaimItemUpdatePage extends Component {
                                 <br />
                                 <br />
                                 <br />
-                             <h3>  You are submitting an Expense Claim for {this.state.item_name}. Enter the expense details in the fields below: </h3>
+                             <h3>  Please modify your expense details based on the coordinator feedback </h3>
+                             <br />
+                             <p> Feedback:  {this.state.rejection_reasoning} </p>
                              <br />
                              <br />
                                   <form onSubmit={this.handleSubmitSubItemAddition}>
