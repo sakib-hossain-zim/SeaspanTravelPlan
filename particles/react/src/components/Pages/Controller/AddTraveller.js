@@ -26,8 +26,8 @@ class AddTraveller extends Component {
     this.state = {
       data: [],
 
-      Event_id: "",
-      VSY_IndexNo: "",
+      Event_id: localStorage.getItem('Event_id_Selection') ,
+      VSY_IndexNo: localStorage.getItem('Traveller_id_Selection'),
       travel_start_date: "",
       travel_end_date:""
 
