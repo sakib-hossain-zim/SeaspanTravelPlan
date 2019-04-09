@@ -19,6 +19,7 @@ import Loading from './Helpers/Loading';
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import "../../../../node_modules/react-bootstrap-table/css/react-bootstrap-table.css";
 
+
 class AddTraveller extends Component {
   constructor(props) {
     super(props);
@@ -103,6 +104,11 @@ class AddTraveller extends Component {
         })
 
   };
+
+
+  // use the routes to redirect to event selection page
+  // once event selected, redirect to the traveller selection page 
+  // once traveller selected use the routing to redirect to the 
 
   render() {
     return (

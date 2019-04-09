@@ -34,7 +34,7 @@ export default class Navigation extends Component {
                     </li>
 
                     <li>
-                        <NavLink to="/addTraveller" class="text-muted" activeClassName="active">
+                        <NavLink to="/addTravellerToEventSelectionPage" class="text-muted" activeClassName="active">
                             <i className="md-icon">add</i> <span>Add Traveller to Event</span>
                         </NavLink>
                     </li>

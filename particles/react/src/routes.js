@@ -51,7 +51,8 @@ import TravelProgramSelectionPageForTravelExpenseClaimApproval from './component
 import TravellerTypeSelectionPage from './components/Pages/Controller/TravellerTypeSelectionPage';
 import ViewExpenseClaimStatus from './components/Pages/Traveller/ViewExpenseClaimStatus';
 import TravelExpenseClaimItemUpdatePage from './components/Pages/Traveller/TravelExpenseClaimItemUpdatePage';
-
+import AddTravellerToEventSelectionPage from './components/Pages/Controller/AddTravellerToEventSelectionPage';
+import SelectTravellerPage from './components/Pages/Controller/SelectTravellerPage';
 
 
 
@@ -558,6 +559,26 @@ export const routes = [
       breadcrumb_link: false,
       exact: true,
       component: TravelExpenseClaimItemUpdatePage
+
+    },
+
+    {
+      path: '/addTravellerToEventSelectionPage',
+      title: 'Add Traveller to event selection Page',
+      breadcrumb: 'Add traveller to event selection page',
+      breadcrumb_link: false,
+      exact: true,
+      component: AddTravellerToEventSelectionPage
+
+    },
+
+    {
+      path: '/selectTravellerPage',
+      title: 'Select Traveller Page',
+      breadcrumb: 'Select traveller page',
+      breadcrumb_link: false,
+      exact: true,
+      component: SelectTravellerPage
 
     },
 
